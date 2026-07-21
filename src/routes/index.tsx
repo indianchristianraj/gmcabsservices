@@ -55,19 +55,86 @@ const fleet = [
 ];
 
 const packages = [
-  { title: "8 Hrs / 80 Kms", price: "₹1,999", tag: "City Package" },
-  { title: "12 Hrs / 120 Kms", price: "₹2,799", tag: "Extended Day" },
-  { title: "Hyderabad City Tour", price: "₹2,499", tag: "Sightseeing" },
-  { title: "Ramoji Film City", price: "₹2,299", tag: "Full Day" },
-  { title: "Yadagirigutta Darshan", price: "₹2,599", tag: "Round Trip" },
-  { title: "Statue of Equality", price: "₹2,399", tag: "Half Day" },
+  {
+    title: "8 Hrs / 80 Kms",
+    tag: "City Package",
+    duration: "8 Hours",
+    distance: "80 Kms",
+    ideal: "Meetings & shopping",
+    includes: ["Fuel", "Driver charges", "Parking", "AC"],
+  },
+  {
+    title: "12 Hrs / 120 Kms",
+    tag: "Extended Day",
+    duration: "12 Hours",
+    distance: "120 Kms",
+    ideal: "Full-day city errands",
+    includes: ["Fuel", "Driver charges", "Parking", "AC"],
+  },
+  {
+    title: "Hyderabad City Tour",
+    tag: "Sightseeing",
+    duration: "10 Hours",
+    distance: "100 Kms",
+    ideal: "Charminar, Golconda, Hussain Sagar",
+    includes: ["Multi-stop", "Driver guide", "AC", "Bottled water"],
+  },
+  {
+    title: "Ramoji Film City",
+    tag: "Full Day",
+    duration: "12 Hours",
+    distance: "120 Kms",
+    ideal: "Family day out",
+    includes: ["Pickup & drop", "Waiting time", "AC", "Toll"],
+  },
+  {
+    title: "Yadagirigutta Darshan",
+    tag: "Round Trip",
+    duration: "8 Hours",
+    distance: "180 Kms",
+    ideal: "Temple visit",
+    includes: ["Round trip", "Waiting time", "AC", "Toll"],
+  },
+  {
+    title: "Statue of Equality",
+    tag: "Half Day",
+    duration: "6 Hours",
+    distance: "90 Kms",
+    ideal: "Muchintal sightseeing",
+    includes: ["Pickup & drop", "Waiting time", "AC", "Parking"],
+  },
 ];
 
 const whyUs = [
   { t: "Verified Drivers", d: "Trained, licensed & background-checked chauffeurs." },
-  { t: "Transparent Pricing", d: "No hidden fees, no surge — the price we quote is what you pay." },
+  { t: "Transparent Booking", d: "Clear confirmations on WhatsApp — no hidden surprises." },
   { t: "24/7 Availability", d: "Round-the-clock booking and support across Hyderabad." },
   { t: "Well-Maintained Cars", d: "Sanitised, AC cabs serviced regularly for a smooth ride." },
+];
+
+// Coverage helps users see how far we go and what routes are supported.
+const coverage = [
+  { icon: "🏙️", label: "All Hyderabad", detail: "Secunderabad · Gachibowli · HITEC City · LB Nagar · Kompally" },
+  { icon: "✈️", label: "RGIA Airport", detail: "24×7 pickup & drop with flight tracking" },
+  { icon: "🛕", label: "Pilgrim Trips", detail: "Tirupati · Yadagirigutta · Vemulawada · Srisailam" },
+  { icon: "🌆", label: "Outstation", detail: "Bangalore · Vijayawada · Vizag · Chennai · Pune" },
+];
+
+// Simple, calm process to reassure first-time visitors.
+const process = [
+  { step: "01", t: "Share your trip", d: "Tell us pickup, drop, date & car type on WhatsApp or call." },
+  { step: "02", t: "Get instant quote", d: "We confirm availability and a transparent fare." },
+  { step: "03", t: "Driver assigned", d: "You receive driver name, photo and vehicle number." },
+  { step: "04", t: "Ride & pay", d: "Enjoy the trip — pay by cash, UPI or online transfer." },
+];
+
+// Real questions people ask before booking.
+const faqs = [
+  { q: "How do I book a cab?", a: "Tap the WhatsApp button or call 6301875485. Share pickup, drop, date and time — we confirm within minutes." },
+  { q: "Do you provide outstation and one-way trips?", a: "Yes. We handle round trip and one-way outstation to Bangalore, Vijayawada, Vizag, Tirupati and more." },
+  { q: "Are your drivers verified?", a: "Every driver is licensed, background-verified and trained in safe, courteous driving." },
+  { q: "What payment options do you accept?", a: "Cash, UPI (GPay / PhonePe / Paytm) and direct bank transfer. Corporate invoicing is available on request." },
+  { q: "Can I cancel or reschedule?", a: "Yes — free cancellation up to 2 hours before pickup. Reschedule anytime by messaging us." },
 ];
 
 function Index() {
@@ -171,23 +238,75 @@ function Index() {
       </section>
 
       <section id="packages" className="mx-auto max-w-7xl px-4 py-20 md:px-8 md:py-28">
-        <SectionHead eyebrow="Popular Packages" title="Fixed-price cab packages in Hyderabad" sub="Transparent pricing for the trips our customers love most." />
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <SectionHead eyebrow="Popular Packages" title="Ready-made cab packages in Hyderabad" sub="Popular trips our customers book most — every package includes fuel, driver and AC." />
+        <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {packages.map((p) => (
-            <div key={p.title} className="flex items-center justify-between rounded-2xl border border-border bg-card p-6 shadow-card transition hover:-translate-y-1 hover:border-gold hover:shadow-elegant">
-              <div>
-                <div className="text-[10px] font-semibold uppercase tracking-widest text-gold">{p.tag}</div>
-                <h3 className="mt-1 font-display text-lg font-bold text-primary">{p.title}</h3>
-                <a href={waFor(`${p.title} package`)} target="_blank" rel="noopener noreferrer" className="mt-2 inline-block text-xs font-semibold text-muted-foreground hover:text-primary">Book now →</a>
+            <article key={p.title} className="flex flex-col rounded-2xl border border-border bg-card p-6 shadow-card transition hover:-translate-y-1 hover:border-gold hover:shadow-elegant">
+              <div className="text-[10px] font-semibold uppercase tracking-widest text-gold">{p.tag}</div>
+              <h3 className="mt-1 font-display text-xl font-bold text-primary">{p.title}</h3>
+              <p className="mt-1 text-xs text-muted-foreground">Ideal for {p.ideal}</p>
+
+              <div className="mt-4 grid grid-cols-2 gap-3 rounded-xl bg-accent/50 p-3 text-xs">
+                <div>
+                  <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Duration</div>
+                  <div className="mt-0.5 font-semibold text-primary">⏱ {p.duration}</div>
+                </div>
+                <div>
+                  <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Distance</div>
+                  <div className="mt-0.5 font-semibold text-primary">📍 {p.distance}</div>
+                </div>
               </div>
-              <div className="text-right">
-                <div className="font-display text-2xl font-bold text-primary">{p.price}</div>
-                <div className="text-[10px] uppercase tracking-wider text-muted-foreground">starting</div>
+
+              <ul className="mt-4 flex flex-wrap gap-1.5">
+                {p.includes.map((i) => (
+                  <li key={i} className="rounded-full border border-border bg-background px-2.5 py-0.5 text-[11px] text-muted-foreground">
+                    ✓ {i}
+                  </li>
+                ))}
+              </ul>
+
+              <a
+                href={waFor(`${p.title} package`)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-5 inline-flex items-center justify-center gap-2 rounded-full bg-primary px-4 py-2.5 text-xs font-semibold text-primary-foreground transition hover:bg-gold hover:text-gold-foreground"
+              >
+                <WhatsAppIcon className="h-4 w-4" /> Get quote on WhatsApp
+              </a>
+            </article>
+          ))}
+        </div>
+        <p className="mt-6 text-center text-xs text-muted-foreground">* Fare depends on car type, kms travelled and season. Message us for an exact quote — no obligation.</p>
+      </section>
+
+      {/* SERVICE COVERAGE */}
+      <section className="bg-accent/40 py-20 md:py-24">
+        <div className="mx-auto max-w-7xl px-4 md:px-8">
+          <SectionHead eyebrow="Coverage" title="Where we drive" sub="From every Hyderabad neighbourhood to long outstation routes." />
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {coverage.map((c) => (
+              <div key={c.label} className="rounded-2xl border border-border bg-card p-6 shadow-card">
+                <div className="grid h-12 w-12 place-items-center rounded-xl bg-gold-gradient text-2xl shadow-gold">{c.icon}</div>
+                <h3 className="mt-4 font-display text-lg font-bold text-primary">{c.label}</h3>
+                <p className="mt-1 text-sm text-muted-foreground">{c.detail}</p>
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* HOW IT WORKS */}
+      <section className="mx-auto max-w-7xl px-4 py-20 md:px-8 md:py-24">
+        <SectionHead eyebrow="How it works" title="Booking a cab in 4 simple steps" sub="No apps, no accounts — just message or call us." />
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {process.map((s) => (
+            <div key={s.step} className="relative rounded-2xl border border-border bg-card p-6 shadow-card">
+              <div className="font-display text-4xl font-bold text-gold/80">{s.step}</div>
+              <h3 className="mt-2 font-display text-lg font-bold text-primary">{s.t}</h3>
+              <p className="mt-1 text-sm text-muted-foreground">{s.d}</p>
             </div>
           ))}
         </div>
-        <p className="mt-6 text-center text-xs text-muted-foreground">* Prices vary by car type and season. Call {PHONE} for exact quote.</p>
       </section>
 
       <section id="about" className="bg-hero-gradient py-20 text-white md:py-28">
@@ -209,6 +328,24 @@ function Index() {
                 <h3 className="mt-4 font-display text-lg font-bold text-white">{w.t}</h3>
                 <p className="mt-1 text-sm text-white/75">{w.d}</p>
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="bg-accent/40 py-20 md:py-24">
+        <div className="mx-auto max-w-3xl px-4 md:px-8">
+          <SectionHead eyebrow="FAQ" title="Answers before you book" sub="Still unsure? Message us on WhatsApp — we reply in minutes." />
+          <div className="mt-10 space-y-3">
+            {faqs.map((f) => (
+              <details key={f.q} className="group rounded-xl border border-border bg-card p-5 shadow-card transition open:shadow-elegant">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-display text-base font-bold text-primary">
+                  {f.q}
+                  <span className="text-gold transition group-open:rotate-45">+</span>
+                </summary>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{f.a}</p>
+              </details>
             ))}
           </div>
         </div>
