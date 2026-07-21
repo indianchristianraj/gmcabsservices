@@ -1,4 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useRouterState } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import heroCab from "@/assets/hero-cab.jpg";
 import airportImg from "@/assets/airport.jpg";
 import outstationImg from "@/assets/outstation.jpg";
@@ -13,11 +14,29 @@ const PHONE = "6301875485";
 const PHONE_INTL = "916301875485";
 const EMAIL = "gmcabs@gmail.com";
 const ADDRESS = "H.No: 7-6/16, Sri Sai Colony, Nacharam, Hyderabad - 500076";
-const WHATSAPP_MSG = encodeURIComponent(
-  "Hi GM Cabs, I would like to book a cab. Please share details.",
-);
-const waLink = `https://wa.me/${PHONE_INTL}?text=${WHATSAPP_MSG}`;
+
+// Build a WhatsApp deep-link with a message tailored to the context
+// (section on the page + current app route).
+function waFor(context?: string, route?: string) {
+  const base = "Hi GM Cabs,";
+  const ctx = context
+    ? ` I'm interested in *${context}*.`
+    : " I would like to book a cab.";
+  const from = route && route !== "/" ? ` (from page: ${route})` : "";
+  const msg = `${base}${ctx}${from} Please share availability and pricing.`;
+  return `https://wa.me/${PHONE_INTL}?text=${encodeURIComponent(msg)}`;
+}
+const waLink = waFor();
 const telLink = `tel:+${PHONE_INTL}`;
+
+// Map each in-page section id to a contextual WhatsApp message.
+const SECTION_CONTEXT: Record<string, string> = {
+  services: "your cab services",
+  fleet: "your car fleet options",
+  packages: "your Hyderabad cab packages",
+  about: "GM Cabs Services",
+  contact: "booking a cab",
+};
 
 const services = [
   { title: "Airport Drop", desc: "On-time pickups to Rajiv Gandhi International Airport with luggage assistance and flight tracking.", img: airportImg, icon: "✈️" },
