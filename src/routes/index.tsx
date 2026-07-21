@@ -55,19 +55,86 @@ const fleet = [
 ];
 
 const packages = [
-  { title: "8 Hrs / 80 Kms", price: "₹1,999", tag: "City Package" },
-  { title: "12 Hrs / 120 Kms", price: "₹2,799", tag: "Extended Day" },
-  { title: "Hyderabad City Tour", price: "₹2,499", tag: "Sightseeing" },
-  { title: "Ramoji Film City", price: "₹2,299", tag: "Full Day" },
-  { title: "Yadagirigutta Darshan", price: "₹2,599", tag: "Round Trip" },
-  { title: "Statue of Equality", price: "₹2,399", tag: "Half Day" },
+  {
+    title: "8 Hrs / 80 Kms",
+    tag: "City Package",
+    duration: "8 Hours",
+    distance: "80 Kms",
+    ideal: "Meetings & shopping",
+    includes: ["Fuel", "Driver charges", "Parking", "AC"],
+  },
+  {
+    title: "12 Hrs / 120 Kms",
+    tag: "Extended Day",
+    duration: "12 Hours",
+    distance: "120 Kms",
+    ideal: "Full-day city errands",
+    includes: ["Fuel", "Driver charges", "Parking", "AC"],
+  },
+  {
+    title: "Hyderabad City Tour",
+    tag: "Sightseeing",
+    duration: "10 Hours",
+    distance: "100 Kms",
+    ideal: "Charminar, Golconda, Hussain Sagar",
+    includes: ["Multi-stop", "Driver guide", "AC", "Bottled water"],
+  },
+  {
+    title: "Ramoji Film City",
+    tag: "Full Day",
+    duration: "12 Hours",
+    distance: "120 Kms",
+    ideal: "Family day out",
+    includes: ["Pickup & drop", "Waiting time", "AC", "Toll"],
+  },
+  {
+    title: "Yadagirigutta Darshan",
+    tag: "Round Trip",
+    duration: "8 Hours",
+    distance: "180 Kms",
+    ideal: "Temple visit",
+    includes: ["Round trip", "Waiting time", "AC", "Toll"],
+  },
+  {
+    title: "Statue of Equality",
+    tag: "Half Day",
+    duration: "6 Hours",
+    distance: "90 Kms",
+    ideal: "Muchintal sightseeing",
+    includes: ["Pickup & drop", "Waiting time", "AC", "Parking"],
+  },
 ];
 
 const whyUs = [
   { t: "Verified Drivers", d: "Trained, licensed & background-checked chauffeurs." },
-  { t: "Transparent Pricing", d: "No hidden fees, no surge — the price we quote is what you pay." },
+  { t: "Transparent Booking", d: "Clear confirmations on WhatsApp — no hidden surprises." },
   { t: "24/7 Availability", d: "Round-the-clock booking and support across Hyderabad." },
   { t: "Well-Maintained Cars", d: "Sanitised, AC cabs serviced regularly for a smooth ride." },
+];
+
+// Coverage helps users see how far we go and what routes are supported.
+const coverage = [
+  { icon: "🏙️", label: "All Hyderabad", detail: "Secunderabad · Gachibowli · HITEC City · LB Nagar · Kompally" },
+  { icon: "✈️", label: "RGIA Airport", detail: "24×7 pickup & drop with flight tracking" },
+  { icon: "🛕", label: "Pilgrim Trips", detail: "Tirupati · Yadagirigutta · Vemulawada · Srisailam" },
+  { icon: "🌆", label: "Outstation", detail: "Bangalore · Vijayawada · Vizag · Chennai · Pune" },
+];
+
+// Simple, calm process to reassure first-time visitors.
+const process = [
+  { step: "01", t: "Share your trip", d: "Tell us pickup, drop, date & car type on WhatsApp or call." },
+  { step: "02", t: "Get instant quote", d: "We confirm availability and a transparent fare." },
+  { step: "03", t: "Driver assigned", d: "You receive driver name, photo and vehicle number." },
+  { step: "04", t: "Ride & pay", d: "Enjoy the trip — pay by cash, UPI or online transfer." },
+];
+
+// Real questions people ask before booking.
+const faqs = [
+  { q: "How do I book a cab?", a: "Tap the WhatsApp button or call 6301875485. Share pickup, drop, date and time — we confirm within minutes." },
+  { q: "Do you provide outstation and one-way trips?", a: "Yes. We handle round trip and one-way outstation to Bangalore, Vijayawada, Vizag, Tirupati and more." },
+  { q: "Are your drivers verified?", a: "Every driver is licensed, background-verified and trained in safe, courteous driving." },
+  { q: "What payment options do you accept?", a: "Cash, UPI (GPay / PhonePe / Paytm) and direct bank transfer. Corporate invoicing is available on request." },
+  { q: "Can I cancel or reschedule?", a: "Yes — free cancellation up to 2 hours before pickup. Reschedule anytime by messaging us." },
 ];
 
 function Index() {
