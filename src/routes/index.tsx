@@ -333,6 +333,24 @@ function Index() {
         </div>
       </section>
 
+      {/* FAQ */}
+      <section className="bg-accent/40 py-20 md:py-24">
+        <div className="mx-auto max-w-3xl px-4 md:px-8">
+          <SectionHead eyebrow="FAQ" title="Answers before you book" sub="Still unsure? Message us on WhatsApp — we reply in minutes." />
+          <div className="mt-10 space-y-3">
+            {faqs.map((f) => (
+              <details key={f.q} className="group rounded-xl border border-border bg-card p-5 shadow-card transition open:shadow-elegant">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-display text-base font-bold text-primary">
+                  {f.q}
+                  <span className="text-gold transition group-open:rotate-45">+</span>
+                </summary>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{f.a}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section id="contact" className="mx-auto max-w-7xl px-4 py-20 md:px-8 md:py-28">
         <SectionHead eyebrow="Get in Touch" title="Book your cab in one call" sub="Reach us anytime — we respond within minutes." />
         <div className="mt-12 grid gap-6 md:grid-cols-3">
