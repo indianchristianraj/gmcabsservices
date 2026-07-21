@@ -1,4 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useRouterState } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import heroCab from "@/assets/hero-cab.jpg";
 import airportImg from "@/assets/airport.jpg";
 import outstationImg from "@/assets/outstation.jpg";
@@ -13,11 +14,29 @@ const PHONE = "6301875485";
 const PHONE_INTL = "916301875485";
 const EMAIL = "gmcabs@gmail.com";
 const ADDRESS = "H.No: 7-6/16, Sri Sai Colony, Nacharam, Hyderabad - 500076";
-const WHATSAPP_MSG = encodeURIComponent(
-  "Hi GM Cabs, I would like to book a cab. Please share details.",
-);
-const waLink = `https://wa.me/${PHONE_INTL}?text=${WHATSAPP_MSG}`;
+
+// Build a WhatsApp deep-link with a message tailored to the context
+// (section on the page + current app route).
+function waFor(context?: string, route?: string) {
+  const base = "Hi GM Cabs,";
+  const ctx = context
+    ? ` I'm interested in *${context}*.`
+    : " I would like to book a cab.";
+  const from = route && route !== "/" ? ` (from page: ${route})` : "";
+  const msg = `${base}${ctx}${from} Please share availability and pricing.`;
+  return `https://wa.me/${PHONE_INTL}?text=${encodeURIComponent(msg)}`;
+}
+const waLink = waFor();
 const telLink = `tel:+${PHONE_INTL}`;
+
+// Map each in-page section id to a contextual WhatsApp message.
+const SECTION_CONTEXT: Record<string, string> = {
+  services: "your cab services",
+  fleet: "your car fleet options",
+  packages: "your Hyderabad cab packages",
+  about: "GM Cabs Services",
+  contact: "booking a cab",
+};
 
 const services = [
   { title: "Airport Drop", desc: "On-time pickups to Rajiv Gandhi International Airport with luggage assistance and flight tracking.", img: airportImg, icon: "✈️" },
@@ -123,7 +142,7 @@ function Index() {
               <div className="p-6">
                 <h3 className="font-display text-xl font-bold text-primary">{s.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{s.desc}</p>
-                <a href={waLink} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary hover:text-gold">
+                <a href={waFor(s.title)} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary hover:text-gold">
                   Book this service →
                 </a>
               </div>
@@ -159,7 +178,7 @@ function Index() {
               <div>
                 <div className="text-[10px] font-semibold uppercase tracking-widest text-gold">{p.tag}</div>
                 <h3 className="mt-1 font-display text-lg font-bold text-primary">{p.title}</h3>
-                <a href={waLink} target="_blank" rel="noopener noreferrer" className="mt-2 inline-block text-xs font-semibold text-muted-foreground hover:text-primary">Book now →</a>
+                <a href={waFor(`${p.title} package`)} target="_blank" rel="noopener noreferrer" className="mt-2 inline-block text-xs font-semibold text-muted-foreground hover:text-primary">Book now →</a>
               </div>
               <div className="text-right">
                 <div className="font-display text-2xl font-bold text-primary">{p.price}</div>
@@ -225,10 +244,64 @@ function Index() {
         </div>
       </footer>
 
-      <a href={waLink} target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp" className="fixed bottom-6 right-6 z-50 grid h-14 w-14 place-items-center rounded-full bg-[var(--whatsapp)] text-white shadow-elegant animate-pulse-ring transition hover:scale-110">
-        <WhatsAppIcon className="h-7 w-7" />
-      </a>
+      <FloatingWhatsApp />
     </div>
+  );
+}
+
+function FloatingWhatsApp() {
+  const [section, setSection] = useState<string | null>(null);
+  const route = useRouterState({ select: (s) => s.location.pathname });
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const ids = Object.keys(SECTION_CONTEXT);
+    const els = ids
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => !!el);
+    if (!els.length) return;
+
+    const visible = new Map<string, number>();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) visible.set(e.target.id, e.intersectionRatio);
+          else visible.delete(e.target.id);
+        }
+        let top: string | null = null;
+        let best = 0;
+        for (const [id, ratio] of visible) {
+          if (ratio > best) {
+            best = ratio;
+            top = id;
+          }
+        }
+        setSection(top);
+      },
+      { threshold: [0.25, 0.5, 0.75], rootMargin: "-80px 0px -40% 0px" },
+    );
+    els.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
+  const context = section ? SECTION_CONTEXT[section] : undefined;
+  const href = waFor(context, route);
+  const label = context ? `Chat on WhatsApp about ${context}` : "Chat on WhatsApp";
+
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={label}
+      title={label}
+      className="fixed bottom-6 right-6 z-50 flex items-center gap-2 rounded-full bg-[var(--whatsapp)] py-3 pl-3 pr-4 text-white shadow-elegant animate-pulse-ring transition hover:scale-105"
+    >
+      <WhatsAppIcon className="h-7 w-7" />
+      <span className="hidden text-sm font-semibold sm:inline">
+        {context ? "Ask about this" : "Chat with us"}
+      </span>
+    </a>
   );
 }
 
