@@ -142,7 +142,7 @@ function Index() {
               <div className="p-6">
                 <h3 className="font-display text-xl font-bold text-primary">{s.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{s.desc}</p>
-                <a href={waLink} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary hover:text-gold">
+                <a href={waFor(s.title)} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary hover:text-gold">
                   Book this service →
                 </a>
               </div>
@@ -178,7 +178,7 @@ function Index() {
               <div>
                 <div className="text-[10px] font-semibold uppercase tracking-widest text-gold">{p.tag}</div>
                 <h3 className="mt-1 font-display text-lg font-bold text-primary">{p.title}</h3>
-                <a href={waLink} target="_blank" rel="noopener noreferrer" className="mt-2 inline-block text-xs font-semibold text-muted-foreground hover:text-primary">Book now →</a>
+                <a href={waFor(`${p.title} package`)} target="_blank" rel="noopener noreferrer" className="mt-2 inline-block text-xs font-semibold text-muted-foreground hover:text-primary">Book now →</a>
               </div>
               <div className="text-right">
                 <div className="font-display text-2xl font-bold text-primary">{p.price}</div>
@@ -244,10 +244,64 @@ function Index() {
         </div>
       </footer>
 
-      <a href={waLink} target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp" className="fixed bottom-6 right-6 z-50 grid h-14 w-14 place-items-center rounded-full bg-[var(--whatsapp)] text-white shadow-elegant animate-pulse-ring transition hover:scale-110">
-        <WhatsAppIcon className="h-7 w-7" />
-      </a>
+      <FloatingWhatsApp />
     </div>
+  );
+}
+
+function FloatingWhatsApp() {
+  const [section, setSection] = useState<string | null>(null);
+  const route = useRouterState({ select: (s) => s.location.pathname });
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const ids = Object.keys(SECTION_CONTEXT);
+    const els = ids
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => !!el);
+    if (!els.length) return;
+
+    const visible = new Map<string, number>();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) visible.set(e.target.id, e.intersectionRatio);
+          else visible.delete(e.target.id);
+        }
+        let top: string | null = null;
+        let best = 0;
+        for (const [id, ratio] of visible) {
+          if (ratio > best) {
+            best = ratio;
+            top = id;
+          }
+        }
+        setSection(top);
+      },
+      { threshold: [0.25, 0.5, 0.75], rootMargin: "-80px 0px -40% 0px" },
+    );
+    els.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
+  const context = section ? SECTION_CONTEXT[section] : undefined;
+  const href = waFor(context, route);
+  const label = context ? `Chat on WhatsApp about ${context}` : "Chat on WhatsApp";
+
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={label}
+      title={label}
+      className="fixed bottom-6 right-6 z-50 flex items-center gap-2 rounded-full bg-[var(--whatsapp)] py-3 pl-3 pr-4 text-white shadow-elegant animate-pulse-ring transition hover:scale-105"
+    >
+      <WhatsAppIcon className="h-7 w-7" />
+      <span className="hidden text-sm font-semibold sm:inline">
+        {context ? "Ask about this" : "Chat with us"}
+      </span>
+    </a>
   );
 }
 
