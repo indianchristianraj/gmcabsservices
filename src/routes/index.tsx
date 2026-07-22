@@ -536,7 +536,7 @@ function BookingForm() {
   const [errors, setErrors] = useState<Errors>({});
   const [touched, setTouched] = useState<Partial<Record<BookingFields, boolean>>>({});
 
-  const validated: BookingFields[] = ["phone", "date", "time", "passengers"];
+  const validated: BookingFields[] = ["phone", "pickup", "drop", "date", "time", "passengers"];
 
   function runValidation(next: Record<BookingFields, string>): Errors {
     const errs: Errors = {};
