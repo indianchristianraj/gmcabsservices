@@ -492,6 +492,20 @@ function validateField(name: BookingFields, value: string, form: Record<BookingF
       }
       return undefined;
     }
+    case "pickup":
+    case "drop": {
+      const other = name === "pickup" ? form.drop : form.pickup;
+      const label = name === "pickup" ? "Pickup" : "Drop";
+      const v = value.trim();
+      if (!v) return `${label} location is required.`;
+      if (v.length < 3) return `${label} location must be at least 3 characters.`;
+      if (v.length > 120) return `${label} location is too long.`;
+      if (!/[a-zA-Z\u0900-\u097F\u0C00-\u0C7F]/.test(v))
+        return `Enter a valid ${label.toLowerCase()} location.`;
+      if (other.trim() && other.trim().toLowerCase() === v.toLowerCase())
+        return "Pickup and drop can't be the same.";
+      return undefined;
+    }
     case "passengers": {
       if (!value) return "Select the number of passengers.";
       const n = value === "7+" ? 7 : parseInt(value, 10);
