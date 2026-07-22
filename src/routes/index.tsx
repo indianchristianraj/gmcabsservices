@@ -663,11 +663,30 @@ function BookingForm() {
 
         <label className="space-y-1.5 sm:col-span-2">
           <span className={labelCls}>Pickup location *</span>
-          <input required value={form.pickup} onChange={update("pickup")} className={`${baseInput} ${okInput}`} placeholder="e.g. Nacharam, Hyderabad" />
+          <input
+            required
+            value={form.pickup}
+            onChange={update("pickup")}
+            onBlur={blur("pickup")}
+            aria-invalid={!!errors.pickup}
+            aria-describedby={errors.pickup ? "err-pickup" : undefined}
+            className={inputCls("pickup")}
+            placeholder="e.g. Nacharam, Hyderabad"
+          />
+          <span id="err-pickup">{errMsg("pickup")}</span>
         </label>
         <label className="space-y-1.5 sm:col-span-2">
           <span className={labelCls}>Drop location *</span>
-          <input required value={form.drop} onChange={update("drop")} className={`${baseInput} ${okInput}`} placeholder="e.g. RGIA Airport / Tirupati" />
+          <input
+            required
+            value={form.drop}
+            onChange={update("drop")}
+            onBlur={blur("drop")}
+            aria-invalid={!!errors.drop}
+            aria-describedby={errors.drop ? "err-drop" : undefined}
+            className={inputCls("drop")}
+            placeholder="e.g. RGIA Airport / Tirupati"
+          />
         </label>
 
         <label className="space-y-1.5">
