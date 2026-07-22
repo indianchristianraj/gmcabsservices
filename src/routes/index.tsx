@@ -570,7 +570,7 @@ function BookingForm() {
     e.preventDefault();
     const errs = runValidation(form);
     setErrors(errs);
-    setTouched({ phone: true, date: true, time: true, passengers: true });
+    setTouched({ phone: true, pickup: true, drop: true, date: true, time: true, passengers: true });
     if (Object.keys(errs).length > 0 || !form.name || !form.pickup || !form.drop) return;
 
     const lines = [
