@@ -352,19 +352,19 @@ function Index() {
       </section>
 
       <section id="contact" className="mx-auto max-w-7xl px-4 py-20 md:px-8 md:py-28">
-        <SectionHead eyebrow="Get in Touch" title="Book your cab in one call" sub="Reach us anytime — we respond within minutes." />
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
-          <ContactCard icon="📞" title="Call / SMS" line={PHONE} href={telLink} />
-          <ContactCard icon="✉️" title="Email" line={EMAIL} href={`mailto:${EMAIL}`} />
-          <ContactCard icon="📍" title="Visit Us" line={ADDRESS} />
-        </div>
-        <div className="mt-10 flex flex-wrap justify-center gap-3">
-          <a href={waLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-[var(--whatsapp)] px-8 py-4 text-base font-semibold text-white shadow-elegant transition hover:opacity-90">
-            <WhatsAppIcon className="h-5 w-5" /> Message on WhatsApp
-          </a>
-          <a href={telLink} className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-4 text-base font-semibold text-primary-foreground shadow-elegant transition hover:opacity-90">
-            📞 Call {PHONE}
-          </a>
+        <SectionHead eyebrow="Get in Touch" title="Book your cab in a few clicks" sub="Fill in the trip details below — we'll confirm on WhatsApp within minutes." />
+
+        <div className="mt-12 grid gap-8 lg:grid-cols-[1.2fr_1fr]">
+          <BookingForm />
+
+          <div className="space-y-4">
+            <ContactCard icon="📞" title="Call / SMS" line={PHONE} href={telLink} />
+            <ContactCard icon="✉️" title="Email" line={EMAIL} href={`mailto:${EMAIL}`} />
+            <ContactCard icon="📍" title="Visit Us" line={ADDRESS} />
+            <a href={waLink} target="_blank" rel="noopener noreferrer" className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[var(--whatsapp)] px-6 py-3.5 text-sm font-semibold text-white shadow-elegant transition hover:opacity-90">
+              <WhatsAppIcon className="h-5 w-5" /> Quick WhatsApp chat
+            </a>
+          </div>
         </div>
       </section>
 
@@ -439,6 +439,161 @@ function FloatingWhatsApp() {
         {context ? "Ask about this" : "Chat with us"}
       </span>
     </a>
+  );
+}
+
+function BookingForm() {
+  const [form, setForm] = useState({
+    name: "",
+    phone: "",
+    service: "Airport Pickup",
+    car: "Sedan",
+    pickup: "",
+    drop: "",
+    date: "",
+    time: "",
+    tripType: "One-way",
+    passengers: "2",
+    luggage: "1",
+    notes: "",
+  });
+
+  const update =
+    (k: keyof typeof form) =>
+    (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
+      setForm((f) => ({ ...f, [k]: e.target.value }));
+
+  const canSubmit = form.name && form.phone && form.pickup && form.drop && form.date;
+
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!canSubmit) return;
+    const lines = [
+      "Hi GM Cabs, I'd like to book a cab. Here are my trip details:",
+      "",
+      `• Name: ${form.name}`,
+      `• Phone: ${form.phone}`,
+      `• Service: ${form.service}`,
+      `• Car type: ${form.car}`,
+      `• Trip type: ${form.tripType}`,
+      `• Pickup: ${form.pickup}`,
+      `• Drop: ${form.drop}`,
+      `• Date: ${form.date}${form.time ? ` at ${form.time}` : ""}`,
+      `• Passengers: ${form.passengers}`,
+      `• Luggage: ${form.luggage}`,
+    ];
+    if (form.notes.trim()) lines.push(`• Notes: ${form.notes.trim()}`);
+    lines.push("", "Please share availability and fare. Thank you!");
+    const url = `https://wa.me/${PHONE_INTL}?text=${encodeURIComponent(lines.join("\n"))}`;
+    window.open(url, "_blank", "noopener,noreferrer");
+  }
+
+  const inputCls =
+    "w-full rounded-lg border border-border bg-background px-3.5 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/70 focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30";
+  const labelCls = "text-xs font-semibold uppercase tracking-wider text-muted-foreground";
+
+  return (
+    <form
+      onSubmit={handleSubmit}
+      className="rounded-2xl border border-border bg-card p-6 shadow-card md:p-8"
+    >
+      <div className="mb-6 flex items-center gap-3">
+        <span className="grid h-11 w-11 place-items-center rounded-xl bg-gold-gradient text-xl shadow-gold">📝</span>
+        <div>
+          <h3 className="font-display text-xl font-bold text-primary">Booking request</h3>
+          <p className="text-xs text-muted-foreground">All fields marked * are required.</p>
+        </div>
+      </div>
+
+      <div className="grid gap-4 sm:grid-cols-2">
+        <label className="space-y-1.5">
+          <span className={labelCls}>Full name *</span>
+          <input required value={form.name} onChange={update("name")} className={inputCls} placeholder="Your name" />
+        </label>
+        <label className="space-y-1.5">
+          <span className={labelCls}>Mobile number *</span>
+          <input required type="tel" pattern="[0-9+ ]{7,15}" value={form.phone} onChange={update("phone")} className={inputCls} placeholder="10-digit mobile" />
+        </label>
+
+        <label className="space-y-1.5">
+          <span className={labelCls}>Preferred service *</span>
+          <select value={form.service} onChange={update("service")} className={inputCls}>
+            {["Airport Pickup", "Airport Drop", "Local Rental", "Outstation Trip", "Sightseeing Tour", "Corporate Travel"].map((o) => (
+              <option key={o}>{o}</option>
+            ))}
+          </select>
+        </label>
+        <label className="space-y-1.5">
+          <span className={labelCls}>Car type</span>
+          <select value={form.car} onChange={update("car")} className={inputCls}>
+            {["Sedan", "SUV", "Premium (Crysta)", "Tempo Traveller"].map((o) => (
+              <option key={o}>{o}</option>
+            ))}
+          </select>
+        </label>
+
+        <label className="space-y-1.5 sm:col-span-2">
+          <span className={labelCls}>Pickup location *</span>
+          <input required value={form.pickup} onChange={update("pickup")} className={inputCls} placeholder="e.g. Nacharam, Hyderabad" />
+        </label>
+        <label className="space-y-1.5 sm:col-span-2">
+          <span className={labelCls}>Drop location *</span>
+          <input required value={form.drop} onChange={update("drop")} className={inputCls} placeholder="e.g. RGIA Airport / Tirupati" />
+        </label>
+
+        <label className="space-y-1.5">
+          <span className={labelCls}>Travel date *</span>
+          <input required type="date" value={form.date} onChange={update("date")} className={inputCls} />
+        </label>
+        <label className="space-y-1.5">
+          <span className={labelCls}>Pickup time</span>
+          <input type="time" value={form.time} onChange={update("time")} className={inputCls} />
+        </label>
+
+        <label className="space-y-1.5">
+          <span className={labelCls}>Trip type</span>
+          <select value={form.tripType} onChange={update("tripType")} className={inputCls}>
+            {["One-way", "Round trip", "Multi-day"].map((o) => (
+              <option key={o}>{o}</option>
+            ))}
+          </select>
+        </label>
+        <div className="grid grid-cols-2 gap-3">
+          <label className="space-y-1.5">
+            <span className={labelCls}>Passengers</span>
+            <select value={form.passengers} onChange={update("passengers")} className={inputCls}>
+              {["1", "2", "3", "4", "5", "6", "7+"].map((o) => (
+                <option key={o}>{o}</option>
+              ))}
+            </select>
+          </label>
+          <label className="space-y-1.5">
+            <span className={labelCls}>Luggage</span>
+            <select value={form.luggage} onChange={update("luggage")} className={inputCls}>
+              {["0", "1", "2", "3", "4+"].map((o) => (
+                <option key={o}>{o}</option>
+              ))}
+            </select>
+          </label>
+        </div>
+
+        <label className="space-y-1.5 sm:col-span-2">
+          <span className={labelCls}>Additional notes</span>
+          <textarea rows={3} value={form.notes} onChange={update("notes")} className={inputCls} placeholder="Flight number, child seat, stops on the way…" />
+        </label>
+      </div>
+
+      <button
+        type="submit"
+        disabled={!canSubmit}
+        className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[var(--whatsapp)] px-6 py-3.5 text-sm font-semibold text-white shadow-elegant transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
+      >
+        <WhatsAppIcon className="h-5 w-5" /> Send booking on WhatsApp
+      </button>
+      <p className="mt-3 text-center text-xs text-muted-foreground">
+        Your details open in WhatsApp so you can review before sending.
+      </p>
+    </form>
   );
 }
 
