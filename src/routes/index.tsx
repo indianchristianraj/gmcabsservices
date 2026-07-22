@@ -687,6 +687,7 @@ function BookingForm() {
             className={inputCls("drop")}
             placeholder="e.g. RGIA Airport / Tirupati"
           />
+          <span id="err-drop">{errMsg("drop")}</span>
         </label>
 
         <label className="space-y-1.5">
