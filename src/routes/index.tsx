@@ -492,6 +492,20 @@ function validateField(name: BookingFields, value: string, form: Record<BookingF
       }
       return undefined;
     }
+    case "pickup":
+    case "drop": {
+      const other = name === "pickup" ? form.drop : form.pickup;
+      const label = name === "pickup" ? "Pickup" : "Drop";
+      const v = value.trim();
+      if (!v) return `${label} location is required.`;
+      if (v.length < 3) return `${label} location must be at least 3 characters.`;
+      if (v.length > 120) return `${label} location is too long.`;
+      if (!/[a-zA-Z\u0900-\u097F\u0C00-\u0C7F]/.test(v))
+        return `Enter a valid ${label.toLowerCase()} location.`;
+      if (other.trim() && other.trim().toLowerCase() === v.toLowerCase())
+        return "Pickup and drop can't be the same.";
+      return undefined;
+    }
     case "passengers": {
       if (!value) return "Select the number of passengers.";
       const n = value === "7+" ? 7 : parseInt(value, 10);
@@ -522,7 +536,7 @@ function BookingForm() {
   const [errors, setErrors] = useState<Errors>({});
   const [touched, setTouched] = useState<Partial<Record<BookingFields, boolean>>>({});
 
-  const validated: BookingFields[] = ["phone", "date", "time", "passengers"];
+  const validated: BookingFields[] = ["phone", "pickup", "drop", "date", "time", "passengers"];
 
   function runValidation(next: Record<BookingFields, string>): Errors {
     const errs: Errors = {};
@@ -556,7 +570,7 @@ function BookingForm() {
     e.preventDefault();
     const errs = runValidation(form);
     setErrors(errs);
-    setTouched({ phone: true, date: true, time: true, passengers: true });
+    setTouched({ phone: true, pickup: true, drop: true, date: true, time: true, passengers: true });
     if (Object.keys(errs).length > 0 || !form.name || !form.pickup || !form.drop) return;
 
     const lines = [
@@ -649,11 +663,31 @@ function BookingForm() {
 
         <label className="space-y-1.5 sm:col-span-2">
           <span className={labelCls}>Pickup location *</span>
-          <input required value={form.pickup} onChange={update("pickup")} className={`${baseInput} ${okInput}`} placeholder="e.g. Nacharam, Hyderabad" />
+          <input
+            required
+            value={form.pickup}
+            onChange={update("pickup")}
+            onBlur={blur("pickup")}
+            aria-invalid={!!errors.pickup}
+            aria-describedby={errors.pickup ? "err-pickup" : undefined}
+            className={inputCls("pickup")}
+            placeholder="e.g. Nacharam, Hyderabad"
+          />
+          <span id="err-pickup">{errMsg("pickup")}</span>
         </label>
         <label className="space-y-1.5 sm:col-span-2">
           <span className={labelCls}>Drop location *</span>
-          <input required value={form.drop} onChange={update("drop")} className={`${baseInput} ${okInput}`} placeholder="e.g. RGIA Airport / Tirupati" />
+          <input
+            required
+            value={form.drop}
+            onChange={update("drop")}
+            onBlur={blur("drop")}
+            aria-invalid={!!errors.drop}
+            aria-describedby={errors.drop ? "err-drop" : undefined}
+            className={inputCls("drop")}
+            placeholder="e.g. RGIA Airport / Tirupati"
+          />
+          <span id="err-drop">{errMsg("drop")}</span>
         </label>
 
         <label className="space-y-1.5">
