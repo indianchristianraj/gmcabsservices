@@ -352,19 +352,19 @@ function Index() {
       </section>
 
       <section id="contact" className="mx-auto max-w-7xl px-4 py-20 md:px-8 md:py-28">
-        <SectionHead eyebrow="Get in Touch" title="Book your cab in one call" sub="Reach us anytime — we respond within minutes." />
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
-          <ContactCard icon="📞" title="Call / SMS" line={PHONE} href={telLink} />
-          <ContactCard icon="✉️" title="Email" line={EMAIL} href={`mailto:${EMAIL}`} />
-          <ContactCard icon="📍" title="Visit Us" line={ADDRESS} />
-        </div>
-        <div className="mt-10 flex flex-wrap justify-center gap-3">
-          <a href={waLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-[var(--whatsapp)] px-8 py-4 text-base font-semibold text-white shadow-elegant transition hover:opacity-90">
-            <WhatsAppIcon className="h-5 w-5" /> Message on WhatsApp
-          </a>
-          <a href={telLink} className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-4 text-base font-semibold text-primary-foreground shadow-elegant transition hover:opacity-90">
-            📞 Call {PHONE}
-          </a>
+        <SectionHead eyebrow="Get in Touch" title="Book your cab in a few clicks" sub="Fill in the trip details below — we'll confirm on WhatsApp within minutes." />
+
+        <div className="mt-12 grid gap-8 lg:grid-cols-[1.2fr_1fr]">
+          <BookingForm />
+
+          <div className="space-y-4">
+            <ContactCard icon="📞" title="Call / SMS" line={PHONE} href={telLink} />
+            <ContactCard icon="✉️" title="Email" line={EMAIL} href={`mailto:${EMAIL}`} />
+            <ContactCard icon="📍" title="Visit Us" line={ADDRESS} />
+            <a href={waLink} target="_blank" rel="noopener noreferrer" className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[var(--whatsapp)] px-6 py-3.5 text-sm font-semibold text-white shadow-elegant transition hover:opacity-90">
+              <WhatsAppIcon className="h-5 w-5" /> Quick WhatsApp chat
+            </a>
+          </div>
         </div>
       </section>
 
