@@ -92,6 +92,7 @@
 
 @utility bg-hero-gradient { background: var(--gradient-hero); }
 @utility bg-gold-gradient { background: var(--gradient-gold); }
+@utility bg-brand-gradient { background: var(--gradient-brand); }
 @utility shadow-elegant { box-shadow: var(--shadow-elegant); }
 @utility shadow-gold { box-shadow: var(--shadow-gold); }
 @utility shadow-card { box-shadow: var(--shadow-card); }
