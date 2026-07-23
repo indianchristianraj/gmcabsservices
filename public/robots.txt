@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://glide-seamless.lovable.app/sitemap.xml
