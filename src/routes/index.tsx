@@ -9,6 +9,9 @@ import gmLogo from "@/assets/gm-logo.jpg.asset.json";
 import innovaRamoji from "@/assets/innova-ramoji.png.asset.json";
 import innovaHycross from "@/assets/innova-hycross.png.asset.json";
 import fleetPair from "@/assets/fleet-pair.png.asset.json";
+import innovaCrystaReal from "@/assets/innova-crysta-real.jpg.asset.json";
+import innovaHycrossReal from "@/assets/innova-hycross-real.jpg.asset.json";
+import instagramQR from "@/assets/gmcabs-instagram-qr.jpg.asset.json";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -87,8 +90,8 @@ type Vehicle = {
 };
 
 const fleet: Vehicle[] = [
-  { name: "Toyota Innova Crysta", category: "SUV", seats: "6 + 1", bags: "4 Bags", fuel: "Diesel", best: "Family · Outstation", badge: "Most Booked", img: innovaRamoji.url },
-  { name: "Toyota Innova Hycross", category: "SUV", seats: "6 + 1", bags: "4 Bags", fuel: "Hybrid", best: "Premium family travel", badge: "New Model", img: innovaHycross.url },
+  { name: "Toyota Innova Crysta", category: "SUV", seats: "6 + 1", bags: "4 Bags", fuel: "Diesel", best: "Family · Outstation", badge: "Most Booked", img: innovaCrystaReal.url },
+  { name: "Toyota Innova Hycross", category: "SUV", seats: "6 + 1", bags: "4 Bags", fuel: "Hybrid", best: "Premium family travel", badge: "New Model", img: innovaHycrossReal.url },
   { name: "Toyota Innova", category: "SUV", seats: "7 + 1", bags: "3 Bags", fuel: "Diesel", best: "Group & tours", img: fleetPair.url },
   { name: "Toyota Fortuner", category: "Luxury", seats: "6 + 1", bags: "4 Bags", fuel: "Diesel", best: "VIP · Wedding", badge: "Luxury", img: heroCab },
   { name: "Toyota Camry Hybrid", category: "Luxury", seats: "4 + 1", bags: "3 Bags", fuel: "Hybrid", best: "Executive travel", badge: "Corporate Choice", img: heroCab },
@@ -181,6 +184,7 @@ function Index() {
       <HowItWorks />
       <WhyUs />
       <FAQ />
+      <Instagram />
       <Contact />
       <Footer />
       <FloatingWhatsApp />
@@ -272,8 +276,8 @@ function Hero() {
             <span className="h-2 w-2 rounded-full bg-orange" /> ⭐ Hyderabad's Trusted Cab Services
           </span>
           <h1 className="mt-6 font-display text-4xl font-bold leading-[1.05] text-white md:text-6xl">
-            Premium Airport Taxi & <br />
-            <span className="bg-brand-gradient bg-clip-text text-transparent">Luxury One Way Cab Services</span>
+            Premium Airport Taxi
+            <span className="mt-2 block text-3xl font-semibold text-gold md:text-5xl">& Luxury One Way Cab Services</span>
           </h1>
           <p className="mt-5 max-w-xl text-base text-white/85 md:text-lg">
             Travel anywhere across Telangana & Andhra Pradesh with safe, comfortable, affordable and premium taxi services.
@@ -618,7 +622,43 @@ function Contact() {
   );
 }
 
-/* ---------------- FOOTER ---------------- */
+/* ---------------- INSTAGRAM ---------------- */
+function Instagram() {
+  return (
+    <section id="instagram" className="bg-background py-16 md:py-20">
+      <div className="mx-auto grid max-w-6xl gap-8 px-4 md:grid-cols-2 md:items-center md:px-8">
+        <div>
+          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-orange">Follow Us</span>
+          <h2 className="mt-2 font-display text-3xl font-bold text-primary md:text-4xl">Ride stories on Instagram</h2>
+          <p className="mt-3 text-sm text-muted-foreground md:text-base">
+            Airport pickups, luxury trips and behind-the-wheel moments. Scan the QR or tap the button to follow <span className="font-semibold text-primary">@gmcabs786</span>.
+          </p>
+          <a
+            href="https://instagram.com/gmcabs786"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-6 inline-flex items-center gap-2 rounded-full bg-brand-gradient px-6 py-3 text-sm font-semibold text-white shadow-gold hover:opacity-90"
+          >
+            📸 Follow @gmcabs786
+          </a>
+        </div>
+        <a
+          href="https://instagram.com/gmcabs786"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mx-auto block w-full max-w-xs overflow-hidden rounded-2xl border border-border bg-card p-4 shadow-elegant transition hover:-translate-y-1"
+          aria-label="Scan to open GM Cabs Instagram"
+        >
+          <img src={instagramQR.url} alt="GM Cabs Instagram QR code — @gmcabs786" className="h-auto w-full rounded-xl" loading="lazy" />
+          <div className="mt-3 text-center text-sm font-semibold text-primary">@gmcabs786</div>
+          <div className="text-center text-xs text-muted-foreground">Scan with your camera</div>
+        </a>
+      </div>
+    </section>
+  );
+}
+
+
 function Footer() {
   return (
     <footer className="border-t border-border bg-primary text-primary-foreground">
