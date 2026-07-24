@@ -275,8 +275,8 @@ function Hero() {
             <span className="h-2 w-2 rounded-full bg-orange" /> ⭐ Hyderabad's Trusted Cab Services
           </span>
           <h1 className="mt-6 font-display text-4xl font-bold leading-[1.05] text-white md:text-6xl">
-            Premium Airport Taxi & <br />
-            <span className="bg-brand-gradient bg-clip-text text-transparent">Luxury One Way Cab Services</span>
+            Premium Airport Taxi
+            <span className="mt-2 block text-3xl font-semibold text-gold md:text-5xl">& Luxury One Way Cab Services</span>
           </h1>
           <p className="mt-5 max-w-xl text-base text-white/85 md:text-lg">
             Travel anywhere across Telangana & Andhra Pradesh with safe, comfortable, affordable and premium taxi services.
