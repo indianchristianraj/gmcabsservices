@@ -175,6 +175,7 @@ function Index() {
     <div className="min-h-screen bg-background text-foreground">
       <Header />
       <Hero />
+      <QuoteWidget />
       <StatsBar />
       <Services />
       <Fleet />
