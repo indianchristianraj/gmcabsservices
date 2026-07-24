@@ -19,8 +19,8 @@ export const Route = createFileRoute("/")({
     meta: [
       { title: "GM Cabs Services — Premium Airport Taxi, One Way & Outstation Cabs in Hyderabad" },
       { name: "description", content: "Book premium airport pickup & drop, one way taxi, outstation cabs and luxury car rentals in Hyderabad. Innova Crysta, Hycross, Fortuner & more. 24×7 — 6301875485." },
-      { property: "og:title", content: "GM Cabs Services — Premium Hyderabad Cabs & Chauffeur Service" },
-      { property: "og:description", content: "Airport, One Way, Outstation & Luxury cabs across Telangana & Andhra Pradesh. Professional chauffeurs, luxury fleet, 24×7 support." },
+      { property: "og:title", content: "GM Cabs Services — Premium Airport Taxi, One Way & Outstation Cabs in Hyderabad" },
+      { property: "og:description", content: "Book premium airport pickup & drop, one way taxi, outstation cabs and luxury car rentals in Hyderabad. Innova Crysta, Hycross, Fortuner & more. 24×7 — 6301875485." },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://glide-seamless.lovable.app/" },
     ],
