@@ -9,6 +9,9 @@ import gmLogo from "@/assets/gm-logo.jpg.asset.json";
 import innovaRamoji from "@/assets/innova-ramoji.png.asset.json";
 import innovaHycross from "@/assets/innova-hycross.png.asset.json";
 import fleetPair from "@/assets/fleet-pair.png.asset.json";
+import innovaCrystaReal from "@/assets/innova-crysta-real.jpg.asset.json";
+import innovaHycrossReal from "@/assets/innova-hycross-real.jpg.asset.json";
+import instagramQR from "@/assets/gmcabs-instagram-qr.jpg.asset.json";
 
 export const Route = createFileRoute("/")({
   component: Index,
