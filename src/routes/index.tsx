@@ -175,6 +175,7 @@ function Index() {
     <div className="min-h-screen bg-background text-foreground">
       <Header />
       <Hero />
+      <QuoteWidget />
       <StatsBar />
       <Services />
       <Fleet />
@@ -303,7 +304,220 @@ function Hero() {
   );
 }
 
+/* ---------------- QUOTE WIDGET ---------------- */
+type TripType = "airport" | "oneway" | "outstation" | "local";
+
+const TRIP_TYPES: { id: TripType; label: string; icon: string; hint: string }[] = [
+  { id: "airport", label: "Airport", icon: "✈️", hint: "Pickup / Drop at RGIA" },
+  { id: "oneway", label: "One Way", icon: "➡️", hint: "Drop to any city" },
+  { id: "outstation", label: "Outstation", icon: "🛣️", hint: "Round trip · Multi-day" },
+  { id: "local", label: "Local (Hourly)", icon: "🏙️", hint: "8/12 hr packages" },
+];
+
+type QuoteVehicle = { id: string; name: string; seats: string; perKm: number; base: number; category: string };
+const QUOTE_VEHICLES: QuoteVehicle[] = [
+  { id: "dzire", name: "Swift Dzire / Amaze", seats: "4+1", perKm: 12, base: 250, category: "Sedan" },
+  { id: "city", name: "Honda City / Verna", seats: "4+1", perKm: 14, base: 300, category: "Sedan+" },
+  { id: "innova", name: "Toyota Innova", seats: "7+1", perKm: 17, base: 400, category: "SUV" },
+  { id: "crysta", name: "Innova Crysta / Hycross", seats: "6+1", perKm: 20, base: 500, category: "Premium SUV" },
+  { id: "fortuner", name: "Fortuner / Carnival", seats: "6+1", perKm: 28, base: 800, category: "Luxury" },
+];
+
+const KM_HINTS: Record<string, number> = {
+  "warangal": 150, "vijayawada": 275, "guntur": 290, "tirupati": 560,
+  "bangalore": 570, "visakhapatnam": 620, "vizag": 620, "chennai": 630,
+  "rajahmundry": 445, "nellore": 460, "ongole": 370, "srisailam": 220,
+  "yadagirigutta": 60, "ramoji": 30, "shamshabad": 30, "rgia": 30, "airport": 30,
+  "pune": 560, "mumbai": 710, "kakinada": 500,
+};
+
+function guessKm(text: string): number | null {
+  const t = text.toLowerCase();
+  for (const key of Object.keys(KM_HINTS)) if (t.includes(key)) return KM_HINTS[key];
+  return null;
+}
+
+function QuoteWidget() {
+  const [trip, setTrip] = useState<TripType>("airport");
+  const [vehicle, setVehicle] = useState<string>("crysta");
+  const [pickup, setPickup] = useState("");
+  const [drop, setDrop] = useState("");
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
+  const [pax, setPax] = useState("2");
+  const [quote, setQuote] = useState<{ low: number; high: number; km: number; note: string } | null>(null);
+
+  const veh = QUOTE_VEHICLES.find((v) => v.id === vehicle)!;
+
+  function calcQuote() {
+    if (trip === "local") {
+      const low = veh.base + veh.perKm * 80;
+      const high = veh.base + veh.perKm * 120;
+      setQuote({ low, high, km: 0, note: "8–12 hr city package · fuel & driver included" });
+      return;
+    }
+    if (trip === "airport") {
+      const low = Math.max(veh.base + veh.perKm * 25, 700);
+      const high = veh.base + veh.perKm * 45;
+      setQuote({ low, high, km: 30, note: "Flat airport transfer within Hyderabad" });
+      return;
+    }
+    const km = guessKm(drop) ?? guessKm(pickup) ?? 250;
+    const multiplier = trip === "outstation" ? 2 : 1;
+    const eff = km * multiplier;
+    const low = veh.base + veh.perKm * eff;
+    const high = low + veh.perKm * (trip === "outstation" ? 60 : 20);
+    setQuote({
+      low,
+      high,
+      km: eff,
+      note: trip === "outstation" ? "Round trip · driver bata & tolls extra" : "One way drop · tolls extra",
+    });
+  }
+
+  function bookOnWhatsApp() {
+    const lines = [
+      "*GM Cabs — Quote Request*",
+      `• Trip: ${TRIP_TYPES.find((t) => t.id === trip)?.label}`,
+      `• Vehicle: ${veh.name} (${veh.seats})`,
+      pickup && `• Pickup: ${pickup}`,
+      drop && `• Drop: ${drop}`,
+      date && `• Date: ${date}${time ? " · " + time : ""}`,
+      `• Passengers: ${pax}`,
+      quote && `• Est. fare: ₹${quote.low.toLocaleString("en-IN")} – ₹${quote.high.toLocaleString("en-IN")}${quote.km ? ` (~${quote.km} km)` : ""}`,
+      quote?.note && `• Note: ${quote.note}`,
+      "",
+      "Please confirm availability and final fare.",
+    ].filter(Boolean);
+    const url = `https://wa.me/${PHONE_INTL}?text=${encodeURIComponent(lines.join("\n"))}`;
+    window.open(url, "_blank", "noopener,noreferrer");
+  }
+
+  const showDrop = trip !== "local";
+  const showPickupLabel = trip === "airport" ? "Pickup / Drop area" : "Pickup location";
+
+  return (
+    <section id="quote" className="relative z-10 -mt-10 px-4 md:-mt-16 md:px-8">
+      <div className="mx-auto max-w-6xl rounded-2xl border border-border bg-card p-4 shadow-elegant md:p-6">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <div>
+            <div className="text-[11px] font-semibold uppercase tracking-[0.2em] text-orange">Instant Quote</div>
+            <h3 className="font-display text-xl font-bold text-primary md:text-2xl">Get a fare estimate in seconds</h3>
+          </div>
+          <span className="rounded-full bg-secondary px-3 py-1 text-[11px] font-semibold text-secondary-foreground">No signup · WhatsApp confirmation</span>
+        </div>
+
+        {/* Trip type tabs */}
+        <div className="mt-4 grid grid-cols-2 gap-2 md:grid-cols-4">
+          {TRIP_TYPES.map((t) => {
+            const active = trip === t.id;
+            return (
+              <button
+                key={t.id}
+                type="button"
+                onClick={() => { setTrip(t.id); setQuote(null); }}
+                className={`rounded-xl border px-3 py-3 text-left transition ${active ? "border-orange bg-brand-gradient text-white shadow-gold" : "border-border bg-background hover:border-orange/50"}`}
+              >
+                <div className="text-lg">{t.icon} <span className="ml-1 text-sm font-semibold">{t.label}</span></div>
+                <div className={`mt-0.5 text-[11px] ${active ? "text-white/85" : "text-muted-foreground"}`}>{t.hint}</div>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Fields */}
+        <div className="mt-4 grid gap-3 md:grid-cols-12">
+          <div className={`md:col-span-${showDrop ? "4" : "6"}`}>
+            <label className="text-xs font-semibold text-muted-foreground">{showPickupLabel}</label>
+            <input
+              value={pickup}
+              onChange={(e) => setPickup(e.target.value)}
+              placeholder={trip === "airport" ? "e.g. Gachibowli" : "e.g. HITEC City, Hyderabad"}
+              className="mt-1 w-full rounded-lg border border-input bg-background px-3 py-2.5 text-sm outline-none focus:border-orange"
+            />
+          </div>
+          {showDrop && (
+            <div className="md:col-span-4">
+              <label className="text-xs font-semibold text-muted-foreground">Drop location</label>
+              <input
+                value={drop}
+                onChange={(e) => setDrop(e.target.value)}
+                placeholder={trip === "outstation" ? "e.g. Vijayawada" : "e.g. RGIA Airport"}
+                className="mt-1 w-full rounded-lg border border-input bg-background px-3 py-2.5 text-sm outline-none focus:border-orange"
+              />
+            </div>
+          )}
+          <div className="md:col-span-2">
+            <label className="text-xs font-semibold text-muted-foreground">Date</label>
+            <input type="date" value={date} onChange={(e) => setDate(e.target.value)} className="mt-1 w-full rounded-lg border border-input bg-background px-3 py-2.5 text-sm outline-none focus:border-orange" />
+          </div>
+          <div className="md:col-span-2">
+            <label className="text-xs font-semibold text-muted-foreground">Time</label>
+            <input type="time" value={time} onChange={(e) => setTime(e.target.value)} className="mt-1 w-full rounded-lg border border-input bg-background px-3 py-2.5 text-sm outline-none focus:border-orange" />
+          </div>
+        </div>
+
+        {/* Vehicle picker */}
+        <div className="mt-4">
+          <label className="text-xs font-semibold text-muted-foreground">Choose vehicle</label>
+          <div className="mt-2 grid grid-cols-2 gap-2 md:grid-cols-5">
+            {QUOTE_VEHICLES.map((v) => {
+              const active = vehicle === v.id;
+              return (
+                <button
+                  key={v.id}
+                  type="button"
+                  onClick={() => { setVehicle(v.id); setQuote(null); }}
+                  className={`rounded-xl border px-3 py-2.5 text-left transition ${active ? "border-gold bg-primary text-primary-foreground shadow-elegant" : "border-border bg-background hover:border-gold/50"}`}
+                >
+                  <div className="text-sm font-semibold leading-tight">{v.name}</div>
+                  <div className={`mt-0.5 text-[11px] ${active ? "text-white/80" : "text-muted-foreground"}`}>{v.category} · {v.seats}</div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-2 text-sm">
+            <label className="text-xs font-semibold text-muted-foreground">Passengers</label>
+            <select value={pax} onChange={(e) => setPax(e.target.value)} className="rounded-lg border border-input bg-background px-2.5 py-2 text-sm outline-none focus:border-orange">
+              {[1,2,3,4,5,6,7,8].map((n) => <option key={n} value={n}>{n}</option>)}
+            </select>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <button type="button" onClick={calcQuote} className="inline-flex items-center gap-2 rounded-full border border-primary bg-background px-5 py-2.5 text-sm font-semibold text-primary hover:bg-secondary">
+              💰 Get Instant Quote
+            </button>
+            <button type="button" onClick={bookOnWhatsApp} className="inline-flex items-center gap-2 rounded-full bg-[var(--whatsapp)] px-5 py-2.5 text-sm font-semibold text-white shadow-elegant hover:opacity-90">
+              <WhatsAppIcon className="h-4 w-4" /> Book on WhatsApp
+            </button>
+          </div>
+        </div>
+
+        {quote && (
+          <div className="mt-4 rounded-xl border border-gold/40 bg-gold/10 p-4">
+            <div className="flex flex-wrap items-baseline justify-between gap-2">
+              <div>
+                <div className="text-[11px] font-semibold uppercase tracking-widest text-orange">Estimated fare</div>
+                <div className="font-display text-2xl font-bold text-primary md:text-3xl">
+                  ₹{quote.low.toLocaleString("en-IN")} <span className="text-muted-foreground">–</span> ₹{quote.high.toLocaleString("en-IN")}
+                </div>
+                <div className="mt-1 text-xs text-muted-foreground">{veh.name} · {quote.note}{quote.km ? ` · ~${quote.km} km` : ""}</div>
+              </div>
+              <div className="text-[11px] text-muted-foreground max-w-xs">
+                Indicative estimate. Final fare confirmed on WhatsApp based on live route, tolls & waiting.
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
 /* ---------------- STATS ---------------- */
+
 function StatsBar() {
   return (
     <section className="border-b border-border bg-card">
