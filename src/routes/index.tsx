@@ -622,7 +622,43 @@ function Contact() {
   );
 }
 
-/* ---------------- FOOTER ---------------- */
+/* ---------------- INSTAGRAM ---------------- */
+function Instagram() {
+  return (
+    <section id="instagram" className="bg-background py-16 md:py-20">
+      <div className="mx-auto grid max-w-6xl gap-8 px-4 md:grid-cols-2 md:items-center md:px-8">
+        <div>
+          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-orange">Follow Us</span>
+          <h2 className="mt-2 font-display text-3xl font-bold text-primary md:text-4xl">Ride stories on Instagram</h2>
+          <p className="mt-3 text-sm text-muted-foreground md:text-base">
+            Airport pickups, luxury trips and behind-the-wheel moments. Scan the QR or tap the button to follow <span className="font-semibold text-primary">@gmcabs786</span>.
+          </p>
+          <a
+            href="https://instagram.com/gmcabs786"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-6 inline-flex items-center gap-2 rounded-full bg-brand-gradient px-6 py-3 text-sm font-semibold text-white shadow-gold hover:opacity-90"
+          >
+            📸 Follow @gmcabs786
+          </a>
+        </div>
+        <a
+          href="https://instagram.com/gmcabs786"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mx-auto block w-full max-w-xs overflow-hidden rounded-2xl border border-border bg-card p-4 shadow-elegant transition hover:-translate-y-1"
+          aria-label="Scan to open GM Cabs Instagram"
+        >
+          <img src={instagramQR.url} alt="GM Cabs Instagram QR code — @gmcabs786" className="h-auto w-full rounded-xl" loading="lazy" />
+          <div className="mt-3 text-center text-sm font-semibold text-primary">@gmcabs786</div>
+          <div className="text-center text-xs text-muted-foreground">Scan with your camera</div>
+        </a>
+      </div>
+    </section>
+  );
+}
+
+
 function Footer() {
   return (
     <footer className="border-t border-border bg-primary text-primary-foreground">
