@@ -184,6 +184,7 @@ function Index() {
       <HowItWorks />
       <WhyUs />
       <FAQ />
+      <Instagram />
       <Contact />
       <Footer />
       <FloatingWhatsApp />
