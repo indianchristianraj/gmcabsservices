@@ -992,14 +992,21 @@ function FloatingWhatsApp() {
     els.forEach((el) => observer.observe(el));
     return () => observer.disconnect();
   }, []);
+  const draft = useBookingDraft();
+  const hasDraft = hasBookingDetails(draft);
   const context = section ? SECTION_CONTEXT[section] : undefined;
-  const href = waFor(context, route);
-  const label = context ? `Chat on WhatsApp about ${context}` : "Chat on WhatsApp";
+  const href = hasDraft
+    ? `https://wa.me/${PHONE_INTL}?text=${encodeURIComponent(buildBookingMessage(draft))}`
+    : waFor(context, route);
+  const label = hasDraft
+    ? "Send your booking details on WhatsApp"
+    : context ? `Chat on WhatsApp about ${context}` : "Chat on WhatsApp";
+  const shortLabel = hasDraft ? "Send booking" : context ? "Ask about this" : "Chat with us";
   return (
     <a href={href} target="_blank" rel="noopener noreferrer" aria-label={label} title={label}
       className="fixed bottom-6 right-6 z-50 flex items-center gap-2 rounded-full bg-[var(--whatsapp)] py-3 pl-3 pr-4 text-white shadow-elegant animate-pulse-ring transition hover:scale-105">
       <WhatsAppIcon className="h-7 w-7" />
-      <span className="hidden text-sm font-semibold sm:inline">{context ? "Ask about this" : "Chat with us"}</span>
+      <span className="hidden text-sm font-semibold sm:inline">{shortLabel}</span>
     </a>
   );
 }
