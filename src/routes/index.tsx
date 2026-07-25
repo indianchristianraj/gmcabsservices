@@ -66,6 +66,47 @@ const SECTION_CONTEXT: Record<string, string> = {
   contact: "booking a cab",
 };
 
+/* ---- shared booking draft (used by BookingForm + FloatingWhatsApp) ---- */
+type BookingDraft = {
+  name: string; phone: string; service: string; car: string;
+  pickup: string; drop: string; date: string; time: string;
+  tripType: string; passengers: string; luggage: string; notes: string;
+};
+const EMPTY_DRAFT: BookingDraft = {
+  name: "", phone: "", service: "", car: "", pickup: "", drop: "",
+  date: "", time: "", tripType: "", passengers: "", luggage: "", notes: "",
+};
+let bookingDraft: BookingDraft = EMPTY_DRAFT;
+const bookingListeners = new Set<() => void>();
+const bookingStore = {
+  get: () => bookingDraft,
+  set: (d: BookingDraft) => { bookingDraft = d; bookingListeners.forEach((l) => l()); },
+  subscribe: (l: () => void) => { bookingListeners.add(l); return () => { bookingListeners.delete(l); }; },
+};
+function useBookingDraft() {
+  return useSyncExternalStore(bookingStore.subscribe, bookingStore.get, () => EMPTY_DRAFT);
+}
+function hasBookingDetails(d: BookingDraft) {
+  return !!(d.name || d.phone || d.pickup || d.drop || d.date || d.time || d.notes);
+}
+function buildBookingMessage(d: BookingDraft) {
+  const lines = ["Hi GM Cabs, I'd like to book a cab. Here are my trip details:", ""];
+  if (d.name) lines.push(`• Name: ${d.name}`);
+  if (d.phone) lines.push(`• Phone: ${d.phone}`);
+  if (d.service) lines.push(`• Service: ${d.service}`);
+  if (d.car) lines.push(`• Car type: ${d.car}`);
+  if (d.tripType) lines.push(`• Trip type: ${d.tripType}`);
+  if (d.pickup) lines.push(`• Pickup: ${d.pickup}`);
+  if (d.drop) lines.push(`• Drop: ${d.drop}`);
+  if (d.date) lines.push(`• Date: ${d.date}${d.time ? ` at ${d.time}` : ""}`);
+  else if (d.time) lines.push(`• Time: ${d.time}`);
+  if (d.passengers) lines.push(`• Passengers: ${d.passengers}`);
+  if (d.luggage) lines.push(`• Luggage: ${d.luggage}`);
+  if (d.notes.trim()) lines.push(`• Notes: ${d.notes.trim()}`);
+  lines.push("", "Please share availability and fare. Thank you!");
+  return lines.join("\n");
+}
+
 const services = [
   { title: "Airport Pickup", desc: "24×7 meet-and-greet at Rajiv Gandhi International Airport with real-time flight tracking.", img: airportImg, icon: "🛬" },
   { title: "Airport Drop", desc: "On-time drops to RGIA with luggage assistance, clean cabs and professional chauffeurs.", img: airportImg, icon: "✈️" },
