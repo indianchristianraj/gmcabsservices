@@ -620,6 +620,9 @@ function Services() {
             <div className="p-6">
               <h3 className="font-display text-xl font-bold text-primary">{s.title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{s.desc}</p>
+              <Link to="/services/$slug" params={{ slug: s.slug }} className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-orange hover:text-primary">
+                Learn more <span aria-hidden>→</span>
+              </Link>
               <div className="mt-4 flex gap-2">
                 <a href={waFor(s.title)} target="_blank" rel="noopener noreferrer" className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-full bg-[var(--whatsapp)] px-3 py-2 text-xs font-semibold text-white hover:opacity-90">
                   <WhatsAppIcon className="h-3.5 w-3.5" /> WhatsApp
