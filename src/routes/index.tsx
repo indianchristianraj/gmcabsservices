@@ -45,6 +45,7 @@ export const Route = createFileRoute("/")({
 const PHONE = "6301875485";
 const PHONE_INTL = "916301875485";
 const EMAIL = "gmcabsservices@gmail.com";
+const EMAIL_RENTALS = "gmcabrentals@gmail.com";
 const ADDRESS = "H.No: 7-6/16, Sri Sai Colony, Nacharam, Hyderabad - 500076";
 
 function waFor(context?: string, route?: string) {
