@@ -1134,6 +1134,7 @@ function BookingForm() {
   });
   const [errors, setErrors] = useState<Errors>({});
   const [touched, setTouched] = useState<Partial<Record<BookingFields, boolean>>>({});
+  const startedRef = useRef(false);
   useEffect(() => { bookingStore.set(form); }, [form]);
   useEffect(() => () => { bookingStore.set(EMPTY_DRAFT); }, []);
   const validated: BookingFields[] = ["phone", "pickup", "drop", "date", "time", "passengers"];
@@ -1147,6 +1148,10 @@ function BookingForm() {
   const update = (k: BookingFields) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const next = { ...form, [k]: e.target.value };
     setForm(next);
+    if (!startedRef.current) {
+      startedRef.current = true;
+      trackEvent("booking_started", { source: "booking_form", first_field: k });
+    }
     if (touched[k] || errors[k]) setErrors(runValidation(next));
   };
   const blur = (k: BookingFields) => () => { setTouched((t) => ({ ...t, [k]: true })); setErrors(runValidation(form)); };
@@ -1168,6 +1173,20 @@ function BookingForm() {
     if (form.notes.trim()) lines.push(`• Notes: ${form.notes.trim()}`);
     lines.push("", "Please share availability and fare. Thank you!");
     const url = `https://wa.me/${PHONE_INTL}?text=${encodeURIComponent(lines.join("\n"))}`;
+    const eventParams = {
+      service_type: form.service,
+      vehicle_category: form.car,
+      trip_type: form.tripType,
+      pickup_location: form.pickup,
+      drop_location: form.drop,
+      passengers: Number(form.passengers) || undefined,
+      luggage: Number(form.luggage) || undefined,
+      travel_date: form.date,
+      travel_time: form.time || undefined,
+    };
+    trackEvent("contact_form_submit", { form_name: "booking_form", ...eventParams });
+    trackEvent("enquiry_submitted", eventParams);
+    trackEvent("booking_completed", eventParams);
     window.open(url, "_blank", "noopener,noreferrer");
   }
 
