@@ -1,5 +1,6 @@
 import { createFileRoute, useRouterState, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { trackEvent } from "@/lib/analytics";
 import heroCab from "@/assets/hero-cab.jpg";
 import airportImg from "@/assets/airport.jpg";
 import outstationImg from "@/assets/outstation.jpg";
