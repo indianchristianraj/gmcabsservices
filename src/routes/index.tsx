@@ -914,7 +914,7 @@ function Instagram() {
           className="mx-auto block w-full max-w-xs overflow-hidden rounded-2xl border border-border bg-card p-4 shadow-elegant transition hover:-translate-y-1"
           aria-label="Scan to open GM Cabs Instagram"
         >
-          <img src={instagramQR.url} alt="GM Cabs Instagram QR code — @gmcabs786" className="h-auto w-full rounded-xl" loading="lazy" />
+          <img src={instagramQR.url} alt="GM Cabs Instagram QR code — @gmcabs786" className="h-auto w-full rounded-xl" loading="lazy" decoding="async" width={512} height={512} />
           <div className="mt-3 text-center text-sm font-semibold text-primary">@gmcabs786</div>
           <div className="text-center text-xs text-muted-foreground">Scan with your camera</div>
         </a>
