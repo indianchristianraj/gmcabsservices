@@ -126,14 +126,14 @@ function buildBookingMessage(d: BookingDraft) {
 
 const services = [
   { slug: "airport-pickup", title: "Airport Pickup", desc: "24×7 meet-and-greet at Rajiv Gandhi International Airport with real-time flight tracking.", img: airportImg, icon: "🛬" },
-  { slug: "airport-drop", title: "Airport Drop", desc: "On-time drops to RGIA with luggage assistance, clean cabs and professional chauffeurs.", img: airportImg, icon: "✈️" },
+  { slug: "airport-drop", title: "Airport Drop", desc: "On-time drops to RGIA with luggage assistance, clean cabs and professional chauffeurs.", img: vehCarnival, icon: "✈️" },
   { slug: "one-way-taxi", title: "One Way Taxi", desc: "Affordable one way drops across Telangana & Andhra Pradesh — you pay only one side.", img: outstationImg, icon: "➡️" },
-  { slug: "outstation-cabs", title: "Outstation Cabs", desc: "Round trip and multi-day outstation to Bangalore, Vijayawada, Vizag, Tirupati & more.", img: outstationImg, icon: "🛣️" },
+  { slug: "outstation-cabs", title: "Outstation Cabs", desc: "Round trip and multi-day outstation to Bangalore, Vijayawada, Vizag, Tirupati & more.", img: vehXuv700, icon: "🛣️" },
   { slug: "local-rental", title: "Local Rental", desc: "Hourly packages (4/8/12 hrs) across Hyderabad — perfect for meetings & city errands.", img: localImg, icon: "🏙️" },
-  { slug: "corporate-travel", title: "Corporate Travel", desc: "Monthly billing, dedicated chauffeurs and premium sedans for business & employee transport.", img: heroCab, icon: "💼" },
-  { slug: "wedding-cars", title: "Wedding Cars", desc: "Luxury cars for wedding pickups, baraat and guest transportation with decoration on request.", img: fleetPair.url, icon: "💍" },
+  { slug: "corporate-travel", title: "Corporate Travel", desc: "Monthly billing, dedicated chauffeurs and premium sedans for business & employee transport.", img: svcCorporate, icon: "💼" },
+  { slug: "wedding-cars", title: "Wedding Cars", desc: "Luxury cars for wedding pickups, baraat and guest transportation with decoration on request.", img: svcWedding, icon: "💍" },
   { slug: "temple-tours", title: "Temple Tours", desc: "Curated darshan trips to Tirupati, Yadagirigutta, Vemulawada, Srisailam and Basara.", img: ramojiImg, icon: "🛕" },
-  { slug: "luxury-car-rental", title: "Luxury Car Rental", desc: "Fortuner, Camry, Kia Carnival — chauffeur-driven premium cars for VIP occasions.", img: fleetPair.url, icon: "👑" },
+  { slug: "luxury-car-rental", title: "Luxury Car Rental", desc: "Fortuner, Camry, Kia Carnival — chauffeur-driven premium cars for VIP occasions.", img: vehFortuner, icon: "👑" },
 ];
 
 type Vehicle = {
@@ -150,16 +150,16 @@ type Vehicle = {
 const fleet: Vehicle[] = [
   { name: "Toyota Innova Crysta", category: "SUV", seats: "6 + 1", bags: "4 Bags", fuel: "Diesel", best: "Family · Outstation", badge: "Most Booked", img: innovaCrystaReal.url },
   { name: "Toyota Innova Hycross", category: "SUV", seats: "6 + 1", bags: "4 Bags", fuel: "Hybrid", best: "Premium family travel", badge: "New Model", img: innovaHycrossReal.url },
-  { name: "Toyota Innova", category: "SUV", seats: "7 + 1", bags: "3 Bags", fuel: "Diesel", best: "Group & tours", img: fleetPair.url },
-  { name: "Toyota Fortuner", category: "Luxury", seats: "6 + 1", bags: "4 Bags", fuel: "Diesel", best: "VIP · Wedding", badge: "Luxury", img: heroCab },
-  { name: "Toyota Camry Hybrid", category: "Luxury", seats: "4 + 1", bags: "3 Bags", fuel: "Hybrid", best: "Executive travel", badge: "Corporate Choice", img: heroCab },
-  { name: "Kia Carnival", category: "Luxury", seats: "6 + 1", bags: "5 Bags", fuel: "Diesel", best: "Airport VIP", badge: "Airport Special", img: fleetPair.url },
-  { name: "Mahindra XUV700", category: "SUV", seats: "6 + 1", bags: "4 Bags", fuel: "Diesel", best: "Comfort & power", img: outstationImg },
-  { name: "Mahindra Scorpio N", category: "SUV", seats: "6 + 1", bags: "3 Bags", fuel: "Diesel", best: "Highway trips", img: outstationImg },
-  { name: "Honda City", category: "Sedan", seats: "4 + 1", bags: "2 Bags", fuel: "Petrol", best: "Airport transfer", badge: "One Way Bestseller", img: airportImg },
-  { name: "Hyundai Verna", category: "Sedan", seats: "4 + 1", bags: "2 Bags", fuel: "Petrol", best: "City & business", img: airportImg },
-  { name: "Maruti Swift Dzire", category: "Economy", seats: "4 + 1", bags: "2 Bags", fuel: "Petrol", best: "City & short drops", badge: "Family Favourite", img: localImg },
-  { name: "Honda Amaze", category: "Economy", seats: "4 + 1", bags: "2 Bags", fuel: "Petrol", best: "Budget airport rides", img: localImg },
+  { name: "Toyota Innova", category: "SUV", seats: "7 + 1", bags: "3 Bags", fuel: "Diesel", best: "Group & tours", img: vehInnova },
+  { name: "Toyota Fortuner", category: "Luxury", seats: "6 + 1", bags: "4 Bags", fuel: "Diesel", best: "VIP · Wedding", badge: "Luxury", img: vehFortuner },
+  { name: "Toyota Camry Hybrid", category: "Luxury", seats: "4 + 1", bags: "3 Bags", fuel: "Hybrid", best: "Executive travel", badge: "Corporate Choice", img: vehCamry },
+  { name: "Kia Carnival", category: "Luxury", seats: "6 + 1", bags: "5 Bags", fuel: "Diesel", best: "Airport VIP", badge: "Airport Special", img: vehCarnival },
+  { name: "Mahindra XUV700", category: "SUV", seats: "6 + 1", bags: "4 Bags", fuel: "Diesel", best: "Comfort & power", img: vehXuv700 },
+  { name: "Mahindra Scorpio N", category: "SUV", seats: "6 + 1", bags: "3 Bags", fuel: "Diesel", best: "Highway trips", img: vehScorpio },
+  { name: "Honda City", category: "Sedan", seats: "4 + 1", bags: "2 Bags", fuel: "Petrol", best: "Airport transfer", badge: "One Way Bestseller", img: vehCity },
+  { name: "Hyundai Verna", category: "Sedan", seats: "4 + 1", bags: "2 Bags", fuel: "Petrol", best: "City & business", img: vehVerna },
+  { name: "Maruti Swift Dzire", category: "Economy", seats: "4 + 1", bags: "2 Bags", fuel: "Petrol", best: "City & short drops", badge: "Family Favourite", img: vehDzire },
+  { name: "Honda Amaze", category: "Economy", seats: "4 + 1", bags: "2 Bags", fuel: "Petrol", best: "Budget airport rides", img: vehAmaze },
 ];
 
 const packages = [
