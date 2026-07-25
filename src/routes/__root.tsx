@@ -150,10 +150,21 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const router = useRouter();
 
   useEffect(() => {
     void import("../lib/web-vitals").then((m) => m.initWebVitals());
-  }, []);
+    void import("../lib/analytics").then(({ initAnalytics }) => {
+      initAnalytics((cb) => {
+        const unsub = router.subscribe("onResolved", () => {
+          if (typeof window !== "undefined") {
+            cb(window.location.pathname + window.location.search);
+          }
+        });
+        return unsub;
+      });
+    });
+  }, [router]);
 
   return (
     <QueryClientProvider client={queryClient}>
