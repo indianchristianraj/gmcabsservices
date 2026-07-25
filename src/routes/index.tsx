@@ -24,7 +24,10 @@ export const Route = createFileRoute("/")({
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://glide-seamless.lovable.app/" },
     ],
-    links: [{ rel: "canonical", href: "https://glide-seamless.lovable.app/" }],
+    links: [
+      { rel: "canonical", href: "https://glide-seamless.lovable.app/" },
+      { rel: "preload", as: "image", href: heroCab, fetchpriority: "high" } as any,
+    ],
     scripts: [
       {
         type: "application/ld+json",
