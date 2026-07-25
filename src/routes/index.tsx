@@ -1,5 +1,6 @@
 import { createFileRoute, useRouterState, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { trackEvent } from "@/lib/analytics";
 import heroCab from "@/assets/hero-cab.jpg";
 import airportImg from "@/assets/airport.jpg";
 import outstationImg from "@/assets/outstation.jpg";
@@ -400,28 +401,40 @@ function QuoteWidget() {
   const veh = QUOTE_VEHICLES.find((v) => v.id === vehicle)!;
 
   function calcQuote() {
+    let result: { low: number; high: number; km: number; note: string };
     if (trip === "local") {
       const low = veh.base + veh.perKm * 80;
       const high = veh.base + veh.perKm * 120;
-      setQuote({ low, high, km: 0, note: "8–12 hr city package · fuel & driver included" });
-      return;
-    }
-    if (trip === "airport") {
+      result = { low, high, km: 0, note: "8–12 hr city package · fuel & driver included" };
+    } else if (trip === "airport") {
       const low = Math.max(veh.base + veh.perKm * 25, 700);
       const high = veh.base + veh.perKm * 45;
-      setQuote({ low, high, km: 30, note: "Flat airport transfer within Hyderabad" });
-      return;
+      result = { low, high, km: 30, note: "Flat airport transfer within Hyderabad" };
+    } else {
+      const km = guessKm(drop) ?? guessKm(pickup) ?? 250;
+      const multiplier = trip === "outstation" ? 2 : 1;
+      const eff = km * multiplier;
+      const low = veh.base + veh.perKm * eff;
+      const high = low + veh.perKm * (trip === "outstation" ? 60 : 20);
+      result = {
+        low,
+        high,
+        km: eff,
+        note: trip === "outstation" ? "Round trip · driver bata & tolls extra" : "One way drop · tolls extra",
+      };
     }
-    const km = guessKm(drop) ?? guessKm(pickup) ?? 250;
-    const multiplier = trip === "outstation" ? 2 : 1;
-    const eff = km * multiplier;
-    const low = veh.base + veh.perKm * eff;
-    const high = low + veh.perKm * (trip === "outstation" ? 60 : 20);
-    setQuote({
-      low,
-      high,
-      km: eff,
-      note: trip === "outstation" ? "Round trip · driver bata & tolls extra" : "One way drop · tolls extra",
+    setQuote(result);
+    trackEvent("quote_request", {
+      trip_type: trip,
+      service_type: TRIP_TYPES.find((t) => t.id === trip)?.label,
+      vehicle_name: veh.name,
+      vehicle_category: veh.category,
+      pickup_location: pickup || undefined,
+      drop_location: drop || undefined,
+      passengers: Number(pax),
+      estimate_low: result.low,
+      estimate_high: result.high,
+      estimate_km: result.km,
     });
   }
 
@@ -440,6 +453,21 @@ function QuoteWidget() {
       "Please confirm availability and final fare.",
     ].filter(Boolean);
     const url = `https://wa.me/${PHONE_INTL}?text=${encodeURIComponent(lines.join("\n"))}`;
+    trackEvent("book_now_click", {
+      button_name: "Quote widget — Book on WhatsApp",
+      trip_type: trip,
+      service_type: TRIP_TYPES.find((t) => t.id === trip)?.label,
+      vehicle_name: veh.name,
+      vehicle_category: veh.category,
+      pickup_location: pickup || undefined,
+      drop_location: drop || undefined,
+      passengers: Number(pax),
+    });
+    trackEvent("booking_started", {
+      source: "quote_widget",
+      trip_type: trip,
+      vehicle_name: veh.name,
+    });
     window.open(url, "_blank", "noopener,noreferrer");
   }
 
@@ -660,7 +688,7 @@ function Fleet() {
           {CATEGORIES.map((c) => (
             <button
               key={c}
-              onClick={() => setCat(c)}
+              onClick={() => { setCat(c); trackEvent("vehicle_category_view", { vehicle_category: c }); }}
               className={`rounded-full px-4 py-2 text-xs font-semibold transition ${cat === c ? "bg-brand-gradient text-white shadow-gold" : "border border-border bg-card text-primary hover:border-orange"}`}
             >
               {c}
@@ -1106,6 +1134,7 @@ function BookingForm() {
   });
   const [errors, setErrors] = useState<Errors>({});
   const [touched, setTouched] = useState<Partial<Record<BookingFields, boolean>>>({});
+  const startedRef = useRef(false);
   useEffect(() => { bookingStore.set(form); }, [form]);
   useEffect(() => () => { bookingStore.set(EMPTY_DRAFT); }, []);
   const validated: BookingFields[] = ["phone", "pickup", "drop", "date", "time", "passengers"];
@@ -1119,6 +1148,10 @@ function BookingForm() {
   const update = (k: BookingFields) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const next = { ...form, [k]: e.target.value };
     setForm(next);
+    if (!startedRef.current) {
+      startedRef.current = true;
+      trackEvent("booking_started", { source: "booking_form", first_field: k });
+    }
     if (touched[k] || errors[k]) setErrors(runValidation(next));
   };
   const blur = (k: BookingFields) => () => { setTouched((t) => ({ ...t, [k]: true })); setErrors(runValidation(form)); };
@@ -1140,6 +1173,20 @@ function BookingForm() {
     if (form.notes.trim()) lines.push(`• Notes: ${form.notes.trim()}`);
     lines.push("", "Please share availability and fare. Thank you!");
     const url = `https://wa.me/${PHONE_INTL}?text=${encodeURIComponent(lines.join("\n"))}`;
+    const eventParams = {
+      service_type: form.service,
+      vehicle_category: form.car,
+      trip_type: form.tripType,
+      pickup_location: form.pickup,
+      drop_location: form.drop,
+      passengers: Number(form.passengers) || undefined,
+      luggage: Number(form.luggage) || undefined,
+      travel_date: form.date,
+      travel_time: form.time || undefined,
+    };
+    trackEvent("contact_form_submit", { form_name: "booking_form", ...eventParams });
+    trackEvent("enquiry_submitted", eventParams);
+    trackEvent("booking_completed", eventParams);
     window.open(url, "_blank", "noopener,noreferrer");
   }
 
