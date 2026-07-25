@@ -108,15 +108,15 @@ function buildBookingMessage(d: BookingDraft) {
 }
 
 const services = [
-  { title: "Airport Pickup", desc: "24×7 meet-and-greet at Rajiv Gandhi International Airport with real-time flight tracking.", img: airportImg, icon: "🛬" },
-  { title: "Airport Drop", desc: "On-time drops to RGIA with luggage assistance, clean cabs and professional chauffeurs.", img: airportImg, icon: "✈️" },
-  { title: "One Way Taxi", desc: "Affordable one way drops across Telangana & Andhra Pradesh — you pay only one side.", img: outstationImg, icon: "➡️" },
-  { title: "Outstation Cabs", desc: "Round trip and multi-day outstation to Bangalore, Vijayawada, Vizag, Tirupati & more.", img: outstationImg, icon: "🛣️" },
-  { title: "Local Rental", desc: "Hourly packages (4/8/12 hrs) across Hyderabad — perfect for meetings & city errands.", img: localImg, icon: "🏙️" },
-  { title: "Corporate Travel", desc: "Monthly billing, dedicated chauffeurs and premium sedans for business & employee transport.", img: heroCab, icon: "💼" },
-  { title: "Wedding Cars", desc: "Luxury cars for wedding pickups, baraat and guest transportation with decoration on request.", img: fleetPair.url, icon: "💍" },
-  { title: "Temple Tours", desc: "Curated darshan trips to Tirupati, Yadagirigutta, Vemulawada, Srisailam and Basara.", img: ramojiImg, icon: "🛕" },
-  { title: "Luxury Car Rental", desc: "Fortuner, Camry, Kia Carnival — chauffeur-driven premium cars for VIP occasions.", img: fleetPair.url, icon: "👑" },
+  { slug: "airport-pickup", title: "Airport Pickup", desc: "24×7 meet-and-greet at Rajiv Gandhi International Airport with real-time flight tracking.", img: airportImg, icon: "🛬" },
+  { slug: "airport-drop", title: "Airport Drop", desc: "On-time drops to RGIA with luggage assistance, clean cabs and professional chauffeurs.", img: airportImg, icon: "✈️" },
+  { slug: "one-way-taxi", title: "One Way Taxi", desc: "Affordable one way drops across Telangana & Andhra Pradesh — you pay only one side.", img: outstationImg, icon: "➡️" },
+  { slug: "outstation-cabs", title: "Outstation Cabs", desc: "Round trip and multi-day outstation to Bangalore, Vijayawada, Vizag, Tirupati & more.", img: outstationImg, icon: "🛣️" },
+  { slug: "local-rental", title: "Local Rental", desc: "Hourly packages (4/8/12 hrs) across Hyderabad — perfect for meetings & city errands.", img: localImg, icon: "🏙️" },
+  { slug: "corporate-travel", title: "Corporate Travel", desc: "Monthly billing, dedicated chauffeurs and premium sedans for business & employee transport.", img: heroCab, icon: "💼" },
+  { slug: "wedding-cars", title: "Wedding Cars", desc: "Luxury cars for wedding pickups, baraat and guest transportation with decoration on request.", img: fleetPair.url, icon: "💍" },
+  { slug: "temple-tours", title: "Temple Tours", desc: "Curated darshan trips to Tirupati, Yadagirigutta, Vemulawada, Srisailam and Basara.", img: ramojiImg, icon: "🛕" },
+  { slug: "luxury-car-rental", title: "Luxury Car Rental", desc: "Fortuner, Camry, Kia Carnival — chauffeur-driven premium cars for VIP occasions.", img: fleetPair.url, icon: "👑" },
 ];
 
 type Vehicle = {
