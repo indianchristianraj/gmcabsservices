@@ -930,7 +930,7 @@ function Footer() {
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-12 md:grid-cols-4 md:px-8">
         <div>
           <div className="flex items-center gap-2.5">
-            <img src={gmLogo.url} alt="GM Cabs Services" width={44} height={44} className="rounded-lg" />
+            <img src={gmLogo.url} alt="GM Cabs Services" width={44} height={44} loading="lazy" decoding="async" className="rounded-lg" />
             <div>
               <div className="font-display text-base font-bold text-white">GM Cabs Services</div>
               <div className="text-[10px] uppercase tracking-widest text-orange">Airport · One Way · Outstation</div>
