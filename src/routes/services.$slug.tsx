@@ -327,7 +327,7 @@ function ServiceDetail() {
       {/* HERO */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0">
-          <img src={s.hero} alt={s.title} className="h-full w-full object-cover" />
+          <img src={s.hero} alt={s.title} fetchPriority="high" decoding="async" className="h-full w-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-b from-primary/85 via-primary/70 to-primary/90" />
         </div>
         <div className="relative mx-auto max-w-6xl px-4 pt-24 pb-20 md:px-8 md:pt-32 md:pb-28">

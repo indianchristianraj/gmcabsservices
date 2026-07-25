@@ -24,7 +24,10 @@ export const Route = createFileRoute("/")({
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://glide-seamless.lovable.app/" },
     ],
-    links: [{ rel: "canonical", href: "https://glide-seamless.lovable.app/" }],
+    links: [
+      { rel: "canonical", href: "https://glide-seamless.lovable.app/" },
+      { rel: "preload", as: "image", href: heroCab, fetchpriority: "high" } as any,
+    ],
     scripts: [
       {
         type: "application/ld+json",
@@ -248,6 +251,8 @@ function Logo({ size = 40 }: { size?: number }) {
         alt="GM Cabs Services"
         width={size}
         height={size}
+        decoding="async"
+        fetchPriority="high"
         className="shrink-0 rounded-lg object-cover shadow-card"
         style={{ width: size, height: size }}
       />
@@ -314,7 +319,7 @@ function Header() {
 function Hero() {
   return (
     <section id="top" className="relative overflow-hidden">
-      <img src={heroCab} alt="Premium GM Cabs Services luxury car" width={1920} height={1200} className="absolute inset-0 h-full w-full object-cover" />
+      <img src={heroCab} alt="Premium GM Cabs Services luxury car" width={1920} height={1200} fetchPriority="high" decoding="async" className="absolute inset-0 h-full w-full object-cover" />
       <div className="absolute inset-0 bg-hero-gradient opacity-90" />
       <div className="relative mx-auto max-w-7xl px-4 py-20 md:px-8 md:py-32">
         <div className="max-w-2xl animate-float-in">
@@ -614,7 +619,7 @@ function Services() {
         {services.map((s) => (
           <article key={s.title} className="group overflow-hidden rounded-2xl border border-border bg-card shadow-card transition hover:-translate-y-1 hover:shadow-elegant">
             <div className="relative aspect-[16/10] overflow-hidden">
-              <img src={s.img} alt={s.title} loading="lazy" className="h-full w-full object-cover transition duration-700 group-hover:scale-105" />
+              <img src={s.img} alt={s.title} loading="lazy" decoding="async" className="h-full w-full object-cover transition duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
               <div className="absolute left-4 top-4 grid h-11 w-11 place-items-center rounded-xl bg-background/95 text-xl shadow-card">{s.icon}</div>
             </div>
@@ -667,7 +672,7 @@ function Fleet() {
           {items.map((v) => (
             <article key={v.name} className="group overflow-hidden rounded-2xl border border-border bg-card shadow-card transition hover:-translate-y-1 hover:shadow-elegant">
               <div className="relative aspect-[4/3] overflow-hidden bg-muted">
-                <img src={v.img} alt={v.name} loading="lazy" className="h-full w-full object-cover transition duration-700 group-hover:scale-105" />
+                <img src={v.img} alt={v.name} loading="lazy" decoding="async" className="h-full w-full object-cover transition duration-700 group-hover:scale-105" />
                 {v.badge && (
                   <span className="absolute left-3 top-3 rounded-full bg-brand-gradient px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white shadow-gold">{v.badge}</span>
                 )}
@@ -911,7 +916,7 @@ function Instagram() {
           className="mx-auto block w-full max-w-xs overflow-hidden rounded-2xl border border-border bg-card p-4 shadow-elegant transition hover:-translate-y-1"
           aria-label="Scan to open GM Cabs Instagram"
         >
-          <img src={instagramQR.url} alt="GM Cabs Instagram QR code — @gmcabs786" className="h-auto w-full rounded-xl" loading="lazy" />
+          <img src={instagramQR.url} alt="GM Cabs Instagram QR code — @gmcabs786" className="h-auto w-full rounded-xl" loading="lazy" decoding="async" width={512} height={512} />
           <div className="mt-3 text-center text-sm font-semibold text-primary">@gmcabs786</div>
           <div className="text-center text-xs text-muted-foreground">Scan with your camera</div>
         </a>
@@ -927,7 +932,7 @@ function Footer() {
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-12 md:grid-cols-4 md:px-8">
         <div>
           <div className="flex items-center gap-2.5">
-            <img src={gmLogo.url} alt="GM Cabs Services" width={44} height={44} className="rounded-lg" />
+            <img src={gmLogo.url} alt="GM Cabs Services" width={44} height={44} loading="lazy" decoding="async" className="rounded-lg" />
             <div>
               <div className="font-display text-base font-bold text-white">GM Cabs Services</div>
               <div className="text-[10px] uppercase tracking-widest text-orange">Airport · One Way · Outstation</div>
