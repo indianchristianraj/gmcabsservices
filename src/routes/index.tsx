@@ -173,6 +173,7 @@ const stats = [
 function Index() {
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <ScrollProgress />
       <Header />
       <Hero />
       <QuoteWidget />
@@ -181,6 +182,7 @@ function Index() {
       <Fleet />
       <Routes />
       <Packages />
+      <Testimonials />
       <Coverage />
       <HowItWorks />
       <WhyUs />
@@ -189,6 +191,7 @@ function Index() {
       <Contact />
       <Footer />
       <FloatingWhatsApp />
+      <FloatingCall />
       <ScrollTop />
     </div>
   );
@@ -1178,3 +1181,114 @@ function WhatsAppIcon({ className }: { className?: string }) {
     </svg>
   );
 }
+
+/* ---------------- SCROLL PROGRESS ---------------- */
+function ScrollProgress() {
+  const [p, setP] = useState(0);
+  useEffect(() => {
+    const onScroll = () => {
+      const h = document.documentElement;
+      const max = h.scrollHeight - h.clientHeight;
+      setP(max > 0 ? (h.scrollTop / max) * 100 : 0);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  return (
+    <div className="pointer-events-none fixed left-0 top-0 z-[60] h-[3px] w-full bg-transparent">
+      <div
+        className="h-full bg-brand-gradient transition-[width] duration-150 ease-out"
+        style={{ width: `${p}%` }}
+      />
+    </div>
+  );
+}
+
+/* ---------------- FLOATING CALL ---------------- */
+function FloatingCall() {
+  return (
+    <a
+      href={telLink}
+      aria-label="Call GM Cabs Services"
+      title="Call now"
+      className="fixed bottom-6 left-6 z-50 grid h-12 w-12 place-items-center rounded-full bg-orange text-white shadow-elegant transition hover:scale-105 sm:h-14 sm:w-14"
+    >
+      <svg viewBox="0 0 24 24" fill="currentColor" className="h-6 w-6" aria-hidden>
+        <path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.24.2 2.45.57 3.57a1 1 0 0 1-.24 1.02l-2.21 2.2z" />
+      </svg>
+    </a>
+  );
+}
+
+/* ---------------- TESTIMONIALS ---------------- */
+const testimonials = [
+  { name: "Rakesh Menon", role: "Corporate Traveller · HITEC City", stars: 5, text: "GM Cabs has been our go-to for airport transfers for over a year. Immaculate cars, punctual chauffeurs and zero hidden charges." },
+  { name: "Priya Reddy", role: "Family trip to Tirupati", stars: 5, text: "Booked a Crysta for a 2-day Tirupati darshan. The driver was courteous, the car was spotless, and the whole trip felt safe and premium." },
+  { name: "Ahmed Hussain", role: "Wedding · Banjara Hills", stars: 5, text: "Arranged a Fortuner and two Innovas for our wedding. On time, decorated beautifully, and the team handled everything without fuss." },
+  { name: "Sneha Iyer", role: "Outstation · Hyderabad → Bangalore", stars: 5, text: "Very transparent booking on WhatsApp. Fair pricing, smooth Hycross, and the driver Mohsin bhai was incredibly professional." },
+  { name: "Vikram Naidu", role: "Airport pickup · RGIA", stars: 5, text: "Landed at 2 AM and the cab was already waiting at the gate. Clean car, friendly driver — exactly what a premium taxi should feel like." },
+];
+
+function Testimonials() {
+  const [i, setI] = useState(0);
+  useEffect(() => {
+    const t = setInterval(() => setI((v) => (v + 1) % testimonials.length), 5000);
+    return () => clearInterval(t);
+  }, []);
+  return (
+    <section id="reviews" className="border-t border-border bg-gradient-to-b from-background to-secondary/40 py-20">
+      <div className="mx-auto max-w-6xl px-4">
+        <div className="mb-10 text-center">
+          <div className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-gold">
+            ★ 4.9 / 5 · Verified guests
+          </div>
+          <h2 className="mt-4 font-display text-3xl font-bold text-foreground md:text-4xl">Loved by travellers across Hyderabad</h2>
+          <p className="mt-2 text-sm text-muted-foreground">Real stories from families, executives and wedding guests.</p>
+        </div>
+
+        <div className="relative overflow-hidden rounded-3xl border border-border bg-card p-6 shadow-elegant md:p-10">
+          <div
+            className="flex transition-transform duration-700 ease-out"
+            style={{ transform: `translateX(-${i * 100}%)` }}
+          >
+            {testimonials.map((t) => (
+              <div key={t.name} className="w-full shrink-0 px-2 md:px-6">
+                <div className="mx-auto max-w-3xl text-center">
+                  <div className="mb-3 text-gold" aria-label={`${t.stars} out of 5 stars`}>
+                    {"★".repeat(t.stars)}
+                    <span className="text-muted-foreground/40">{"★".repeat(5 - t.stars)}</span>
+                  </div>
+                  <p className="font-display text-lg italic leading-relaxed text-foreground md:text-2xl">
+                    “{t.text}”
+                  </p>
+                  <div className="mt-6 flex items-center justify-center gap-3">
+                    <div className="grid h-11 w-11 place-items-center rounded-full bg-brand-gradient text-sm font-bold text-white">
+                      {t.name.split(" ").map((s) => s[0]).slice(0, 2).join("")}
+                    </div>
+                    <div className="text-left">
+                      <div className="text-sm font-semibold text-foreground">{t.name}</div>
+                      <div className="text-xs text-muted-foreground">{t.role}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-8 flex items-center justify-center gap-2">
+            {testimonials.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => setI(idx)}
+                aria-label={`Show review ${idx + 1}`}
+                className={`h-2 rounded-full transition-all ${idx === i ? "w-8 bg-orange" : "w-2 bg-border hover:bg-muted-foreground/40"}`}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
