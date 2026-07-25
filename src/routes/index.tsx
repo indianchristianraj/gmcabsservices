@@ -401,28 +401,40 @@ function QuoteWidget() {
   const veh = QUOTE_VEHICLES.find((v) => v.id === vehicle)!;
 
   function calcQuote() {
+    let result: { low: number; high: number; km: number; note: string };
     if (trip === "local") {
       const low = veh.base + veh.perKm * 80;
       const high = veh.base + veh.perKm * 120;
-      setQuote({ low, high, km: 0, note: "8–12 hr city package · fuel & driver included" });
-      return;
-    }
-    if (trip === "airport") {
+      result = { low, high, km: 0, note: "8–12 hr city package · fuel & driver included" };
+    } else if (trip === "airport") {
       const low = Math.max(veh.base + veh.perKm * 25, 700);
       const high = veh.base + veh.perKm * 45;
-      setQuote({ low, high, km: 30, note: "Flat airport transfer within Hyderabad" });
-      return;
+      result = { low, high, km: 30, note: "Flat airport transfer within Hyderabad" };
+    } else {
+      const km = guessKm(drop) ?? guessKm(pickup) ?? 250;
+      const multiplier = trip === "outstation" ? 2 : 1;
+      const eff = km * multiplier;
+      const low = veh.base + veh.perKm * eff;
+      const high = low + veh.perKm * (trip === "outstation" ? 60 : 20);
+      result = {
+        low,
+        high,
+        km: eff,
+        note: trip === "outstation" ? "Round trip · driver bata & tolls extra" : "One way drop · tolls extra",
+      };
     }
-    const km = guessKm(drop) ?? guessKm(pickup) ?? 250;
-    const multiplier = trip === "outstation" ? 2 : 1;
-    const eff = km * multiplier;
-    const low = veh.base + veh.perKm * eff;
-    const high = low + veh.perKm * (trip === "outstation" ? 60 : 20);
-    setQuote({
-      low,
-      high,
-      km: eff,
-      note: trip === "outstation" ? "Round trip · driver bata & tolls extra" : "One way drop · tolls extra",
+    setQuote(result);
+    trackEvent("quote_request", {
+      trip_type: trip,
+      service_type: TRIP_TYPES.find((t) => t.id === trip)?.label,
+      vehicle_name: veh.name,
+      vehicle_category: veh.category,
+      pickup_location: pickup || undefined,
+      drop_location: drop || undefined,
+      passengers: Number(pax),
+      estimate_low: result.low,
+      estimate_high: result.high,
+      estimate_km: result.km,
     });
   }
 
@@ -441,6 +453,21 @@ function QuoteWidget() {
       "Please confirm availability and final fare.",
     ].filter(Boolean);
     const url = `https://wa.me/${PHONE_INTL}?text=${encodeURIComponent(lines.join("\n"))}`;
+    trackEvent("book_now_click", {
+      button_name: "Quote widget — Book on WhatsApp",
+      trip_type: trip,
+      service_type: TRIP_TYPES.find((t) => t.id === trip)?.label,
+      vehicle_name: veh.name,
+      vehicle_category: veh.category,
+      pickup_location: pickup || undefined,
+      drop_location: drop || undefined,
+      passengers: Number(pax),
+    });
+    trackEvent("booking_started", {
+      source: "quote_widget",
+      trip_type: trip,
+      vehicle_name: veh.name,
+    });
     window.open(url, "_blank", "noopener,noreferrer");
   }
 
