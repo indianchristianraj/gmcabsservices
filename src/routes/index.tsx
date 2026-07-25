@@ -317,7 +317,7 @@ function Header() {
 function Hero() {
   return (
     <section id="top" className="relative overflow-hidden">
-      <img src={heroCab} alt="Premium GM Cabs Services luxury car" width={1920} height={1200} className="absolute inset-0 h-full w-full object-cover" />
+      <img src={heroCab} alt="Premium GM Cabs Services luxury car" width={1920} height={1200} fetchPriority="high" decoding="async" className="absolute inset-0 h-full w-full object-cover" />
       <div className="absolute inset-0 bg-hero-gradient opacity-90" />
       <div className="relative mx-auto max-w-7xl px-4 py-20 md:px-8 md:py-32">
         <div className="max-w-2xl animate-float-in">
