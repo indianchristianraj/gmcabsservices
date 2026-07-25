@@ -659,7 +659,7 @@ function Services() {
         {services.map((s) => (
           <article key={s.title} className="group overflow-hidden rounded-2xl border border-border bg-card shadow-card transition hover:-translate-y-1 hover:shadow-elegant">
             <div className="relative aspect-[16/10] overflow-hidden">
-              <img src={s.img} alt={s.title} loading="lazy" decoding="async" className="h-full w-full object-cover transition duration-700 group-hover:scale-105" />
+              <img src={s.img} alt={`${s.title} — GM Cabs Services in Hyderabad`} loading="lazy" decoding="async" width={1280} height={800} className="h-full w-full object-cover transition duration-700 group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
               <div className="absolute left-4 top-4 grid h-11 w-11 place-items-center rounded-xl bg-background/95 text-xl shadow-card">{s.icon}</div>
             </div>
