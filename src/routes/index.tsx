@@ -13,6 +13,18 @@ import fleetPair from "@/assets/fleet-pair.png.asset.json";
 import innovaCrystaReal from "@/assets/innova-crysta-real.jpg.asset.json";
 import innovaHycrossReal from "@/assets/innova-hycross-real.jpg.asset.json";
 import instagramQR from "@/assets/gmcabs-instagram-qr.jpg.asset.json";
+import vehInnova from "@/assets/veh-innova.jpg";
+import vehFortuner from "@/assets/veh-fortuner.jpg";
+import vehCamry from "@/assets/veh-camry.jpg";
+import vehCarnival from "@/assets/veh-carnival.jpg";
+import vehXuv700 from "@/assets/veh-xuv700.jpg";
+import vehScorpio from "@/assets/veh-scorpio.jpg";
+import vehCity from "@/assets/veh-city.jpg";
+import vehVerna from "@/assets/veh-verna.jpg";
+import vehDzire from "@/assets/veh-dzire.jpg";
+import vehAmaze from "@/assets/veh-amaze.jpg";
+import svcWedding from "@/assets/svc-wedding.jpg";
+import svcCorporate from "@/assets/svc-corporate.jpg";
 
 export const Route = createFileRoute("/")({
   component: Index,
