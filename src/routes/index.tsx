@@ -688,7 +688,7 @@ function Fleet() {
           {CATEGORIES.map((c) => (
             <button
               key={c}
-              onClick={() => setCat(c)}
+              onClick={() => { setCat(c); trackEvent("vehicle_category_view", { vehicle_category: c }); }}
               className={`rounded-full px-4 py-2 text-xs font-semibold transition ${cat === c ? "bg-brand-gradient text-white shadow-gold" : "border border-border bg-card text-primary hover:border-orange"}`}
             >
               {c}
