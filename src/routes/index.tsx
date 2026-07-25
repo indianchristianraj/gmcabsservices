@@ -45,6 +45,7 @@ export const Route = createFileRoute("/")({
 const PHONE = "6301875485";
 const PHONE_INTL = "916301875485";
 const EMAIL = "gmcabsservices@gmail.com";
+const EMAIL_RENTALS = "gmcabrentals@gmail.com";
 const ADDRESS = "H.No: 7-6/16, Sri Sai Colony, Nacharam, Hyderabad - 500076";
 
 function waFor(context?: string, route?: string) {
@@ -955,6 +956,7 @@ function Footer() {
           <ul className="mt-4 space-y-2 text-sm text-primary-foreground/80">
             <li>📞 <a href={telLink} className="hover:text-orange">{PHONE}</a></li>
             <li>✉️ <a href={`mailto:${EMAIL}`} className="hover:text-orange break-all">{EMAIL}</a></li>
+            <li>✉️ <a href={`mailto:${EMAIL_RENTALS}`} className="hover:text-orange break-all">{EMAIL_RENTALS}</a></li>
             <li>📍 {ADDRESS}</li>
           </ul>
         </div>
