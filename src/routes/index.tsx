@@ -956,6 +956,7 @@ function Footer() {
           <ul className="mt-4 space-y-2 text-sm text-primary-foreground/80">
             <li>📞 <a href={telLink} className="hover:text-orange">{PHONE}</a></li>
             <li>✉️ <a href={`mailto:${EMAIL}`} className="hover:text-orange break-all">{EMAIL}</a></li>
+            <li>✉️ <a href={`mailto:${EMAIL_RENTALS}`} className="hover:text-orange break-all">{EMAIL_RENTALS}</a></li>
             <li>📍 {ADDRESS}</li>
           </ul>
         </div>
