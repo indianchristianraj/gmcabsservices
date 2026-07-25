@@ -173,6 +173,7 @@ const stats = [
 function Index() {
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <ScrollProgress />
       <Header />
       <Hero />
       <QuoteWidget />
@@ -181,6 +182,7 @@ function Index() {
       <Fleet />
       <Routes />
       <Packages />
+      <Testimonials />
       <Coverage />
       <HowItWorks />
       <WhyUs />
@@ -189,6 +191,7 @@ function Index() {
       <Contact />
       <Footer />
       <FloatingWhatsApp />
+      <FloatingCall />
       <ScrollTop />
     </div>
   );
