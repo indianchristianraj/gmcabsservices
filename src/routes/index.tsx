@@ -251,6 +251,8 @@ function Logo({ size = 40 }: { size?: number }) {
         alt="GM Cabs Services"
         width={size}
         height={size}
+        decoding="async"
+        fetchPriority="high"
         className="shrink-0 rounded-lg object-cover shadow-card"
         style={{ width: size, height: size }}
       />
