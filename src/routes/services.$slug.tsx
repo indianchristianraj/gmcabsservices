@@ -318,7 +318,8 @@ export const Route = createFileRoute("/services/$slug")({
 });
 
 function ServiceDetail() {
-  const { service: s } = Route.useLoaderData();
+  const { slug } = Route.useParams();
+  const s = SERVICES[slug]!;
   const bookMsg = `Hi GM Cabs, I'd like to book *${s.title}*. Please share availability and fare.`;
 
   return (
