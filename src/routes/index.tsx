@@ -712,7 +712,7 @@ function Fleet() {
           {items.map((v) => (
             <article key={v.name} className="group overflow-hidden rounded-2xl border border-border bg-card shadow-card transition hover:-translate-y-1 hover:shadow-elegant">
               <div className="relative aspect-[4/3] overflow-hidden bg-muted">
-                <img src={v.img} alt={v.name} loading="lazy" decoding="async" className="h-full w-full object-cover transition duration-700 group-hover:scale-105" />
+                <img src={v.img} alt={`${v.name} ${v.category} chauffeur-driven cab for hire in Hyderabad`} loading="lazy" decoding="async" width={1280} height={800} className="h-full w-full object-cover transition duration-700 group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100" />
                 {v.badge && (
                   <span className="absolute left-3 top-3 rounded-full bg-brand-gradient px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white shadow-gold">{v.badge}</span>
                 )}
