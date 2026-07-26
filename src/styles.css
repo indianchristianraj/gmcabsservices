@@ -29,7 +29,10 @@
   --color-orange: var(--orange);
   --color-orange-foreground: var(--orange-foreground);
   --color-coral: var(--coral);
+  --color-orange-ink: var(--orange-ink);
   --color-whatsapp: var(--whatsapp);
+  --color-whatsapp-ink: var(--whatsapp-ink);
+
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
