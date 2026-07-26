@@ -271,7 +271,7 @@ function Logo({ size = 40 }: { size?: number }) {
       />
       <div className="leading-tight">
         <div className="font-display text-base font-bold text-primary sm:text-lg">GM Cabs Services</div>
-        <div className="text-[9px] font-semibold uppercase tracking-[0.15em] text-orange sm:text-[10px]">Airport · One Way · Outstation</div>
+        <div className="text-[9px] font-semibold uppercase tracking-[0.15em] text-orange-ink sm:text-[10px]">Airport · One Way · Outstation</div>
       </div>
     </div>
   );
@@ -284,12 +284,12 @@ function Header() {
       <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 py-3 md:px-8">
         <a href="#top" className="min-w-0"><Logo /></a>
         <nav className="hidden items-center gap-7 text-sm font-medium text-foreground/80 lg:flex">
-          <a href="#services" className="hover:text-orange">Services</a>
-          <a href="#fleet" className="hover:text-orange">Fleet</a>
-          <a href="#routes" className="hover:text-orange">Routes</a>
-          <a href="#packages" className="hover:text-orange">Packages</a>
-          <a href="#about" className="hover:text-orange">About</a>
-          <a href="#contact" className="hover:text-orange">Contact</a>
+          <a href="#services" className="hover:text-orange-ink">Services</a>
+          <a href="#fleet" className="hover:text-orange-ink">Fleet</a>
+          <a href="#routes" className="hover:text-orange-ink">Routes</a>
+          <a href="#packages" className="hover:text-orange-ink">Packages</a>
+          <a href="#about" className="hover:text-orange-ink">About</a>
+          <a href="#contact" className="hover:text-orange-ink">Contact</a>
         </nav>
         <div className="hidden items-center gap-2 lg:flex">
           <a href={waLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 rounded-full bg-[var(--whatsapp)] px-4 py-2 text-xs font-semibold text-white shadow-card hover:opacity-90">
@@ -491,8 +491,8 @@ function QuoteWidget() {
       <div className="mx-auto max-w-6xl rounded-2xl border border-border bg-card p-4 shadow-elegant md:p-6">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div>
-            <div className="text-[11px] font-semibold uppercase tracking-[0.2em] text-orange">Instant Quote</div>
-            <h3 className="font-display text-xl font-bold text-primary md:text-2xl">Get a fare estimate in seconds</h3>
+            <div className="text-[11px] font-semibold uppercase tracking-[0.2em] text-orange-ink">Instant Quote</div>
+            <h2 className="font-display text-xl font-bold text-primary md:text-2xl">Get a fare estimate in seconds</h2>
           </div>
           <span className="rounded-full bg-secondary px-3 py-1 text-[11px] font-semibold text-secondary-foreground">No signup · WhatsApp confirmation</span>
         </div>
@@ -539,11 +539,11 @@ function QuoteWidget() {
           )}
           <div className="md:col-span-2">
             <label className="text-xs font-semibold text-muted-foreground">Date</label>
-            <input type="date" value={date} onChange={(e) => setDate(e.target.value)} className="mt-1 w-full rounded-lg border border-input bg-background px-3 py-2.5 text-sm outline-none focus:border-orange" />
+            <input type="date" aria-label="Travel date" value={date} onChange={(e) => setDate(e.target.value)} className="mt-1 w-full rounded-lg border border-input bg-background px-3 py-2.5 text-sm outline-none focus:border-orange" />
           </div>
           <div className="md:col-span-2">
             <label className="text-xs font-semibold text-muted-foreground">Time</label>
-            <input type="time" value={time} onChange={(e) => setTime(e.target.value)} className="mt-1 w-full rounded-lg border border-input bg-background px-3 py-2.5 text-sm outline-none focus:border-orange" />
+            <input type="time" aria-label="Pickup time" value={time} onChange={(e) => setTime(e.target.value)} className="mt-1 w-full rounded-lg border border-input bg-background px-3 py-2.5 text-sm outline-none focus:border-orange" />
           </div>
         </div>
 
@@ -571,7 +571,7 @@ function QuoteWidget() {
         <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-2 text-sm">
             <label className="text-xs font-semibold text-muted-foreground">Passengers</label>
-            <select value={pax} onChange={(e) => setPax(e.target.value)} className="rounded-lg border border-input bg-background px-2.5 py-2 text-sm outline-none focus:border-orange">
+            <select aria-label="Passengers" value={pax} onChange={(e) => setPax(e.target.value)} className="rounded-lg border border-input bg-background px-2.5 py-2 text-sm outline-none focus:border-orange">
               {[1,2,3,4,5,6,7,8].map((n) => <option key={n} value={n}>{n}</option>)}
             </select>
           </div>
@@ -579,7 +579,7 @@ function QuoteWidget() {
             <button type="button" onClick={calcQuote} className="inline-flex items-center gap-2 rounded-full border border-primary bg-background px-5 py-2.5 text-sm font-semibold text-primary hover:bg-secondary">
               💰 Get Instant Quote
             </button>
-            <button type="button" onClick={bookOnWhatsApp} className="inline-flex items-center gap-2 rounded-full bg-[var(--whatsapp)] px-5 py-2.5 text-sm font-semibold text-white shadow-elegant hover:opacity-90">
+            <button type="button" onClick={bookOnWhatsApp} className="inline-flex items-center gap-2 rounded-full bg-[var(--whatsapp-ink)] px-5 py-2.5 text-sm font-semibold text-white shadow-elegant hover:opacity-90">
               <WhatsAppIcon className="h-4 w-4" /> Book on WhatsApp
             </button>
           </div>
@@ -589,7 +589,7 @@ function QuoteWidget() {
           <div className="mt-4 rounded-xl border border-gold/40 bg-gold/10 p-4">
             <div className="flex flex-wrap items-baseline justify-between gap-2">
               <div>
-                <div className="text-[11px] font-semibold uppercase tracking-widest text-orange">Estimated fare</div>
+                <div className="text-[11px] font-semibold uppercase tracking-widest text-orange-ink">Estimated fare</div>
                 <div className="font-display text-2xl font-bold text-primary md:text-3xl">
                   ₹{quote.low.toLocaleString("en-IN")} <span className="text-muted-foreground">–</span> ₹{quote.high.toLocaleString("en-IN")}
                 </div>
@@ -666,7 +666,7 @@ function Services() {
             <div className="p-6">
               <h3 className="font-display text-xl font-bold text-primary">{s.title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{s.desc}</p>
-              <Link to="/services/$slug" params={{ slug: s.slug }} className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-orange hover:text-primary">
+              <Link to="/services/$slug" params={{ slug: s.slug }} className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-orange-ink hover:text-primary">
                 Learn more <span aria-hidden>→</span>
               </Link>
               <div className="mt-4 flex gap-2">
@@ -760,12 +760,12 @@ function Routes() {
             <div className="min-w-0">
               <div className="flex items-center gap-2 text-sm font-semibold text-primary">
                 <span>Hyderabad</span>
-                <span className="text-orange">→</span>
+                <span className="text-orange-ink">→</span>
                 <span className="truncate">{r.to}</span>
               </div>
               <div className="mt-0.5 text-[11px] text-muted-foreground">{r.km} · approx {r.time}</div>
             </div>
-            <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-accent text-orange transition group-hover:bg-brand-gradient group-hover:text-white">→</span>
+            <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-accent text-orange-ink transition group-hover:bg-brand-gradient group-hover:text-white">→</span>
           </a>
         ))}
       </div>
@@ -782,7 +782,7 @@ function Packages() {
         <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {packages.map((p) => (
             <article key={p.title} className="flex flex-col rounded-2xl border border-border bg-card p-6 shadow-card transition hover:-translate-y-1 hover:border-orange hover:shadow-elegant">
-              <div className="text-[10px] font-semibold uppercase tracking-widest text-orange">{p.tag}</div>
+              <div className="text-[10px] font-semibold uppercase tracking-widest text-orange-ink">{p.tag}</div>
               <h3 className="mt-1 font-display text-xl font-bold text-primary">{p.title}</h3>
               <p className="mt-1 text-xs text-muted-foreground">Ideal for {p.ideal}</p>
               <div className="mt-4 grid grid-cols-2 gap-3 rounded-xl bg-accent/50 p-3 text-xs">
@@ -832,7 +832,7 @@ function HowItWorks() {
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {process.map((s) => (
             <div key={s.step} className="relative rounded-2xl border border-border bg-card p-6 shadow-card">
-              <div className="font-display text-4xl font-bold text-orange/80">{s.step}</div>
+              <div className="font-display text-4xl font-bold text-orange-ink-ink/90">{s.step}</div>
               <h3 className="mt-2 font-display text-lg font-bold text-primary">{s.t}</h3>
               <p className="mt-1 text-sm text-muted-foreground">{s.d}</p>
             </div>
@@ -849,7 +849,7 @@ function WhyUs() {
     <section id="about" className="bg-hero-gradient py-20 text-white md:py-28">
       <div className="mx-auto grid max-w-7xl gap-12 px-4 md:grid-cols-2 md:px-8">
         <div>
-          <span className="text-xs font-semibold uppercase tracking-widest text-orange">Why GM Cabs</span>
+          <span className="text-xs font-semibold uppercase tracking-widest text-orange-ink">Why GM Cabs</span>
           <h2 className="mt-3 font-display text-3xl font-bold md:text-4xl">A local Hyderabad cab service you can rely on.</h2>
           <p className="mt-5 text-white/80">
             Founded by <strong className="text-white">Mohsin Khan</strong>, GM Cabs Services has grown into one of Nacharam's trusted travel partners — with a premium fleet, verified chauffeurs and a passion for punctual, comfortable rides across Hyderabad, Telangana and Andhra Pradesh.
@@ -888,7 +888,7 @@ function FAQ() {
             <details key={f.q} className="group rounded-xl border border-border bg-card p-5 shadow-card transition open:shadow-elegant">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-display text-base font-bold text-primary">
                 {f.q}
-                <span className="text-orange transition group-open:rotate-45">+</span>
+                <span className="text-orange-ink transition group-open:rotate-45">+</span>
               </summary>
               <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{f.a}</p>
             </details>
@@ -935,7 +935,7 @@ function Instagram() {
     <section id="instagram" className="bg-background py-16 md:py-20">
       <div className="mx-auto grid max-w-6xl gap-8 px-4 md:grid-cols-2 md:items-center md:px-8">
         <div>
-          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-orange">Follow Us</span>
+          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-orange-ink">Follow Us</span>
           <h2 className="mt-2 font-display text-3xl font-bold text-primary md:text-4xl">Ride stories on Instagram</h2>
           <p className="mt-3 text-sm text-muted-foreground md:text-base">
             Airport pickups, luxury trips and behind-the-wheel moments. Scan the QR or tap the button to follow <span className="font-semibold text-primary">@gmcabs786</span>.
@@ -954,7 +954,7 @@ function Instagram() {
           target="_blank"
           rel="noopener noreferrer"
           className="mx-auto block w-full max-w-xs overflow-hidden rounded-2xl border border-border bg-card p-4 shadow-elegant transition hover:-translate-y-1"
-          aria-label="Scan to open GM Cabs Instagram"
+          aria-label="@gmcabs786 — scan with your camera to open GM Cabs Instagram"
         >
           <img src={instagramQR.url} alt="GM Cabs Instagram QR code — @gmcabs786" className="h-auto w-full rounded-xl" loading="lazy" decoding="async" width={512} height={512} />
           <div className="mt-3 text-center text-sm font-semibold text-primary">@gmcabs786</div>
@@ -1276,7 +1276,7 @@ function BookingForm() {
 function SectionHead({ eyebrow, title, sub }: { eyebrow: string; title: string; sub: string }) {
   return (
     <div className="mx-auto max-w-2xl text-center">
-      <span className="text-xs font-semibold uppercase tracking-[0.2em] text-orange">{eyebrow}</span>
+      <span className="text-xs font-semibold uppercase tracking-[0.2em] text-orange-ink">{eyebrow}</span>
       <h2 className="mt-3 font-display text-3xl font-bold text-primary md:text-4xl">{title}</h2>
       <p className="mt-3 text-muted-foreground">{sub}</p>
     </div>
@@ -1401,8 +1401,14 @@ function Testimonials() {
                 key={idx}
                 onClick={() => setI(idx)}
                 aria-label={`Show review ${idx + 1}`}
-                className={`h-2 rounded-full transition-all ${idx === i ? "w-8 bg-orange" : "w-2 bg-border hover:bg-muted-foreground/40"}`}
-              />
+                className="grid h-11 w-11 place-items-center"
+                type="button"
+              >
+                <span
+                  aria-hidden="true"
+                  className={`block h-2 rounded-full transition-all ${idx === i ? "w-8 bg-orange" : "w-2 bg-border hover:bg-muted-foreground/40"}`}
+                />
+              </button>
             ))}
           </div>
         </div>
