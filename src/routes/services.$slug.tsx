@@ -1,9 +1,9 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import airportImg from "@/assets/airport.jpg";
-import outstationImg from "@/assets/outstation.jpg";
-import localImg from "@/assets/local.jpg";
-import ramojiImg from "@/assets/ramoji.jpg";
-import heroCab from "@/assets/hero-cab.jpg";
+import airportImg from "@/assets/airport.webp";
+import outstationImg from "@/assets/outstation.webp";
+import localImg from "@/assets/local.webp";
+import ramojiImg from "@/assets/ramoji.webp";
+import heroCab from "@/assets/hero-cab.webp";
 import fleetPair from "@/assets/fleet-pair.png.asset.json";
 
 const PHONE_INTL = "916301875485";

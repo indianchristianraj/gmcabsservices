@@ -1,11 +1,11 @@
 import { createFileRoute, useRouterState, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { trackEvent } from "@/lib/analytics";
-import heroCab from "@/assets/hero-cab.jpg";
-import airportImg from "@/assets/airport.jpg";
-import outstationImg from "@/assets/outstation.jpg";
-import localImg from "@/assets/local.jpg";
-import ramojiImg from "@/assets/ramoji.jpg";
+import heroCab from "@/assets/hero-cab.webp";
+import airportImg from "@/assets/airport.webp";
+import outstationImg from "@/assets/outstation.webp";
+import localImg from "@/assets/local.webp";
+import ramojiImg from "@/assets/ramoji.webp";
 import gmLogo from "@/assets/gm-logo.jpg.asset.json";
 import innovaRamoji from "@/assets/innova-ramoji.png.asset.json";
 import innovaHycross from "@/assets/innova-hycross.png.asset.json";
@@ -13,18 +13,18 @@ import fleetPair from "@/assets/fleet-pair.png.asset.json";
 import innovaCrystaReal from "@/assets/innova-crysta-real.jpg.asset.json";
 import innovaHycrossReal from "@/assets/innova-hycross-real.jpg.asset.json";
 import instagramQR from "@/assets/gmcabs-instagram-qr.jpg.asset.json";
-import vehInnova from "@/assets/veh-innova.jpg";
-import vehFortuner from "@/assets/veh-fortuner.jpg";
-import vehCamry from "@/assets/veh-camry.jpg";
-import vehCarnival from "@/assets/veh-carnival.jpg";
-import vehXuv700 from "@/assets/veh-xuv700.jpg";
-import vehScorpio from "@/assets/veh-scorpio.jpg";
-import vehCity from "@/assets/veh-city.jpg";
-import vehVerna from "@/assets/veh-verna.jpg";
-import vehDzire from "@/assets/veh-dzire.jpg";
-import vehAmaze from "@/assets/veh-amaze.jpg";
-import svcWedding from "@/assets/svc-wedding.jpg";
-import svcCorporate from "@/assets/svc-corporate.jpg";
+import vehInnova from "@/assets/veh-innova.webp";
+import vehFortuner from "@/assets/veh-fortuner.webp";
+import vehCamry from "@/assets/veh-camry.webp";
+import vehCarnival from "@/assets/veh-carnival.webp";
+import vehXuv700 from "@/assets/veh-xuv700.webp";
+import vehScorpio from "@/assets/veh-scorpio.webp";
+import vehCity from "@/assets/veh-city.webp";
+import vehVerna from "@/assets/veh-verna.webp";
+import vehDzire from "@/assets/veh-dzire.webp";
+import vehAmaze from "@/assets/veh-amaze.webp";
+import svcWedding from "@/assets/svc-wedding.webp";
+import svcCorporate from "@/assets/svc-corporate.webp";
 
 export const Route = createFileRoute("/")({
   component: Index,
