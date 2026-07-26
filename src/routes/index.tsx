@@ -39,7 +39,7 @@ export const Route = createFileRoute("/")({
     ],
     links: [
       { rel: "canonical", href: "https://glide-seamless.lovable.app/" },
-      { rel: "preload", as: "image", href: heroCab, fetchpriority: "high" } as any,
+      { rel: "preload", as: "image", href: heroCab, fetchPriority: "high" } as any,
     ],
     scripts: [
       {
@@ -292,7 +292,7 @@ function Header() {
           <a href="#contact" className="hover:text-orange-ink">Contact</a>
         </nav>
         <div className="hidden items-center gap-2 lg:flex">
-          <a href={waLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 rounded-full bg-[var(--whatsapp)] px-4 py-2 text-xs font-semibold text-white shadow-card hover:opacity-90">
+          <a href={waLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 rounded-full bg-[var(--whatsapp-ink)] px-4 py-2 text-xs font-semibold text-white shadow-card hover:opacity-90">
             <WhatsAppIcon className="h-4 w-4" /> WhatsApp
           </a>
           <a href={telLink} className="inline-flex items-center gap-1.5 rounded-full bg-brand-gradient px-4 py-2 text-xs font-semibold text-white shadow-gold hover:opacity-90">
@@ -314,7 +314,7 @@ function Header() {
               <a key={h} href={h} onClick={() => setOpen(false)} className="rounded-lg px-3 py-2.5 hover:bg-accent">{l}</a>
             ))}
             <div className="mt-2 grid grid-cols-2 gap-2 pt-2">
-              <a href={waLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-1.5 rounded-full bg-[var(--whatsapp)] px-4 py-2.5 text-xs font-semibold text-white shadow-card">
+              <a href={waLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-1.5 rounded-full bg-[var(--whatsapp-ink)] px-4 py-2.5 text-xs font-semibold text-white shadow-card">
                 <WhatsAppIcon className="h-4 w-4" /> WhatsApp
               </a>
               <a href={telLink} className="inline-flex items-center justify-center gap-1.5 rounded-full bg-brand-gradient px-4 py-2.5 text-xs font-semibold text-white shadow-gold">
@@ -354,7 +354,7 @@ function Hero() {
           </div>
 
           <div className="mt-7 flex flex-wrap gap-3">
-            <a href={waLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-[var(--whatsapp)] px-6 py-3.5 text-sm font-semibold text-white shadow-elegant hover:opacity-90">
+            <a href={waLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-[var(--whatsapp-ink)] px-6 py-3.5 text-sm font-semibold text-white shadow-elegant hover:opacity-90">
               <WhatsAppIcon className="h-5 w-5" /> Book on WhatsApp
             </a>
             <a href={telLink} className="inline-flex items-center gap-2 rounded-full bg-brand-gradient px-6 py-3.5 text-sm font-semibold text-white shadow-gold hover:opacity-90">
@@ -670,7 +670,7 @@ function Services() {
                 Learn more <span aria-hidden>→</span>
               </Link>
               <div className="mt-4 flex gap-2">
-                <a href={waFor(s.title)} target="_blank" rel="noopener noreferrer" className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-full bg-[var(--whatsapp)] px-3 py-2 text-xs font-semibold text-white hover:opacity-90">
+                <a href={waFor(s.title)} target="_blank" rel="noopener noreferrer" className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-full bg-[var(--whatsapp-ink)] px-3 py-2 text-xs font-semibold text-white hover:opacity-90">
                   <WhatsAppIcon className="h-3.5 w-3.5" /> WhatsApp
                 </a>
                 <a href={telLink} className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-full bg-brand-gradient px-3 py-2 text-xs font-semibold text-white hover:opacity-90">
@@ -727,7 +727,7 @@ function Fleet() {
                   <div><div className="text-primary">⛽ {v.fuel}</div><div className="text-[10px]">Fuel</div></div>
                 </div>
                 <div className="mt-4 flex gap-2">
-                  <a href={waFor(`${v.name} booking`)} target="_blank" rel="noopener noreferrer" className="inline-flex flex-1 items-center justify-center gap-1 rounded-full bg-[var(--whatsapp)] px-3 py-2 text-[11px] font-semibold text-white hover:opacity-90">
+                  <a href={waFor(`${v.name} booking`)} target="_blank" rel="noopener noreferrer" className="inline-flex flex-1 items-center justify-center gap-1 rounded-full bg-[var(--whatsapp-ink)] px-3 py-2 text-[11px] font-semibold text-white hover:opacity-90">
                     <WhatsAppIcon className="h-3 w-3" /> WhatsApp
                   </a>
                   <a href="#contact" className="inline-flex flex-1 items-center justify-center rounded-full bg-brand-gradient px-3 py-2 text-[11px] font-semibold text-white hover:opacity-90">
@@ -910,7 +910,7 @@ function Contact() {
           <ContactCard icon="📞" title="Call / SMS" line={PHONE} href={telLink} />
           <ContactCard icon="✉️" title="Email" line={EMAIL} href={`mailto:${EMAIL}`} />
           <ContactCard icon="📍" title="Visit Us" line={ADDRESS} />
-          <a href={waLink} target="_blank" rel="noopener noreferrer" className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[var(--whatsapp)] px-6 py-3.5 text-sm font-semibold text-white shadow-elegant hover:opacity-90">
+          <a href={waLink} target="_blank" rel="noopener noreferrer" className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[var(--whatsapp-ink)] px-6 py-3.5 text-sm font-semibold text-white shadow-elegant hover:opacity-90">
             <WhatsAppIcon className="h-5 w-5" /> Quick WhatsApp chat
           </a>
           <div className="overflow-hidden rounded-2xl border border-border shadow-card">
@@ -954,7 +954,6 @@ function Instagram() {
           target="_blank"
           rel="noopener noreferrer"
           className="mx-auto block w-full max-w-xs overflow-hidden rounded-2xl border border-border bg-card p-4 shadow-elegant transition hover:-translate-y-1"
-          aria-label="@gmcabs786 — scan with your camera to open GM Cabs Instagram"
         >
           <img src={instagramQR.url} alt="GM Cabs Instagram QR code — @gmcabs786" className="h-auto w-full rounded-xl" loading="lazy" decoding="async" width={512} height={512} />
           <div className="mt-3 text-center text-sm font-semibold text-primary">@gmcabs786</div>
@@ -1054,7 +1053,7 @@ function FloatingWhatsApp() {
   const shortLabel = hasDraft ? "Send booking" : context ? "Ask about this" : "Chat with us";
   return (
     <a href={href} target="_blank" rel="noopener noreferrer" aria-label={label} title={label}
-      className="fixed bottom-6 right-6 z-50 flex items-center gap-2 rounded-full bg-[var(--whatsapp)] py-3 pl-3 pr-4 text-white shadow-elegant animate-pulse-ring transition hover:scale-105">
+      className="fixed bottom-6 right-6 z-50 flex items-center gap-2 rounded-full bg-[var(--whatsapp-ink)] py-3 pl-3 pr-4 text-white shadow-elegant animate-pulse-ring transition hover:scale-105">
       <WhatsAppIcon className="h-7 w-7" />
       <span className="hidden text-sm font-semibold sm:inline">{shortLabel}</span>
     </a>
@@ -1265,7 +1264,7 @@ function BookingForm() {
           <textarea rows={3} value={form.notes} onChange={update("notes")} className={`${baseInput} ${okInput}`} placeholder="Flight number, child seat, stops on the way…" /></label>
       </div>
       <button type="submit" disabled={!canSubmit}
-        className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[var(--whatsapp)] px-6 py-3.5 text-sm font-semibold text-white shadow-elegant transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50">
+        className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[var(--whatsapp-ink)] px-6 py-3.5 text-sm font-semibold text-white shadow-elegant transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50">
         <WhatsAppIcon className="h-5 w-5" /> Send booking on WhatsApp
       </button>
       <p className="mt-3 text-center text-xs text-muted-foreground">Your details open in WhatsApp so you can review before sending.</p>
