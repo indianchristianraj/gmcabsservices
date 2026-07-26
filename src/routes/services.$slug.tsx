@@ -1,9 +1,9 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import airportImg from "@/assets/airport.jpg";
-import outstationImg from "@/assets/outstation.jpg";
-import localImg from "@/assets/local.jpg";
-import ramojiImg from "@/assets/ramoji.jpg";
-import heroCab from "@/assets/hero-cab.jpg";
+import airportImg from "@/assets/airport.webp";
+import outstationImg from "@/assets/outstation.webp";
+import localImg from "@/assets/local.webp";
+import ramojiImg from "@/assets/ramoji.webp";
+import heroCab from "@/assets/hero-cab.webp";
 import fleetPair from "@/assets/fleet-pair.png.asset.json";
 
 const PHONE_INTL = "916301875485";
@@ -337,7 +337,7 @@ function ServiceDetail() {
           <h1 className="mt-6 max-w-3xl font-display text-4xl font-bold text-white md:text-5xl lg:text-6xl">{s.title}</h1>
           <p className="mt-4 max-w-2xl text-lg text-white/85">{s.tagline}</p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <a href={wa(bookMsg)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-[var(--whatsapp)] px-6 py-3 text-sm font-semibold text-white shadow-elegant hover:opacity-90">
+            <a href={wa(bookMsg)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-[var(--whatsapp-ink)] px-6 py-3 text-sm font-semibold text-white shadow-elegant hover:opacity-90">
               💬 Book on WhatsApp
             </a>
             <a href={telLink} className="inline-flex items-center gap-2 rounded-full bg-brand-gradient px-6 py-3 text-sm font-semibold text-white shadow-gold hover:opacity-90">
@@ -349,14 +349,14 @@ function ServiceDetail() {
 
       {/* INTRO */}
       <section className="mx-auto max-w-4xl px-4 py-16 md:px-8 md:py-20">
-        <div className="text-xs font-semibold uppercase tracking-[0.2em] text-orange">Overview</div>
+        <div className="text-xs font-semibold uppercase tracking-[0.2em] text-orange-ink">Overview</div>
         <p className="mt-4 text-lg leading-relaxed text-muted-foreground md:text-xl">{s.intro}</p>
       </section>
 
       {/* HIGHLIGHTS */}
       <section className="bg-accent/40 py-16 md:py-20">
         <div className="mx-auto max-w-6xl px-4 md:px-8">
-          <div className="text-xs font-semibold uppercase tracking-[0.2em] text-orange">Why choose this service</div>
+          <div className="text-xs font-semibold uppercase tracking-[0.2em] text-orange-ink">Why choose this service</div>
           <h2 className="mt-3 font-display text-3xl font-bold text-primary md:text-4xl">Every detail, taken care of</h2>
           <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {s.highlights.map((h) => (
@@ -374,7 +374,7 @@ function ServiceDetail() {
       <section className="mx-auto max-w-6xl px-4 py-16 md:px-8 md:py-20">
         <div className="grid gap-10 md:grid-cols-2">
           <div>
-            <div className="text-xs font-semibold uppercase tracking-[0.2em] text-orange">What's included</div>
+            <div className="text-xs font-semibold uppercase tracking-[0.2em] text-orange-ink">What's included</div>
             <h2 className="mt-3 font-display text-2xl font-bold text-primary md:text-3xl">All the essentials, no surprises</h2>
             <ul className="mt-6 space-y-3">
               {s.includes.map((it) => (
@@ -386,7 +386,7 @@ function ServiceDetail() {
             </ul>
           </div>
           <div>
-            <div className="text-xs font-semibold uppercase tracking-[0.2em] text-orange">Recommended vehicles</div>
+            <div className="text-xs font-semibold uppercase tracking-[0.2em] text-orange-ink">Recommended vehicles</div>
             <h2 className="mt-3 font-display text-2xl font-bold text-primary md:text-3xl">Pick the right car for the ride</h2>
             <ul className="mt-6 space-y-3">
               {s.vehicles.map((v) => (
@@ -403,7 +403,7 @@ function ServiceDetail() {
       {/* HOW IT WORKS */}
       <section className="bg-accent/40 py-16 md:py-20">
         <div className="mx-auto max-w-6xl px-4 md:px-8">
-          <div className="text-xs font-semibold uppercase tracking-[0.2em] text-orange">How it works</div>
+          <div className="text-xs font-semibold uppercase tracking-[0.2em] text-orange-ink">How it works</div>
           <h2 className="mt-3 font-display text-3xl font-bold text-primary md:text-4xl">Book in 4 simple steps</h2>
           <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {s.steps.map((st, i) => (
@@ -419,14 +419,14 @@ function ServiceDetail() {
 
       {/* FAQ */}
       <section className="mx-auto max-w-3xl px-4 py-16 md:px-8 md:py-20">
-        <div className="text-xs font-semibold uppercase tracking-[0.2em] text-orange">Frequently asked</div>
+        <div className="text-xs font-semibold uppercase tracking-[0.2em] text-orange-ink">Frequently asked</div>
         <h2 className="mt-3 font-display text-3xl font-bold text-primary md:text-4xl">{s.title} — FAQs</h2>
         <div className="mt-8 space-y-3">
           {s.faqs.map((f) => (
             <details key={f.q} className="group rounded-xl border border-border bg-card p-5 shadow-card">
               <summary className="flex cursor-pointer items-center justify-between gap-4 text-sm font-semibold text-primary">
                 {f.q}
-                <span className="text-orange transition group-open:rotate-45">+</span>
+                <span className="text-orange-ink transition group-open:rotate-45">+</span>
               </summary>
               <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{f.a}</p>
             </details>
@@ -440,7 +440,7 @@ function ServiceDetail() {
           <h2 className="font-display text-3xl font-bold text-white md:text-4xl">Ready to book {s.title.toLowerCase()}?</h2>
           <p className="mt-3 text-white/80">Message us on WhatsApp — we typically respond within a minute.</p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <a href={wa(bookMsg)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-[var(--whatsapp)] px-6 py-3 text-sm font-semibold text-white shadow-elegant hover:opacity-90">
+            <a href={wa(bookMsg)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-[var(--whatsapp-ink)] px-6 py-3 text-sm font-semibold text-white shadow-elegant hover:opacity-90">
               💬 Book on WhatsApp
             </a>
             <a href={telLink} className="inline-flex items-center gap-2 rounded-full bg-brand-gradient px-6 py-3 text-sm font-semibold text-white shadow-gold hover:opacity-90">

@@ -29,7 +29,10 @@
   --color-orange: var(--orange);
   --color-orange-foreground: var(--orange-foreground);
   --color-coral: var(--coral);
+  --color-orange-ink: var(--orange-ink);
   --color-whatsapp: var(--whatsapp);
+  --color-whatsapp-ink: var(--whatsapp-ink);
+
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
@@ -54,7 +57,11 @@
   --orange: oklch(0.72 0.20 45);             /* brand orange #FF8C42 */
   --orange-foreground: oklch(0.99 0.005 60);
   --coral: oklch(0.65 0.22 30);
+  /* Accessible orange for small text on light surfaces (>= 4.5:1) */
+  --orange-ink: oklch(0.55 0.17 42);
   --whatsapp: oklch(0.68 0.18 145);
+  /* Accessible WhatsApp green for white text on solid fills */
+  --whatsapp-ink: oklch(0.52 0.13 150);
   --border: oklch(0.9 0.01 60);
   --input: oklch(0.9 0.01 60);
   --ring: oklch(0.78 0.16 65);
