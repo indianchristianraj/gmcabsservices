@@ -331,41 +331,82 @@ function Header() {
 /* ---------------- HERO ---------------- */
 function Hero() {
   return (
-    <section id="top" className="relative overflow-hidden">
-      <img src={heroCab} alt="Premium GM Cabs Services luxury car" width={1920} height={1200} fetchPriority="high" decoding="async" className="absolute inset-0 h-full w-full object-cover" />
-      <div className="absolute inset-0 bg-hero-gradient opacity-90" />
-      <div className="relative mx-auto max-w-7xl px-4 py-20 md:px-8 md:py-32">
-        <div className="max-w-2xl animate-float-in">
-          <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-widest text-white backdrop-blur">
-            <span className="h-2 w-2 rounded-full bg-orange" /> ⭐ Hyderabad's Trusted Cab Services
-          </span>
-          <h1 className="mt-6 font-display text-4xl font-bold leading-[1.05] text-white md:text-6xl">
-            Premium Airport Taxi
-            <span className="mt-2 block text-3xl font-semibold text-gold md:text-5xl">& Luxury One Way Cab Services</span>
-          </h1>
-          <p className="mt-5 max-w-xl text-base text-white/85 md:text-lg">
-            Travel anywhere across Telangana & Andhra Pradesh with safe, comfortable, affordable and premium taxi services.
-          </p>
+    <section id="top" className="relative overflow-hidden bg-background">
+      {/* soft premium backdrop — no harsh colour bars */}
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(120%_90%_at_50%_0%,color-mix(in_oklab,var(--gold)_16%,transparent)_0%,transparent_60%)]" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-accent/40" />
 
-          <div className="mt-6 grid max-w-xl grid-cols-2 gap-2 text-sm text-white/90 sm:grid-cols-3">
-            {["✈️ Airport Pickup & Drop", "➡️ One Way Taxi", "🛣️ Outstation Cabs", "👑 Luxury Fleet", "🕐 24×7 Available", "🧑‍✈️ Pro Drivers"].map((f) => (
-              <div key={f} className="rounded-lg border border-white/15 bg-white/10 px-3 py-2 backdrop-blur">{f}</div>
-            ))}
+      <div className="relative mx-auto max-w-7xl px-4 pb-24 pt-8 md:px-8 md:pb-32 md:pt-14">
+        <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-12">
+          {/* 1 — VEHICLE: primary focal point, always fully visible */}
+          <div className="order-1 lg:order-2">
+            <div className="relative mx-auto max-w-2xl">
+              <div className="absolute inset-x-6 bottom-3 h-8 rounded-[100%] bg-primary/15 blur-2xl" />
+              <img
+                src={heroCab}
+                alt="Premium white Toyota Innova airport taxi from GM Cabs Services at Rajiv Gandhi International Airport, Hyderabad — front three-quarter view"
+                width={1600}
+                height={1104}
+                fetchPriority="high"
+                decoding="async"
+                className="relative w-full rounded-2xl object-contain shadow-elegant"
+              />
+              <div className="absolute bottom-3 left-3 rounded-full border border-border bg-background/90 px-3 py-1.5 text-[11px] font-semibold text-primary shadow-card backdrop-blur">
+                🕐 24×7 · Airport Meet &amp; Greet
+              </div>
+            </div>
           </div>
 
-          <div className="mt-7 flex flex-wrap gap-3">
-            <a href={waLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-[var(--whatsapp-ink)] px-6 py-3.5 text-sm font-semibold text-white shadow-elegant hover:opacity-90">
-              <WhatsAppIcon className="h-5 w-5" /> Book on WhatsApp
-            </a>
-            <a href={telLink} className="inline-flex items-center gap-2 rounded-full bg-brand-gradient px-6 py-3.5 text-sm font-semibold text-white shadow-gold hover:opacity-90">
-              📞 Call {PHONE}
-            </a>
+          {/* 2 — HEADLINE, 3 — CTAs, 4 — TRUST */}
+          <div className="order-2 animate-float-in lg:order-1">
+            <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-1.5 text-[11px] font-semibold uppercase tracking-widest text-primary shadow-card">
+              <span className="h-2 w-2 rounded-full bg-gold" /> ⭐ Hyderabad&apos;s Trusted Cab Partner
+            </span>
+
+            <h1 className="mt-5 font-display text-[2.1rem] font-bold leading-[1.08] text-primary sm:text-5xl md:text-6xl">
+              Premium Cab Services
+              <span className="block text-gold-ink">in Hyderabad</span>
+            </h1>
+
+            <p className="mt-4 text-base font-medium text-muted-foreground md:text-lg">
+              Airport Transfers <span className="text-gold-ink">•</span> One Way Trips <span className="text-gold-ink">•</span> Outstation Travel
+            </p>
+
+            <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+              <a
+                href="#quote"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-brand-gradient px-7 py-4 text-sm font-bold text-white shadow-gold transition hover:opacity-90"
+              >
+                Book Now <span aria-hidden>→</span>
+              </a>
+              <a
+                href={telLink}
+                className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-primary bg-background px-7 py-4 text-sm font-bold text-primary transition hover:bg-primary hover:text-primary-foreground"
+              >
+                📞 Call Now
+              </a>
+            </div>
+
+            <dl className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
+              {[
+                { k: "10+ yrs", v: "Experience" },
+                { k: "24×7", v: "Availability" },
+                { k: "4.9★", v: "Rated service" },
+                { k: "100%", v: "Verified drivers" },
+              ].map((t) => (
+                <div key={t.k} className="rounded-xl border border-border bg-card px-3 py-2.5 text-center shadow-card">
+                  <dt className="font-display text-base font-bold text-primary">{t.k}</dt>
+                  <dd className="mt-0.5 text-[11px] font-medium text-muted-foreground">{t.v}</dd>
+                </div>
+              ))}
+            </dl>
           </div>
         </div>
       </div>
     </section>
   );
 }
+
 
 /* ---------------- QUOTE WIDGET ---------------- */
 type TripType = "airport" | "oneway" | "outstation" | "local";
