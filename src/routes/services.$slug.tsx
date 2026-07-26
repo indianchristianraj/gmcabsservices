@@ -448,7 +448,7 @@ function ServiceDetail() {
             </a>
           </div>
           <div className="mt-10 border-t border-white/10 pt-8">
-            <div className="text-xs font-semibold uppercase tracking-[0.2em] text-orange-ink">Explore more services</div>
+            <div className="text-xs font-semibold uppercase tracking-[0.2em] text-orange">Explore more services</div>
             <div className="mt-4 flex flex-wrap justify-center gap-2">
               {Object.values(SERVICES).filter((o) => o.slug !== s.slug).slice(0, 6).map((o) => (
                 <Link key={o.slug} to="/services/$slug" params={{ slug: o.slug }} className="rounded-full border border-white/20 bg-white/5 px-4 py-2 text-xs font-semibold text-white hover:border-orange hover:bg-white/10">
