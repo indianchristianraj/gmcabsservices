@@ -1,7 +1,7 @@
 import { createFileRoute, useRouterState, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { trackEvent } from "@/lib/analytics";
-import heroCab from "@/assets/hero-cab.webp";
+import heroCab from "@/assets/hero-suv-front.webp";
 import airportImg from "@/assets/airport.webp";
 import outstationImg from "@/assets/outstation.webp";
 import localImg from "@/assets/local.webp";
@@ -696,21 +696,21 @@ function Services() {
   return (
     <section id="services" className="mx-auto max-w-7xl px-4 py-20 md:px-8 md:py-28">
       <SectionHead eyebrow="What We Offer" title="Cab services built around your journey" sub="From quick airport runs to multi-day outstation trips — every service, one trusted partner." />
-      <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-12 grid auto-rows-fr gap-6 sm:gap-7 md:grid-cols-2 lg:grid-cols-3">
         {services.map((s) => (
-          <article key={s.title} className="group overflow-hidden rounded-2xl border border-border bg-card shadow-card transition hover:-translate-y-1 hover:shadow-elegant">
+          <article key={s.title} className="group flex h-full flex-col overflow-hidden rounded-3xl border border-border bg-card shadow-card transition hover:-translate-y-1 hover:shadow-elegant">
             <div className="relative aspect-[16/10] overflow-hidden">
               <img src={s.img} alt={`${s.title} — GM Cabs Services in Hyderabad`} loading="lazy" decoding="async" width={1280} height={800} className="h-full w-full object-cover transition duration-700 group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+              <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/25 to-transparent" />
               <div className="absolute left-4 top-4 grid h-11 w-11 place-items-center rounded-xl bg-background/95 text-xl shadow-card">{s.icon}</div>
             </div>
-            <div className="p-6">
-              <h3 className="font-display text-xl font-bold text-primary">{s.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{s.desc}</p>
+            <div className="flex flex-1 flex-col p-6">
+              <h3 className="font-display text-xl font-bold leading-snug text-primary">{s.title}</h3>
+              <p className="mt-2.5 text-sm leading-relaxed text-muted-foreground">{s.desc}</p>
               <Link to="/services/$slug" params={{ slug: s.slug }} className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-orange-ink hover:text-primary">
                 Learn more <span aria-hidden>→</span>
               </Link>
-              <div className="mt-4 flex gap-2">
+              <div className="mt-5 flex gap-2 pt-1 [margin-top:auto]">
                 <a href={waFor(s.title)} target="_blank" rel="noopener noreferrer" className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-full bg-[var(--whatsapp-ink)] px-3 py-2 text-xs font-semibold text-white hover:opacity-90">
                   <WhatsAppIcon className="h-3.5 w-3.5" /> WhatsApp
                 </a>
@@ -820,7 +820,7 @@ function Packages() {
     <section id="packages" className="bg-accent/40 py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-4 md:px-8">
         <SectionHead eyebrow="Popular Packages" title="Ready-made cab packages in Hyderabad" sub="Popular trips our customers book most — every package includes fuel, driver and AC." />
-        <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-12 grid auto-rows-fr gap-6 sm:gap-7 md:grid-cols-2 lg:grid-cols-3">
           {packages.map((p) => (
             <article key={p.title} className="flex flex-col rounded-2xl border border-border bg-card p-6 shadow-card transition hover:-translate-y-1 hover:border-orange hover:shadow-elegant">
               <div className="text-[10px] font-semibold uppercase tracking-widest text-orange-ink">{p.tag}</div>
