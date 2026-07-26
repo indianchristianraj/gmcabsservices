@@ -26,6 +26,8 @@
   --color-accent-foreground: var(--accent-foreground);
   --color-gold: var(--gold);
   --color-gold-foreground: var(--gold-foreground);
+  --color-gold-ink: var(--gold-ink);
+
   --color-orange: var(--orange);
   --color-orange-foreground: var(--orange-foreground);
   --color-coral: var(--coral);
