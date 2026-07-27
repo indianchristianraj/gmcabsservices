@@ -914,7 +914,7 @@ function WhyUs() {
             Founded by <strong className="text-white">Mohsin Khan</strong>, GM Cabs Services has grown into one of Nacharam's trusted travel partners — with a premium fleet, verified chauffeurs and a passion for punctual, comfortable rides across Hyderabad, Telangana and Andhra Pradesh.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <a href={waLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-brand-gradient px-6 py-3 text-sm font-semibold text-white shadow-gold hover:opacity-90">
+            <a href={waLink} target="_blank" rel="noopener noreferrer" data-ga-name="WhatsApp — About section" data-ga-context="about" className="inline-flex items-center gap-2 rounded-full bg-brand-gradient px-6 py-3 text-sm font-semibold text-white shadow-gold hover:opacity-90">
               <WhatsAppIcon className="h-4 w-4" /> Chat with us
             </a>
             <a href={telLink} className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-6 py-3 text-sm font-semibold text-white backdrop-blur hover:bg-white/20">
