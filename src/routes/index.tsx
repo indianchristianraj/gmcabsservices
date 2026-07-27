@@ -1106,13 +1106,38 @@ function FloatingWhatsApp() {
     : context ? `Chat on WhatsApp about ${context}` : "Chat on WhatsApp";
   const shortLabel = hasDraft ? "Send booking" : context ? "Ask about this" : "Chat with us";
   return (
-    <a href={href} target="_blank" rel="noopener noreferrer" aria-label={label} title={label}
-      className="fixed bottom-6 right-6 z-50 flex items-center gap-2 rounded-full bg-[var(--whatsapp-ink)] py-3 pl-3 pr-4 text-white shadow-elegant animate-pulse-ring transition hover:scale-105">
-      <WhatsAppIcon className="h-7 w-7" />
-      <span className="hidden text-sm font-semibold sm:inline">{shortLabel}</span>
-    </a>
+    <>
+      {/* Mobile: slim sticky action bar — never overlaps content (spacer below) */}
+      <div
+        className="fixed inset-x-0 bottom-0 z-50 flex items-center gap-2 border-t border-border bg-background/95 px-3 py-2.5 shadow-elegant backdrop-blur sm:hidden"
+        style={{ paddingBottom: "calc(0.625rem + env(safe-area-inset-bottom))" }}
+      >
+        <a
+          href={href} target="_blank" rel="noopener noreferrer" aria-label={label} title={label}
+          data-ga-name="WhatsApp — Sticky bar" data-ga-context="sticky_bar"
+          className="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-[var(--whatsapp-ink)] px-4 py-3 text-sm font-bold text-white shadow-card active:scale-[0.98]"
+        >
+          <WhatsAppIcon className="h-5 w-5" /> {shortLabel}
+        </a>
+        <a
+          href={telLink} aria-label="Call GM Cabs Services"
+          className="inline-flex items-center justify-center gap-1.5 rounded-full bg-brand-gradient px-4 py-3 text-sm font-bold text-white shadow-card active:scale-[0.98]"
+        >
+          📞 Call
+        </a>
+      </div>
+
+      {/* Tablet / desktop: floating pill */}
+      <a href={href} target="_blank" rel="noopener noreferrer" aria-label={label} title={label}
+        data-ga-name="WhatsApp — Floating" data-ga-context="floating"
+        className="fixed bottom-6 right-6 z-50 hidden items-center gap-2 rounded-full bg-[var(--whatsapp-ink)] py-3 pl-3 pr-4 text-white shadow-elegant animate-pulse-ring transition hover:scale-105 sm:flex">
+        <WhatsAppIcon className="h-7 w-7" />
+        <span className="text-sm font-semibold">{shortLabel}</span>
+      </a>
+    </>
   );
 }
+
 
 function ScrollTop() {
   const [show, setShow] = useState(false);
