@@ -711,9 +711,10 @@ function Services() {
                 Learn more <span aria-hidden>→</span>
               </Link>
               <div className="mt-5 flex gap-2 pt-1 [margin-top:auto]">
-                <a href={waFor(s.title)} target="_blank" rel="noopener noreferrer" className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-full bg-[var(--whatsapp-ink)] px-3 py-2 text-xs font-semibold text-white hover:opacity-90">
+                <a href={waFor(s.title)} target="_blank" rel="noopener noreferrer" data-ga-name={`WhatsApp — ${s.title}`} data-ga-context="service_card" aria-label={`Book ${s.title} on WhatsApp`} className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-full bg-[var(--whatsapp-ink)] px-3 py-2 text-xs font-semibold text-white hover:opacity-90">
                   <WhatsAppIcon className="h-3.5 w-3.5" /> WhatsApp
                 </a>
+
                 <a href={telLink} className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-full bg-brand-gradient px-3 py-2 text-xs font-semibold text-white hover:opacity-90">
                   📞 Call
                 </a>
