@@ -337,7 +337,7 @@ function ServiceDetail() {
           <h1 className="mt-6 max-w-3xl font-display text-4xl font-bold text-white md:text-5xl lg:text-6xl">{s.title}</h1>
           <p className="mt-4 max-w-2xl text-lg text-white/85">{s.tagline}</p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <a href={wa(bookMsg)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-[var(--whatsapp-ink)] px-6 py-3 text-sm font-semibold text-white shadow-elegant hover:opacity-90">
+            <a href={wa(bookMsg)} target="_blank" rel="noopener noreferrer" data-ga-name={`WhatsApp — ${svc.title}`} data-ga-context="service_page" className="inline-flex items-center gap-2 rounded-full bg-[var(--whatsapp-ink)] px-6 py-3 text-sm font-semibold text-white shadow-elegant hover:opacity-90">
               💬 Book on WhatsApp
             </a>
             <a href={telLink} className="inline-flex items-center gap-2 rounded-full bg-brand-gradient px-6 py-3 text-sm font-semibold text-white shadow-gold hover:opacity-90">
@@ -440,7 +440,7 @@ function ServiceDetail() {
           <h2 className="font-display text-3xl font-bold text-white md:text-4xl">Ready to book {s.title.toLowerCase()}?</h2>
           <p className="mt-3 text-white/80">Message us on WhatsApp — we typically respond within a minute.</p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <a href={wa(bookMsg)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-[var(--whatsapp-ink)] px-6 py-3 text-sm font-semibold text-white shadow-elegant hover:opacity-90">
+            <a href={wa(bookMsg)} target="_blank" rel="noopener noreferrer" data-ga-name={`WhatsApp — ${svc.title}`} data-ga-context="service_page" className="inline-flex items-center gap-2 rounded-full bg-[var(--whatsapp-ink)] px-6 py-3 text-sm font-semibold text-white shadow-elegant hover:opacity-90">
               💬 Book on WhatsApp
             </a>
             <a href={telLink} className="inline-flex items-center gap-2 rounded-full bg-brand-gradient px-6 py-3 text-sm font-semibold text-white shadow-gold hover:opacity-90">
