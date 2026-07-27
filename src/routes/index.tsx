@@ -372,12 +372,23 @@ function Hero() {
               Airport Transfers <span className="text-gold-ink">•</span> One Way Trips <span className="text-gold-ink">•</span> Outstation Travel
             </p>
 
-            <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <a
                 href="#quote"
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-brand-gradient px-7 py-4 text-sm font-bold text-white shadow-gold transition hover:opacity-90"
               >
                 Book Now <span aria-hidden>→</span>
+              </a>
+              <a
+                href={waFor("Airport & outstation cab booking")}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-ga-name="WhatsApp — Hero"
+                data-ga-context="hero"
+                aria-label="Book a cab on WhatsApp"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-[var(--whatsapp-ink)] px-7 py-4 text-sm font-bold text-white shadow-elegant transition hover:opacity-90"
+              >
+                <WhatsAppIcon className="h-4 w-4" /> WhatsApp Booking
               </a>
               <a
                 href={telLink}
@@ -386,6 +397,7 @@ function Hero() {
                 📞 Call Now
               </a>
             </div>
+
 
             <dl className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
               {[
