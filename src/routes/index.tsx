@@ -294,7 +294,7 @@ function Header() {
           <a href="#contact" className="hover:text-orange-ink">Contact</a>
         </nav>
         <div className="hidden items-center gap-2 lg:flex">
-          <a href={waLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 rounded-full bg-[var(--whatsapp-ink)] px-4 py-2 text-xs font-semibold text-white shadow-card hover:opacity-90">
+          <a href={waLink} target="_blank" rel="noopener noreferrer" data-ga-name="WhatsApp — Header" data-ga-context="header" className="inline-flex items-center gap-1.5 rounded-full bg-[var(--whatsapp-ink)] px-4 py-2 text-xs font-semibold text-white shadow-card hover:opacity-90">
             <WhatsAppIcon className="h-4 w-4" /> WhatsApp
           </a>
           <a href={telLink} className="inline-flex items-center gap-1.5 rounded-full bg-brand-gradient px-4 py-2 text-xs font-semibold text-white shadow-gold hover:opacity-90">
@@ -316,7 +316,7 @@ function Header() {
               <a key={h} href={h} onClick={() => setOpen(false)} className="rounded-lg px-3 py-2.5 hover:bg-accent">{l}</a>
             ))}
             <div className="mt-2 grid grid-cols-2 gap-2 pt-2">
-              <a href={waLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-1.5 rounded-full bg-[var(--whatsapp-ink)] px-4 py-2.5 text-xs font-semibold text-white shadow-card">
+              <a href={waLink} target="_blank" rel="noopener noreferrer" data-ga-name="WhatsApp — Mobile menu" data-ga-context="header_menu" className="inline-flex items-center justify-center gap-1.5 rounded-full bg-[var(--whatsapp-ink)] px-4 py-2.5 text-xs font-semibold text-white shadow-card">
                 <WhatsAppIcon className="h-4 w-4" /> WhatsApp
               </a>
               <a href={telLink} className="inline-flex items-center justify-center gap-1.5 rounded-full bg-brand-gradient px-4 py-2.5 text-xs font-semibold text-white shadow-gold">
@@ -783,7 +783,7 @@ function Fleet() {
                   <div><div className="text-primary">⛽ {v.fuel}</div><div className="text-[10px]">Fuel</div></div>
                 </div>
                 <div className="mt-4 flex gap-2">
-                  <a href={waFor(`${v.name} booking`)} target="_blank" rel="noopener noreferrer" className="inline-flex flex-1 items-center justify-center gap-1 rounded-full bg-[var(--whatsapp-ink)] px-3 py-2 text-[11px] font-semibold text-white hover:opacity-90">
+                  <a href={waFor(`${v.name} booking`)} target="_blank" rel="noopener noreferrer" data-ga-name={`WhatsApp — ${v.name}`} data-ga-context="fleet_card" aria-label={`Book ${v.name} on WhatsApp`} className="inline-flex flex-1 items-center justify-center gap-1 rounded-full bg-[var(--whatsapp-ink)] px-3 py-2 text-[11px] font-semibold text-white hover:opacity-90">
                     <WhatsAppIcon className="h-3 w-3" /> WhatsApp
                   </a>
                   <a href="#contact" className="inline-flex flex-1 items-center justify-center rounded-full bg-brand-gradient px-3 py-2 text-[11px] font-semibold text-white hover:opacity-90">
@@ -811,6 +811,9 @@ function Routes() {
             href={waFor(`Hyderabad to ${r.to} taxi`)}
             target="_blank"
             rel="noopener noreferrer"
+            data-ga-name={`WhatsApp — Hyderabad to ${r.to}`}
+            data-ga-context="route_card"
+            aria-label={`Book a Hyderabad to ${r.to} taxi on WhatsApp`}
             className="group flex items-center justify-between gap-3 rounded-xl border border-border bg-card px-4 py-3.5 shadow-card transition hover:-translate-y-0.5 hover:border-orange hover:shadow-elegant"
           >
             <div className="min-w-0">
@@ -850,7 +853,7 @@ function Packages() {
                   <li key={i} className="rounded-full border border-border bg-background px-2.5 py-0.5 text-[11px] text-muted-foreground">✓ {i}</li>
                 ))}
               </ul>
-              <a href={waFor(`${p.title} package`)} target="_blank" rel="noopener noreferrer" className="mt-5 inline-flex items-center justify-center gap-2 rounded-full bg-brand-gradient px-4 py-2.5 text-xs font-semibold text-white shadow-gold hover:opacity-90">
+              <a href={waFor(`${p.title} package`)} target="_blank" rel="noopener noreferrer" data-ga-name={`WhatsApp — ${p.title}`} data-ga-context="package_card" aria-label={`Get a quote for ${p.title} on WhatsApp`} className="mt-5 inline-flex items-center justify-center gap-2 rounded-full bg-brand-gradient px-4 py-2.5 text-xs font-semibold text-white shadow-gold hover:opacity-90">
                 <WhatsAppIcon className="h-4 w-4" /> Get quote on WhatsApp
               </a>
             </article>
@@ -966,7 +969,7 @@ function Contact() {
           <ContactCard icon="📞" title="Call / SMS" line={PHONE} href={telLink} />
           <ContactCard icon="✉️" title="Email" line={EMAIL} href={`mailto:${EMAIL}`} />
           <ContactCard icon="📍" title="Visit Us" line={ADDRESS} />
-          <a href={waLink} target="_blank" rel="noopener noreferrer" className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[var(--whatsapp-ink)] px-6 py-3.5 text-sm font-semibold text-white shadow-elegant hover:opacity-90">
+          <a href={waLink} target="_blank" rel="noopener noreferrer" data-ga-name="WhatsApp — Contact section" data-ga-context="contact" className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[var(--whatsapp-ink)] px-6 py-3.5 text-sm font-semibold text-white shadow-elegant hover:opacity-90">
             <WhatsAppIcon className="h-5 w-5" /> Quick WhatsApp chat
           </a>
           <div className="overflow-hidden rounded-2xl border border-border shadow-card">
