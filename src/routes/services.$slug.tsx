@@ -294,9 +294,9 @@ export const Route = createFileRoute("/services/$slug")({
         { property: "og:description", content: s.seo.desc },
         { property: "og:type", content: "website" },
         { property: "og:url", content: url },
-        { property: "og:image", content: s.hero },
+        { property: "og:image", content: `https://www.gmcabsservices.com${s.hero}` },
         { name: "twitter:card", content: "summary_large_image" },
-        { name: "twitter:image", content: s.hero },
+        { name: "twitter:image", content: `https://www.gmcabsservices.com${s.hero}` },
       ],
       links: [{ rel: "canonical", href: url }],
     };
