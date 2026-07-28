@@ -805,31 +805,49 @@ function Routes() {
     <section id="routes" className="mx-auto max-w-7xl px-4 py-20 md:px-8 md:py-28">
       <SectionHead eyebrow="Popular Routes" title="Outstation cabs from Hyderabad" sub="One-way and round trip cabs to every major destination in Telangana & Andhra Pradesh." />
       <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        {routes.map((r) => (
-          <a
-            key={r.to}
-            href={waFor(`Hyderabad to ${r.to} taxi`)}
-            target="_blank"
-            rel="noopener noreferrer"
-            data-ga-name={`WhatsApp — Hyderabad to ${r.to}`}
-            data-ga-context="route_card"
-            aria-label={`Book a Hyderabad to ${r.to} taxi on WhatsApp`}
-            className="group flex items-center justify-between gap-3 rounded-xl border border-border bg-card px-4 py-3.5 shadow-card transition hover:-translate-y-0.5 hover:border-orange hover:shadow-elegant"
+        {TRIP_ROUTE_LIST.map((r) => (
+          <div
+            key={r.slug}
+            className="group flex items-center justify-between gap-2 rounded-xl border border-border bg-card px-4 py-3.5 shadow-card transition hover:-translate-y-0.5 hover:border-orange hover:shadow-elegant"
           >
-            <div className="min-w-0">
-              <div className="flex items-center gap-2 text-sm font-semibold text-primary">
+            <Link
+              to="/routes/$slug"
+              params={{ slug: r.slug }}
+              className="min-w-0 flex-1"
+              aria-label={`Hyderabad to ${r.city} cab — route details`}
+            >
+              <span className="flex items-center gap-2 text-sm font-semibold text-primary">
                 <span>Hyderabad</span>
                 <span className="text-orange-ink">→</span>
-                <span className="truncate">{r.to}</span>
-              </div>
-              <div className="mt-0.5 text-[11px] text-muted-foreground">{r.km} · approx {r.time}</div>
-            </div>
-            <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-accent text-orange-ink transition group-hover:bg-brand-gradient group-hover:text-white">→</span>
-          </a>
+                <span className="truncate">{r.city}</span>
+              </span>
+              <span className="mt-0.5 block text-[11px] text-muted-foreground">{r.km} km · approx {r.hours}</span>
+            </Link>
+            <a
+              href={waFor(`Hyderabad to ${r.city} taxi`)}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-ga-name={`WhatsApp — Hyderabad to ${r.city}`}
+              data-ga-context="route_card"
+              aria-label={`Book a Hyderabad to ${r.city} taxi on WhatsApp`}
+              className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-accent text-orange-ink transition hover:bg-brand-gradient hover:text-white"
+            >
+              <WhatsAppIcon className="h-4 w-4" />
+            </a>
+          </div>
         ))}
+      </div>
+      <div className="mt-8 text-center">
+        <Link
+          to="/routes"
+          className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-2.5 text-sm font-semibold text-primary transition hover:border-orange"
+        >
+          View all outstation route guides →
+        </Link>
       </div>
     </section>
   );
+
 }
 
 /* ---------------- PACKAGES ---------------- */
