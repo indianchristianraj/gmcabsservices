@@ -282,30 +282,33 @@ function Header() {
       <div className="mx-auto flex h-[70px] max-w-7xl items-center justify-between gap-4 px-4 md:h-20 md:px-8">
         <a href="#top" className="flex min-w-0 shrink items-center py-1.5" aria-label="GM Cabs Services home"><Logo /></a>
 
-        <nav className="hidden items-center gap-7 text-sm font-medium text-foreground/80 lg:flex">
-          <a href="#services" className="hover:text-orange-ink">Services</a>
-          <a href="#fleet" className="hover:text-orange-ink">Fleet</a>
-          <a href="#routes" className="hover:text-orange-ink">Routes</a>
-          <a href="#packages" className="hover:text-orange-ink">Packages</a>
-          <a href="#about" className="hover:text-orange-ink">About</a>
-          <a href="#contact" className="hover:text-orange-ink">Contact</a>
-        </nav>
-        <div className="hidden items-center gap-2 lg:flex">
-          <a href={waLink} target="_blank" rel="noopener noreferrer" data-ga-name="WhatsApp — Header" data-ga-context="header" className="inline-flex items-center gap-1.5 rounded-full bg-[var(--whatsapp-ink)] px-4 py-2 text-xs font-semibold text-white shadow-card hover:opacity-90">
-            <WhatsAppIcon className="h-4 w-4" /> WhatsApp
-          </a>
-          <a href={telLink} className="inline-flex items-center gap-1.5 rounded-full bg-brand-gradient px-4 py-2 text-xs font-semibold text-white shadow-gold hover:opacity-90">
-            📞 Call Now
-          </a>
+        <div className="flex shrink-0 items-center gap-3 lg:gap-6">
+          <nav className="hidden items-center gap-7 text-sm font-medium text-foreground/80 lg:flex">
+            <a href="#services" className="hover:text-orange-ink">Services</a>
+            <a href="#fleet" className="hover:text-orange-ink">Fleet</a>
+            <a href="#routes" className="hover:text-orange-ink">Routes</a>
+            <a href="#packages" className="hover:text-orange-ink">Packages</a>
+            <a href="#about" className="hover:text-orange-ink">About</a>
+            <a href="#contact" className="hover:text-orange-ink">Contact</a>
+          </nav>
+          <div className="hidden items-center gap-2 lg:flex">
+            <a href={waLink} target="_blank" rel="noopener noreferrer" data-ga-name="WhatsApp — Header" data-ga-context="header" className="inline-flex items-center gap-1.5 rounded-full bg-[var(--whatsapp-ink)] px-4 py-2 text-xs font-semibold text-white shadow-card hover:opacity-90">
+              <WhatsAppIcon className="h-4 w-4" /> WhatsApp
+            </a>
+            <a href={telLink} className="inline-flex items-center gap-1.5 rounded-full bg-brand-gradient px-4 py-2 text-xs font-semibold text-white shadow-gold hover:opacity-90">
+              📞 Call Now
+            </a>
+          </div>
+          <button
+            onClick={() => setOpen((o) => !o)}
+            aria-label="Open menu"
+            className="grid h-11 w-11 shrink-0 place-items-center rounded-lg border border-border bg-card text-primary shadow-card lg:hidden"
+          >
+            <span className="text-xl leading-none">{open ? "✕" : "☰"}</span>
+          </button>
         </div>
-        <button
-          onClick={() => setOpen((o) => !o)}
-          aria-label="Open menu"
-          className="grid h-10 w-10 place-items-center rounded-lg border border-border bg-card text-primary shadow-card lg:hidden"
-        >
-          <span className="text-xl leading-none">{open ? "✕" : "☰"}</span>
-        </button>
       </div>
+
       {open && (
         <div className="border-t border-border bg-card lg:hidden">
           <nav className="mx-auto flex max-w-7xl flex-col gap-1 px-4 py-3 text-sm font-medium">
