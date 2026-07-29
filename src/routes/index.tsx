@@ -61,30 +61,12 @@ export const Route = createFileRoute("/")({
   }),
 });
 
-const PHONE = "6301875485";
-const PHONE_INTL = "916301875485";
 const EMAIL = "gmcabsservices@gmail.com";
 const EMAIL_RENTALS = "gmcabrentals@gmail.com";
 const ADDRESS = "H.No: 7-6/16, Sri Sai Colony, Nacharam, Hyderabad - 500076";
 
-function waFor(context?: string, route?: string) {
-  const base = "Hi GM Cabs,";
-  const ctx = context ? ` I'm interested in *${context}*.` : " I would like to book a cab.";
-  const from = route && route !== "/" ? ` (from page: ${route})` : "";
-  const msg = `${base}${ctx}${from} Please share availability and pricing.`;
-  return `https://wa.me/${PHONE_INTL}?text=${encodeURIComponent(msg)}`;
-}
 const waLink = waFor();
-const telLink = `tel:+${PHONE_INTL}`;
 
-const SECTION_CONTEXT: Record<string, string> = {
-  services: "your cab services",
-  fleet: "your premium fleet",
-  routes: "your popular outstation routes",
-  packages: "your Hyderabad cab packages",
-  about: "GM Cabs Services",
-  contact: "booking a cab",
-};
 
 
 
