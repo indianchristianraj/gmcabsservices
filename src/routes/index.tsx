@@ -1055,74 +1055,8 @@ function Footer() {
   );
 }
 
-/* ---------------- FLOATING WA + SCROLL TOP ---------------- */
-function FloatingWhatsApp() {
-  const [section, setSection] = useState<string | null>(null);
-  const route = useRouterState({ select: (s) => s.location.pathname });
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const ids = Object.keys(SECTION_CONTEXT);
-    const els = ids.map((id) => document.getElementById(id)).filter((el): el is HTMLElement => !!el);
-    if (!els.length) return;
-    const visible = new Map<string, number>();
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) {
-          if (e.isIntersecting) visible.set(e.target.id, e.intersectionRatio);
-          else visible.delete(e.target.id);
-        }
-        let top: string | null = null;
-        let best = 0;
-        for (const [id, ratio] of visible) if (ratio > best) { best = ratio; top = id; }
-        setSection(top);
-      },
-      { threshold: [0.25, 0.5, 0.75], rootMargin: "-80px 0px -40% 0px" },
-    );
-    els.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, []);
-  const draft = useBookingDraft();
-  const hasDraft = hasBookingDetails(draft);
-  const context = section ? SECTION_CONTEXT[section] : undefined;
-  const href = hasDraft
-    ? `https://wa.me/${PHONE_INTL}?text=${encodeURIComponent(buildBookingMessage(draft))}`
-    : waFor(context, route);
-  const label = hasDraft
-    ? "Send your booking details on WhatsApp"
-    : context ? `Chat on WhatsApp about ${context}` : "Chat on WhatsApp";
-  const shortLabel = hasDraft ? "Send booking" : context ? "Ask about this" : "Chat with us";
-  return (
-    <>
-      {/* Mobile: slim sticky action bar — never overlaps content (spacer below) */}
-      <div
-        className="fixed inset-x-0 bottom-0 z-50 flex items-center gap-2 border-t border-border bg-background/95 px-3 py-2.5 shadow-elegant backdrop-blur sm:hidden"
-        style={{ paddingBottom: "calc(0.625rem + env(safe-area-inset-bottom))" }}
-      >
-        <a
-          href={href} target="_blank" rel="noopener noreferrer" aria-label={label} title={label}
-          data-ga-name="WhatsApp — Sticky bar" data-ga-context="sticky_bar"
-          className="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-[var(--whatsapp-ink)] px-4 py-3 text-sm font-bold text-white shadow-card active:scale-[0.98]"
-        >
-          <WhatsAppIcon className="h-5 w-5" /> {shortLabel}
-        </a>
-        <a
-          href={telLink} aria-label="Call GM Cabs Services"
-          className="inline-flex items-center justify-center gap-1.5 rounded-full bg-brand-gradient px-4 py-3 text-sm font-bold text-white shadow-card active:scale-[0.98]"
-        >
-          📞 Call
-        </a>
-      </div>
+/* ---------------- SCROLL TOP ---------------- */
 
-      {/* Tablet / desktop: floating pill */}
-      <a href={href} target="_blank" rel="noopener noreferrer" aria-label={label} title={label}
-        data-ga-name="WhatsApp — Floating" data-ga-context="floating"
-        className="fixed bottom-6 right-6 z-50 hidden items-center gap-2 rounded-full bg-[var(--whatsapp-ink)] py-3 pl-3 pr-4 text-white shadow-elegant animate-pulse-ring transition hover:scale-105 sm:flex">
-        <WhatsAppIcon className="h-7 w-7" />
-        <span className="text-sm font-semibold">{shortLabel}</span>
-      </a>
-    </>
-  );
-}
 
 
 function ScrollTop() {
