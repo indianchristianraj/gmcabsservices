@@ -260,33 +260,28 @@ function Index() {
 }
 
 /* ---------------- HEADER ---------------- */
-function Logo({ size = 40 }: { size?: number }) {
+function Logo() {
   return (
-    <div className="flex items-center gap-2.5">
-      <img
-        src={gmLogo.url}
-        alt="GM Cabs Services"
-        width={size}
-        height={size}
-        decoding="async"
-        fetchPriority="high"
-        className="shrink-0 rounded-lg object-cover shadow-card"
-        style={{ width: size, height: size }}
-      />
-      <div className="leading-tight">
-        <div className="font-display text-base font-bold text-primary sm:text-lg">GM Cabs Services</div>
-        <div className="text-[9px] font-semibold uppercase tracking-[0.15em] text-orange-ink sm:text-[10px]">Airport · One Way · Outstation</div>
-      </div>
-    </div>
+    <img
+      src={gmLogoMark.url}
+      alt="GM Cabs Services Hyderabad"
+      title="GM Cabs Services"
+      width={954}
+      height={518}
+      decoding="async"
+      fetchPriority="high"
+      className="h-[60px] w-auto max-w-full object-contain md:h-[70px]"
+    />
   );
 }
 
 function Header() {
   const [open, setOpen] = useState(false);
   return (
-    <header className="sticky top-0 z-40 border-b border-border/60 bg-background/85 backdrop-blur-lg">
-      <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 py-3 md:px-8">
-        <a href="#top" className="min-w-0"><Logo /></a>
+    <header className="sticky top-0 z-40 border-b border-border/60 bg-card shadow-card">
+      <div className="mx-auto flex h-[70px] max-w-7xl items-center justify-between gap-4 px-4 md:h-20 md:px-8">
+        <a href="#top" className="flex min-w-0 shrink items-center py-1.5" aria-label="GM Cabs Services home"><Logo /></a>
+
         <nav className="hidden items-center gap-7 text-sm font-medium text-foreground/80 lg:flex">
           <a href="#services" className="hover:text-orange-ink">Services</a>
           <a href="#fleet" className="hover:text-orange-ink">Fleet</a>
