@@ -9,6 +9,7 @@ import outstationImg from "@/assets/outstation.webp";
 import localImg from "@/assets/local.webp";
 import ramojiImg from "@/assets/ramoji.webp";
 import gmLogo from "@/assets/gm-logo.jpg.asset.json";
+import gmLogoMark from "@/assets/gm-logo-mark.png.asset.json";
 import innovaRamoji from "@/assets/innova-ramoji.png.asset.json";
 import innovaHycross from "@/assets/innova-hycross.png.asset.json";
 import fleetPair from "@/assets/fleet-pair.png.asset.json";
