@@ -1,7 +1,9 @@
 import { createFileRoute, useRouterState, Link } from "@tanstack/react-router";
-import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { useEffect, useRef, useState } from "react";
 import { trackEvent } from "@/lib/analytics";
 import { TRIP_ROUTE_LIST } from "@/lib/trip-routes";
+import { PHONE, PHONE_INTL, telLink, waFor, bookingStore, EMPTY_DRAFT } from "@/lib/whatsapp";
+import { WhatsAppIcon } from "@/components/FloatingWhatsApp";
 
 import heroCab from "@/assets/hero-suv-front.webp";
 import airportImg from "@/assets/airport.webp";
