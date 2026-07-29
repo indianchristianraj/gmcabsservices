@@ -213,10 +213,8 @@ function Index() {
       <Instagram />
       <Contact />
       <Footer />
-      {/* keeps the mobile sticky bar from covering page content */}
-      <div aria-hidden className="h-[76px] sm:hidden" />
-      <FloatingWhatsApp />
       <FloatingCall />
+
       <ScrollTop />
     </div>
   );
