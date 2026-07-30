@@ -918,8 +918,11 @@ function Contact() {
               width="100%"
               height="220"
               loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              style={{ contentVisibility: "auto", containIntrinsicSize: "220px" }}
               className="border-0"
             />
+
           </div>
         </div>
       </div>
