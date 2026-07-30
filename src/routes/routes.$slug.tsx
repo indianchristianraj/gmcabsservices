@@ -1,9 +1,6 @@
+import { Pic } from "@/components/Pic";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { TRIP_ROUTES, TRIP_ROUTE_LIST, type TripRoute } from "@/lib/trip-routes";
-import outstationImg from "@/assets/outstation.webp";
-import ramojiImg from "@/assets/ramoji.webp";
-import localImg from "@/assets/local.webp";
-import heroCab from "@/assets/hero-cab.webp";
 
 const PHONE_INTL = "916301875485";
 const SITE = "https://www.gmcabsservices.com";
@@ -14,13 +11,13 @@ function wa(msg: string) {
 }
 
 const HERO_IMAGES: Record<string, string> = {
-  "hyderabad-to-ramoji-film-city": ramojiImg,
-  "hyderabad-to-yadagirigutta": localImg,
-  "hyderabad-to-srisailam": heroCab,
+  "hyderabad-to-ramoji-film-city": "ramoji",
+  "hyderabad-to-yadagirigutta": "local",
+  "hyderabad-to-srisailam": "hero-cab",
 };
 
 function heroFor(slug: string) {
-  return HERO_IMAGES[slug] ?? outstationImg;
+  return HERO_IMAGES[slug] ?? "outstation";
 }
 
 export const Route = createFileRoute("/routes/$slug")({
@@ -130,11 +127,11 @@ function RoutePage() {
       {/* HERO */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0">
-          <img
-            src={heroFor(slug)}
+          <Pic
+            name={heroFor(slug)}
             alt={`${title} outstation cab by GM Cabs Services`}
-            fetchPriority="high"
-            decoding="async"
+            sizes="100vw"
+            priority
             className="h-full w-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-primary/85 via-primary/70 to-primary/90" />
