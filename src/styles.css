@@ -166,7 +166,6 @@
 }
 
 /* ---- Rendering performance ---- */
-img, picture, iframe { content-visibility: auto; }
 .animate-float-in, .animate-pulse-ring { will-change: transform, opacity; }
 @media (max-width: 767px) {
   /* Trim heavy compositing work on low-power mobile devices. */
