@@ -155,18 +155,45 @@ function RootComponent() {
   const router = useRouter();
 
   useEffect(() => {
-    void import("../lib/web-vitals").then((m) => m.initWebVitals());
-    void import("../lib/analytics").then(({ initAnalytics }) => {
-      initAnalytics((cb) => {
-        const unsub = router.subscribe("onResolved", () => {
-          if (typeof window !== "undefined") {
-            cb(window.location.pathname + window.location.search);
-          }
+    // Third-party / measurement code is deferred until the page is interactive
+    // (browser idle) or the user's first interaction — whichever comes first.
+    let done = false;
+    const events = ["pointerdown", "keydown", "touchstart", "scroll"] as const;
+
+    const cleanup = () => {
+      events.forEach((e) => window.removeEventListener(e, load));
+    };
+
+    function load() {
+      if (done) return;
+      done = true;
+      cleanup();
+      void import("../lib/web-vitals").then((m) => m.initWebVitals());
+      void import("../lib/analytics").then(({ initAnalytics }) => {
+        initAnalytics((cb) => {
+          const unsub = router.subscribe("onResolved", () => {
+            if (typeof window !== "undefined") {
+              cb(window.location.pathname + window.location.search);
+            }
+          });
+          return unsub;
         });
-        return unsub;
       });
-    });
+    }
+
+    events.forEach((e) => window.addEventListener(e, load, { passive: true, once: true }));
+
+    const ric = (window as unknown as {
+      requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number;
+    }).requestIdleCallback;
+    const timer = ric ? ric(load, { timeout: 4000 }) : window.setTimeout(load, 2500);
+
+    return () => {
+      cleanup();
+      if (!ric) window.clearTimeout(timer);
+    };
   }, [router]);
+
 
   return (
     <QueryClientProvider client={queryClient}>
