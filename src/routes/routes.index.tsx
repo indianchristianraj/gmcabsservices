@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { TRIP_ROUTE_LIST } from "@/lib/trip-routes";
-import outstationImg from "@/assets/outstation.webp";
+import { Pic, picUrl } from "@/components/Pic";
 
 const PHONE_INTL = "916301875485";
 const SITE = "https://www.gmcabsservices.com";
@@ -23,9 +23,9 @@ export const Route = createFileRoute("/routes/")({
       { property: "og:description", content: DESC },
       { property: "og:type", content: "website" },
       { property: "og:url", content: `${SITE}/routes` },
-      { property: "og:image", content: `${SITE}${outstationImg}` },
+      { property: "og:image", content: `${SITE}${picUrl("outstation")}` },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:image", content: `${SITE}${outstationImg}` },
+      { name: "twitter:image", content: `${SITE}${picUrl("outstation")}` },
     ],
     links: [{ rel: "canonical", href: `${SITE}/routes` }],
     scripts: [
@@ -64,7 +64,7 @@ function RoutesIndex() {
     <main className="bg-background">
       <section className="relative overflow-hidden">
         <div className="absolute inset-0">
-          <img src={outstationImg} alt="Outstation cab from Hyderabad on the highway" fetchPriority="high" decoding="async" className="h-full w-full object-cover" />
+          <Pic name="outstation" alt="Outstation cab from Hyderabad on the highway" sizes="100vw" priority className="h-full w-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-b from-primary/85 via-primary/70 to-primary/90" />
         </div>
         <div className="relative mx-auto max-w-6xl px-4 pt-24 pb-16 md:px-8 md:pt-32 md:pb-24">

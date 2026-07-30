@@ -98,9 +98,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "stylesheet", href: appCss },
       { rel: "icon", href: "/favicon.jpg", type: "image/x-icon" },
       { rel: "apple-touch-icon", href: "/favicon.jpg" },
-      { rel: "preconnect", href: "https://fonts.googleapis.com" },
-      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" },
+      { rel: "preload", as: "font", type: "font/woff2", href: "/fonts/inter-latin.woff2", crossOrigin: "anonymous" },
+      { rel: "preload", as: "font", type: "font/woff2", href: "/fonts/playfairdisplay-700-latin.woff2", crossOrigin: "anonymous" },
+      { rel: "preconnect", href: "https://www.googletagmanager.com" },
+      { rel: "dns-prefetch", href: "https://www.googletagmanager.com" },
     ],
     scripts: [
       {
@@ -154,18 +155,45 @@ function RootComponent() {
   const router = useRouter();
 
   useEffect(() => {
-    void import("../lib/web-vitals").then((m) => m.initWebVitals());
-    void import("../lib/analytics").then(({ initAnalytics }) => {
-      initAnalytics((cb) => {
-        const unsub = router.subscribe("onResolved", () => {
-          if (typeof window !== "undefined") {
-            cb(window.location.pathname + window.location.search);
-          }
+    // Third-party / measurement code is deferred until the page is interactive
+    // (browser idle) or the user's first interaction — whichever comes first.
+    let done = false;
+    const events = ["pointerdown", "keydown", "touchstart", "scroll"] as const;
+
+    const cleanup = () => {
+      events.forEach((e) => window.removeEventListener(e, load));
+    };
+
+    function load() {
+      if (done) return;
+      done = true;
+      cleanup();
+      void import("../lib/web-vitals").then((m) => m.initWebVitals());
+      void import("../lib/analytics").then(({ initAnalytics }) => {
+        initAnalytics((cb) => {
+          const unsub = router.subscribe("onResolved", () => {
+            if (typeof window !== "undefined") {
+              cb(window.location.pathname + window.location.search);
+            }
+          });
+          return unsub;
         });
-        return unsub;
       });
-    });
+    }
+
+    events.forEach((e) => window.addEventListener(e, load, { passive: true, once: true }));
+
+    const ric = (window as unknown as {
+      requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number;
+    }).requestIdleCallback;
+    const timer = ric ? ric(load, { timeout: 4000 }) : window.setTimeout(load, 2500);
+
+    return () => {
+      cleanup();
+      if (!ric) window.clearTimeout(timer);
+    };
   }, [router]);
+
 
   return (
     <QueryClientProvider client={queryClient}>

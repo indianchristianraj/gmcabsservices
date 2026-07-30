@@ -1,10 +1,5 @@
+import { Pic } from "@/components/Pic";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import airportImg from "@/assets/airport.webp";
-import outstationImg from "@/assets/outstation.webp";
-import localImg from "@/assets/local.webp";
-import ramojiImg from "@/assets/ramoji.webp";
-import heroCab from "@/assets/hero-cab.webp";
-import fleetPair from "@/assets/fleet-pair.png.asset.json";
 
 const PHONE_INTL = "916301875485";
 const telLink = `tel:+${PHONE_INTL}`;
@@ -31,7 +26,7 @@ export const SERVICES: Record<string, ServiceDetail> = {
     slug: "airport-pickup",
     title: "Airport Pickup",
     tagline: "24×7 meet-and-greet at Rajiv Gandhi International Airport",
-    hero: airportImg,
+    hero: "airport",
     intro:
       "Land in Hyderabad with a professional chauffeur already waiting at the gate. We track your flight in real time so late arrivals, early landings or delays are handled without extra charges.",
     highlights: [
@@ -58,7 +53,7 @@ export const SERVICES: Record<string, ServiceDetail> = {
     slug: "airport-drop",
     title: "Airport Drop",
     tagline: "On-time drops to RGIA with luggage assistance",
-    hero: airportImg,
+    hero: "airport",
     intro:
       "Fixed, transparent pricing for airport drops from anywhere in Hyderabad to Rajiv Gandhi International Airport. Clean, spacious cabs and drivers who know every route and shortcut.",
     highlights: [
@@ -85,7 +80,7 @@ export const SERVICES: Record<string, ServiceDetail> = {
     slug: "one-way-taxi",
     title: "One Way Taxi",
     tagline: "Pay only one side — perfect for one-direction travel",
-    hero: outstationImg,
+    hero: "outstation",
     intro:
       "Travelling only one way? Skip the round-trip cost. Our one-way taxi service covers all major routes across Telangana and Andhra Pradesh with fair, no-hidden-charges pricing.",
     highlights: [
@@ -112,7 +107,7 @@ export const SERVICES: Record<string, ServiceDetail> = {
     slug: "outstation-cabs",
     title: "Outstation Cabs",
     tagline: "Round trip & multi-day cabs from Hyderabad",
-    hero: outstationImg,
+    hero: "outstation",
     intro:
       "Plan a weekend getaway or a multi-day tour with a chauffeur who knows the roads. Round-trip and multi-day outstation packages with clean, well-maintained cars for family and group travel.",
     highlights: [
@@ -139,7 +134,7 @@ export const SERVICES: Record<string, ServiceDetail> = {
     slug: "local-rental",
     title: "Local Rental",
     tagline: "Hourly cabs within Hyderabad — 4h / 8h / 12h packages",
-    hero: localImg,
+    hero: "local",
     intro:
       "Renting a cab by the hour is ideal for city meetings, shopping, medical visits or a full day of sightseeing. Fixed hourly packages with generous km limits and no per-stop charges.",
     highlights: [
@@ -166,7 +161,7 @@ export const SERVICES: Record<string, ServiceDetail> = {
     slug: "corporate-travel",
     title: "Corporate Travel",
     tagline: "Employee transport, executive pickups & monthly billing",
-    hero: heroCab,
+    hero: "hero-cab",
     intro:
       "GM Cabs partners with businesses across Hyderabad for reliable executive transport. Dedicated chauffeurs, premium sedans, monthly invoicing and priority support for corporate accounts.",
     highlights: [
@@ -193,7 +188,7 @@ export const SERVICES: Record<string, ServiceDetail> = {
     slug: "wedding-cars",
     title: "Wedding Cars",
     tagline: "Luxury cars for wedding pickups, baraat & guest transport",
-    hero: fleetPair.url,
+    hero: "fleet-pair",
     intro:
       "Make the big day flawless. From luxury cars for the bride and groom to fleet coordination for guest pickups, GM Cabs handles wedding transport end-to-end.",
     highlights: [
@@ -220,7 +215,7 @@ export const SERVICES: Record<string, ServiceDetail> = {
     slug: "temple-tours",
     title: "Temple Tours",
     tagline: "Curated darshan trips across Telangana & AP",
-    hero: ramojiImg,
+    hero: "ramoji",
     intro:
       "Peaceful, well-planned darshan trips to Tirupati, Yadagirigutta, Vemulawada, Srisailam, Basara and more. Experienced drivers, comfortable cars and flexible schedules built around temple timings.",
     highlights: [
@@ -247,7 +242,7 @@ export const SERVICES: Record<string, ServiceDetail> = {
     slug: "luxury-car-rental",
     title: "Luxury Car Rental",
     tagline: "Chauffeur-driven premium cars for VIP occasions",
-    hero: fleetPair.url,
+    hero: "fleet-pair",
     intro:
       "Fortuner, Camry, Kia Carnival and other premium cars for airport VIPs, corporate visits, anniversaries and photo shoots. Uniformed chauffeurs and immaculate interiors.",
     highlights: [
@@ -371,7 +366,7 @@ function ServiceDetail() {
       {/* HERO */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0">
-          <img src={s.hero} alt={s.title} fetchPriority="high" decoding="async" className="h-full w-full object-cover" />
+          <Pic name={s.hero} alt={s.title} sizes="100vw" priority className="h-full w-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-b from-primary/85 via-primary/70 to-primary/90" />
         </div>
         <div className="relative mx-auto max-w-6xl px-4 pt-24 pb-20 md:px-8 md:pt-32 md:pb-28">

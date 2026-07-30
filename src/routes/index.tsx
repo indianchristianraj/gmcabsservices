@@ -4,32 +4,8 @@ import { trackEvent } from "@/lib/analytics";
 import { TRIP_ROUTE_LIST } from "@/lib/trip-routes";
 import { PHONE, PHONE_INTL, telLink, waFor, bookingStore, EMPTY_DRAFT } from "@/lib/whatsapp";
 import { WhatsAppIcon } from "@/components/FloatingWhatsApp";
+import { Pic, picUrlAt } from "@/components/Pic";
 
-import heroCab from "@/assets/hero-suv-front.webp";
-import airportImg from "@/assets/airport.webp";
-import outstationImg from "@/assets/outstation.webp";
-import localImg from "@/assets/local.webp";
-import ramojiImg from "@/assets/ramoji.webp";
-import gmLogo from "@/assets/gm-logo.jpg.asset.json";
-import gmLogoMark from "@/assets/gm-logo-mark.png.asset.json";
-import innovaRamoji from "@/assets/innova-ramoji.png.asset.json";
-import innovaHycross from "@/assets/innova-hycross.png.asset.json";
-import fleetPair from "@/assets/fleet-pair.png.asset.json";
-import innovaCrystaReal from "@/assets/innova-crysta-real.jpg.asset.json";
-import innovaHycrossReal from "@/assets/innova-hycross-real.jpg.asset.json";
-import instagramQR from "@/assets/gmcabs-instagram-qr.jpg.asset.json";
-import vehInnova from "@/assets/veh-innova.webp";
-import vehFortuner from "@/assets/veh-fortuner.webp";
-import vehCamry from "@/assets/veh-camry.webp";
-import vehCarnival from "@/assets/veh-carnival.webp";
-import vehXuv700 from "@/assets/veh-xuv700.webp";
-import vehScorpio from "@/assets/veh-scorpio.webp";
-import vehCity from "@/assets/veh-city.webp";
-import vehVerna from "@/assets/veh-verna.webp";
-import vehDzire from "@/assets/veh-dzire.webp";
-import vehAmaze from "@/assets/veh-amaze.webp";
-import svcWedding from "@/assets/svc-wedding.webp";
-import svcCorporate from "@/assets/svc-corporate.webp";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -44,7 +20,7 @@ export const Route = createFileRoute("/")({
     ],
     links: [
       { rel: "canonical", href: "https://www.gmcabsservices.com/" },
-      { rel: "preload", as: "image", href: heroCab, fetchPriority: "high" } as any,
+      { rel: "preload", as: "image", href: picUrlAt("hero-suv-front", 800), fetchPriority: "high" } as any,
     ],
     scripts: [
       {
@@ -74,15 +50,15 @@ const waLink = waFor();
 
 
 const services = [
-  { slug: "airport-pickup", title: "Airport Pickup", desc: "24×7 meet-and-greet at Rajiv Gandhi International Airport with real-time flight tracking.", img: airportImg, icon: "🛬" },
-  { slug: "airport-drop", title: "Airport Drop", desc: "On-time drops to RGIA with luggage assistance, clean cabs and professional chauffeurs.", img: vehCarnival, icon: "✈️" },
-  { slug: "one-way-taxi", title: "One Way Taxi", desc: "Affordable one way drops across Telangana & Andhra Pradesh — you pay only one side.", img: outstationImg, icon: "➡️" },
-  { slug: "outstation-cabs", title: "Outstation Cabs", desc: "Round trip and multi-day outstation to Bangalore, Vijayawada, Vizag, Tirupati & more.", img: vehXuv700, icon: "🛣️" },
-  { slug: "local-rental", title: "Local Rental", desc: "Hourly packages (4/8/12 hrs) across Hyderabad — perfect for meetings & city errands.", img: localImg, icon: "🏙️" },
-  { slug: "corporate-travel", title: "Corporate Travel", desc: "Monthly billing, dedicated chauffeurs and premium sedans for business & employee transport.", img: svcCorporate, icon: "💼" },
-  { slug: "wedding-cars", title: "Wedding Cars", desc: "Luxury cars for wedding pickups, baraat and guest transportation with decoration on request.", img: svcWedding, icon: "💍" },
-  { slug: "temple-tours", title: "Temple Tours", desc: "Curated darshan trips to Tirupati, Yadagirigutta, Vemulawada, Srisailam and Basara.", img: ramojiImg, icon: "🛕" },
-  { slug: "luxury-car-rental", title: "Luxury Car Rental", desc: "Fortuner, Camry, Kia Carnival — chauffeur-driven premium cars for VIP occasions.", img: vehFortuner, icon: "👑" },
+  { slug: "airport-pickup", title: "Airport Pickup", desc: "24×7 meet-and-greet at Rajiv Gandhi International Airport with real-time flight tracking.", img: "airport", icon: "🛬" },
+  { slug: "airport-drop", title: "Airport Drop", desc: "On-time drops to RGIA with luggage assistance, clean cabs and professional chauffeurs.", img: "veh-carnival", icon: "✈️" },
+  { slug: "one-way-taxi", title: "One Way Taxi", desc: "Affordable one way drops across Telangana & Andhra Pradesh — you pay only one side.", img: "outstation", icon: "➡️" },
+  { slug: "outstation-cabs", title: "Outstation Cabs", desc: "Round trip and multi-day outstation to Bangalore, Vijayawada, Vizag, Tirupati & more.", img: "veh-xuv700", icon: "🛣️" },
+  { slug: "local-rental", title: "Local Rental", desc: "Hourly packages (4/8/12 hrs) across Hyderabad — perfect for meetings & city errands.", img: "local", icon: "🏙️" },
+  { slug: "corporate-travel", title: "Corporate Travel", desc: "Monthly billing, dedicated chauffeurs and premium sedans for business & employee transport.", img: "svc-corporate", icon: "💼" },
+  { slug: "wedding-cars", title: "Wedding Cars", desc: "Luxury cars for wedding pickups, baraat and guest transportation with decoration on request.", img: "svc-wedding", icon: "💍" },
+  { slug: "temple-tours", title: "Temple Tours", desc: "Curated darshan trips to Tirupati, Yadagirigutta, Vemulawada, Srisailam and Basara.", img: "ramoji", icon: "🛕" },
+  { slug: "luxury-car-rental", title: "Luxury Car Rental", desc: "Fortuner, Camry, Kia Carnival — chauffeur-driven premium cars for VIP occasions.", img: "veh-fortuner", icon: "👑" },
 ];
 
 type Vehicle = {
@@ -97,18 +73,18 @@ type Vehicle = {
 };
 
 const fleet: Vehicle[] = [
-  { name: "Toyota Innova Crysta", category: "SUV", seats: "6 + 1", bags: "4 Bags", fuel: "Diesel", best: "Family · Outstation", badge: "Most Booked", img: innovaCrystaReal.url },
-  { name: "Toyota Innova Hycross", category: "SUV", seats: "6 + 1", bags: "4 Bags", fuel: "Hybrid", best: "Premium family travel", badge: "New Model", img: innovaHycrossReal.url },
-  { name: "Toyota Innova", category: "SUV", seats: "7 + 1", bags: "3 Bags", fuel: "Diesel", best: "Group & tours", img: vehInnova },
-  { name: "Toyota Fortuner", category: "Luxury", seats: "6 + 1", bags: "4 Bags", fuel: "Diesel", best: "VIP · Wedding", badge: "Luxury", img: vehFortuner },
-  { name: "Toyota Camry Hybrid", category: "Luxury", seats: "4 + 1", bags: "3 Bags", fuel: "Hybrid", best: "Executive travel", badge: "Corporate Choice", img: vehCamry },
-  { name: "Kia Carnival", category: "Luxury", seats: "6 + 1", bags: "5 Bags", fuel: "Diesel", best: "Airport VIP", badge: "Airport Special", img: vehCarnival },
-  { name: "Mahindra XUV700", category: "SUV", seats: "6 + 1", bags: "4 Bags", fuel: "Diesel", best: "Comfort & power", img: vehXuv700 },
-  { name: "Mahindra Scorpio N", category: "SUV", seats: "6 + 1", bags: "3 Bags", fuel: "Diesel", best: "Highway trips", img: vehScorpio },
-  { name: "Honda City", category: "Sedan", seats: "4 + 1", bags: "2 Bags", fuel: "Petrol", best: "Airport transfer", badge: "One Way Bestseller", img: vehCity },
-  { name: "Hyundai Verna", category: "Sedan", seats: "4 + 1", bags: "2 Bags", fuel: "Petrol", best: "City & business", img: vehVerna },
-  { name: "Maruti Swift Dzire", category: "Economy", seats: "4 + 1", bags: "2 Bags", fuel: "Petrol", best: "City & short drops", badge: "Family Favourite", img: vehDzire },
-  { name: "Honda Amaze", category: "Economy", seats: "4 + 1", bags: "2 Bags", fuel: "Petrol", best: "Budget airport rides", img: vehAmaze },
+  { name: "Toyota Innova Crysta", category: "SUV", seats: "6 + 1", bags: "4 Bags", fuel: "Diesel", best: "Family · Outstation", badge: "Most Booked", img: "innova-crysta-real" },
+  { name: "Toyota Innova Hycross", category: "SUV", seats: "6 + 1", bags: "4 Bags", fuel: "Hybrid", best: "Premium family travel", badge: "New Model", img: "innova-hycross-real" },
+  { name: "Toyota Innova", category: "SUV", seats: "7 + 1", bags: "3 Bags", fuel: "Diesel", best: "Group & tours", img: "veh-innova" },
+  { name: "Toyota Fortuner", category: "Luxury", seats: "6 + 1", bags: "4 Bags", fuel: "Diesel", best: "VIP · Wedding", badge: "Luxury", img: "veh-fortuner" },
+  { name: "Toyota Camry Hybrid", category: "Luxury", seats: "4 + 1", bags: "3 Bags", fuel: "Hybrid", best: "Executive travel", badge: "Corporate Choice", img: "veh-camry" },
+  { name: "Kia Carnival", category: "Luxury", seats: "6 + 1", bags: "5 Bags", fuel: "Diesel", best: "Airport VIP", badge: "Airport Special", img: "veh-carnival" },
+  { name: "Mahindra XUV700", category: "SUV", seats: "6 + 1", bags: "4 Bags", fuel: "Diesel", best: "Comfort & power", img: "veh-xuv700" },
+  { name: "Mahindra Scorpio N", category: "SUV", seats: "6 + 1", bags: "3 Bags", fuel: "Diesel", best: "Highway trips", img: "veh-scorpio" },
+  { name: "Honda City", category: "Sedan", seats: "4 + 1", bags: "2 Bags", fuel: "Petrol", best: "Airport transfer", badge: "One Way Bestseller", img: "veh-city" },
+  { name: "Hyundai Verna", category: "Sedan", seats: "4 + 1", bags: "2 Bags", fuel: "Petrol", best: "City & business", img: "veh-verna" },
+  { name: "Maruti Swift Dzire", category: "Economy", seats: "4 + 1", bags: "2 Bags", fuel: "Petrol", best: "City & short drops", badge: "Family Favourite", img: "veh-dzire" },
+  { name: "Honda Amaze", category: "Economy", seats: "4 + 1", bags: "2 Bags", fuel: "Petrol", best: "Budget airport rides", img: "veh-amaze" },
 ];
 
 const packages = [
@@ -207,14 +183,14 @@ function Index() {
 /* ---------------- HEADER ---------------- */
 function Logo() {
   return (
-    <img
-      src={gmLogoMark.url}
+    <Pic
+      name="gm-logo-mark"
       alt="GM Cabs Services Hyderabad"
       title="GM Cabs Services"
       width={954}
       height={518}
-      decoding="async"
-      fetchPriority="high"
+      sizes="(min-width: 768px) 130px, 111px"
+      priority
       className="h-[60px] w-auto max-w-full object-contain md:h-[70px]"
     />
   );
@@ -289,13 +265,13 @@ function Hero() {
           <div className="order-1 lg:order-2">
             <div className="relative mx-auto max-w-2xl">
               <div className="absolute inset-x-6 bottom-3 h-8 rounded-[100%] bg-primary/15 blur-2xl" />
-              <img
-                src={heroCab}
+              <Pic
+                name="hero-suv-front"
                 alt="Premium white Toyota Innova airport taxi from GM Cabs Services at Rajiv Gandhi International Airport, Hyderabad — front three-quarter view"
                 width={1600}
                 height={1104}
-                fetchPriority="high"
-                decoding="async"
+                sizes="(min-width: 1024px) 640px, 100vw"
+                priority
                 className="relative w-full rounded-2xl object-contain shadow-elegant"
               />
               <div className="absolute bottom-3 left-3 rounded-full border border-border bg-background/90 px-3 py-1.5 text-[11px] font-semibold text-primary shadow-card backdrop-blur">
@@ -659,7 +635,7 @@ function Services() {
         {services.map((s) => (
           <article key={s.title} className="group flex h-full flex-col overflow-hidden rounded-3xl border border-border bg-card shadow-card transition hover:-translate-y-1 hover:shadow-elegant">
             <div className="relative aspect-[16/10] overflow-hidden">
-              <img src={s.img} alt={`${s.title} — GM Cabs Services in Hyderabad`} loading="lazy" decoding="async" width={1280} height={800} className="h-full w-full object-cover transition duration-700 group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100" />
+              <Pic name={s.img} alt={`${s.title} — GM Cabs Services in Hyderabad`} sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw" width={1280} height={800} className="h-full w-full object-cover transition duration-700 group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100" />
               <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/25 to-transparent" />
               <div className="absolute left-4 top-4 grid h-11 w-11 place-items-center rounded-xl bg-background/95 text-xl shadow-card">{s.icon}</div>
             </div>
@@ -713,7 +689,7 @@ function Fleet() {
           {items.map((v) => (
             <article key={v.name} className="group overflow-hidden rounded-2xl border border-border bg-card shadow-card transition hover:-translate-y-1 hover:shadow-elegant">
               <div className="relative aspect-[4/3] overflow-hidden bg-muted">
-                <img src={v.img} alt={`${v.name} ${v.category} chauffeur-driven cab for hire in Hyderabad`} loading="lazy" decoding="async" width={1280} height={800} className="h-full w-full object-cover transition duration-700 group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100" />
+                <Pic name={v.img} alt={`${v.name} ${v.category} chauffeur-driven cab for hire in Hyderabad`} sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw" width={1280} height={800} className="h-full w-full object-cover transition duration-700 group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100" />
                 {v.badge && (
                   <span className="absolute left-3 top-3 rounded-full bg-brand-gradient px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white shadow-gold">{v.badge}</span>
                 )}
@@ -942,8 +918,11 @@ function Contact() {
               width="100%"
               height="220"
               loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              style={{ contentVisibility: "auto", containIntrinsicSize: "220px" }}
               className="border-0"
             />
+
           </div>
         </div>
       </div>
@@ -977,7 +956,7 @@ function Instagram() {
           rel="noopener noreferrer"
           className="mx-auto block w-full max-w-xs overflow-hidden rounded-2xl border border-border bg-card p-4 shadow-elegant transition hover:-translate-y-1"
         >
-          <img src={instagramQR.url} alt="GM Cabs Instagram QR code — @gmcabs786" className="h-auto w-full rounded-xl" loading="lazy" decoding="async" width={512} height={512} />
+          <Pic name="gmcabs-instagram-qr" alt="GM Cabs Instagram QR code — @gmcabs786" className="h-auto w-full rounded-xl" sizes="(min-width: 768px) 320px, 80vw" width={1080} height={1559} />
           <div className="mt-3 text-center text-sm font-semibold text-primary">@gmcabs786</div>
           <div className="text-center text-xs text-muted-foreground">Scan with your camera</div>
         </a>
@@ -993,7 +972,7 @@ function Footer() {
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-12 md:grid-cols-4 md:px-8">
         <div>
           <div className="flex items-center gap-2.5">
-            <img src={gmLogo.url} alt="GM Cabs Services" width={44} height={44} loading="lazy" decoding="async" className="rounded-lg" />
+            <Pic name="gm-logo" alt="GM Cabs Services" width={44} height={44} sizes="44px" className="rounded-lg" />
             <div>
               <div className="font-display text-base font-bold text-white">GM Cabs Services</div>
               <div className="text-[10px] uppercase tracking-widest text-orange">Airport · One Way · Outstation</div>
