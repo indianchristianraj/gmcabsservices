@@ -1,6 +1,6 @@
 import { createFileRoute, useRouterState, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { trackEvent } from "@/lib/analytics";
+import { trackEvent, trackAdsConversion } from "@/lib/analytics";
 import { TRIP_ROUTE_LIST } from "@/lib/trip-routes";
 import { PHONE, PHONE_INTL, telLink, waFor, bookingStore, EMPTY_DRAFT } from "@/lib/whatsapp";
 import { WhatsAppIcon } from "@/components/FloatingWhatsApp";
