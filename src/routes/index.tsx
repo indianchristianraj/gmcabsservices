@@ -1158,6 +1158,12 @@ function BookingForm() {
     trackEvent("contact_form_submit", { form_name: "booking_form", ...eventParams });
     trackEvent("enquiry_submitted", eventParams);
     trackEvent("booking_completed", eventParams);
+    trackAdsConversion("booking_form_submit", {
+      event_category: "booking",
+      service_type: form.service,
+      vehicle_category: form.car,
+      trip_type: form.tripType,
+    });
     window.open(url, "_blank", "noopener,noreferrer");
   }
 
