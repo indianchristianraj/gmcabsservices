@@ -122,25 +122,24 @@ export function initAnalytics(
   if (typeof window === "undefined" || window.__gaInit) return;
   window.__gaInit = true;
 
-  window.dataLayer = window.dataLayer || [];
-  window.gtag = function gtag() {
-    // eslint-disable-next-line prefer-rest-params
-    window.dataLayer.push(arguments);
-  };
-  window.gtag("js", new Date());
-  window.gtag("config", GA_MEASUREMENT_ID, {
-    send_page_view: false,
-    transport_type: "beacon",
-  });
+  // The base Google tag is installed statically in <head> (see __root.tsx).
+  // Only bootstrap it here if, for any reason, it is not present yet.
+  if (typeof window.gtag !== "function") {
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function gtag() {
+      // eslint-disable-next-line prefer-rest-params
+      window.dataLayer.push(arguments);
+    };
+    window.gtag("js", new Date());
+    window.gtag("config", GA_MEASUREMENT_ID, { transport_type: "beacon" });
 
-  const s = document.createElement("script");
-  s.async = true;
-  s.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
-  document.head.appendChild(s);
+    const s = document.createElement("script");
+    s.async = true;
+    s.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
+    document.head.appendChild(s);
+  }
 
   lastPath = window.location.pathname + window.location.search;
-  // Fire the first page_view once gtag queue is set up.
-  trackPageView(lastPath, document.title);
 
   window.addEventListener("scroll", onScroll, { passive: true });
   document.addEventListener("click", onDocClick, { capture: true });
