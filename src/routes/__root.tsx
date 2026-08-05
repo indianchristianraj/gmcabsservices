@@ -108,7 +108,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       // GA4 / Enhanced Conversions and future GTM detection always find it.
       { src: "https://www.googletagmanager.com/gtag/js?id=G-BK309MJNHS", async: true },
       {
-        children: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;gtag('js',new Date());gtag('config','G-BK309MJNHS',{send_page_view:true,transport_type:'beacon'});window.__gaTagInstalled=true;`,
+        children: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;gtag('js',new Date());gtag('config','G-BK309MJNHS',{send_page_view:true,transport_type:'beacon'});gtag('config','AW-18349476379');gtag('config','GT-PLTMJBBS');gtag('config','GT-WKGB8FSL');window.__gaTagInstalled=true;`,
       },
       {
         type: "application/ld+json",
