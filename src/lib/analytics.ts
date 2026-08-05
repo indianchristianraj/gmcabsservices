@@ -3,6 +3,30 @@
 // Loads gtag.js lazily to keep TTI unaffected.
 
 export const GA_MEASUREMENT_ID = "G-BK309MJNHS";
+export const ADS_CONVERSION_ID = "AW-18349476379";
+
+/**
+ * Google Ads conversion labels. Replace the value with the label from
+ * Google Ads → Goals → Conversions → (action) → Tag setup, e.g. "AbC-D_efG".
+ * Without a label the hit still reaches the Ads account via send_to.
+ */
+export const ADS_CONVERSION_LABELS: Record<string, string | undefined> = {
+  booking_form_submit: undefined,
+};
+
+/** Fire a Google Ads conversion. Safe no-op if gtag hasn't loaded yet. */
+export function trackAdsConversion(
+  key: keyof typeof ADS_CONVERSION_LABELS | string,
+  params: Record<string, unknown> = {},
+) {
+  if (typeof window === "undefined" || typeof window.gtag !== "function") return;
+  const label = ADS_CONVERSION_LABELS[key];
+  window.gtag("event", "conversion", {
+    send_to: label ? `${ADS_CONVERSION_ID}/${label}` : ADS_CONVERSION_ID,
+    ...params,
+  });
+}
+
 
 type Params = Record<string, unknown>;
 
