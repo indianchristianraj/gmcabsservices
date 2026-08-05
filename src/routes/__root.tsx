@@ -104,6 +104,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "dns-prefetch", href: "https://www.googletagmanager.com" },
     ],
     scripts: [
+      // Google tag (gtag.js) — loaded in <head> on every page so Google Ads /
+      // GA4 / Enhanced Conversions and future GTM detection always find it.
+      { src: "https://www.googletagmanager.com/gtag/js?id=G-BK309MJNHS", async: true },
+      {
+        children: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;gtag('js',new Date());gtag('config','G-BK309MJNHS',{send_page_view:true,transport_type:'beacon'});window.__gaTagInstalled=true;`,
+      },
       {
         type: "application/ld+json",
         children: JSON.stringify({
