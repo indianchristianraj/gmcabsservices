@@ -1,6 +1,6 @@
 import { createFileRoute, useRouterState, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { trackEvent } from "@/lib/analytics";
+import { trackEvent, trackAdsConversion } from "@/lib/analytics";
 import { TRIP_ROUTE_LIST } from "@/lib/trip-routes";
 import { PHONE, PHONE_INTL, telLink, waFor, bookingStore, EMPTY_DRAFT } from "@/lib/whatsapp";
 import { WhatsAppIcon } from "@/components/FloatingWhatsApp";
@@ -1158,6 +1158,12 @@ function BookingForm() {
     trackEvent("contact_form_submit", { form_name: "booking_form", ...eventParams });
     trackEvent("enquiry_submitted", eventParams);
     trackEvent("booking_completed", eventParams);
+    trackAdsConversion("booking_form_submit", {
+      event_category: "booking",
+      service_type: form.service,
+      vehicle_category: form.car,
+      trip_type: form.tripType,
+    });
     window.open(url, "_blank", "noopener,noreferrer");
   }
 
