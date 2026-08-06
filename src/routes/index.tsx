@@ -20,7 +20,7 @@ export const Route = createFileRoute("/")({
     ],
     links: [
       { rel: "canonical", href: "https://www.gmcabsservices.com/" },
-      { rel: "preload", as: "image", href: picUrlAt("hero-suv-front", 800), fetchPriority: "high" } as any,
+      { rel: "preload", as: "image", href: picUrlAt("hero-suv-front", 800), fetchPriority: "high" } as unknown as { rel: string; href: string },
     ],
     scripts: [
       {
