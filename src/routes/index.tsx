@@ -1053,7 +1053,7 @@ function validateField(name: BookingFields, value: string, form: Record<BookingF
     case "phone": {
       const digits = value.replace(/\D/g, "");
       if (!value.trim()) return "Mobile number is required.";
-      if (!/^[0-9+ \-]+$/.test(value)) return "Only digits, +, spaces and dashes are allowed.";
+      if (!/^[0-9+ -]+$/.test(value)) return "Only digits, +, spaces and dashes are allowed.";
       if (digits.length < 10) return "Enter at least 10 digits.";
       if (digits.length > 13) return "Number is too long.";
       if (/^\+?91/.test(digits) ? !/^[6-9]/.test(digits.replace(/^\+?91/, "")) : !/^[6-9]/.test(digits))
