@@ -20,7 +20,7 @@ export const Route = createFileRoute("/")({
     ],
     links: [
       { rel: "canonical", href: "https://www.gmcabsservices.com/" },
-      { rel: "preload", as: "image", href: picUrlAt("hero-suv-front", 800), fetchPriority: "high" } as any,
+      { rel: "preload", as: "image", href: picUrlAt("hero-suv-front", 800), fetchPriority: "high" } as unknown as { rel: string; href: string },
     ],
     scripts: [
       {
@@ -1053,7 +1053,7 @@ function validateField(name: BookingFields, value: string, form: Record<BookingF
     case "phone": {
       const digits = value.replace(/\D/g, "");
       if (!value.trim()) return "Mobile number is required.";
-      if (!/^[0-9+ \-]+$/.test(value)) return "Only digits, +, spaces and dashes are allowed.";
+      if (!/^[0-9+ -]+$/.test(value)) return "Only digits, +, spaces and dashes are allowed.";
       if (digits.length < 10) return "Enter at least 10 digits.";
       if (digits.length > 13) return "Number is too long.";
       if (/^\+?91/.test(digits) ? !/^[6-9]/.test(digits.replace(/^\+?91/, "")) : !/^[6-9]/.test(digits))
@@ -1082,7 +1082,7 @@ function validateField(name: BookingFields, value: string, form: Record<BookingF
       if (!v) return `${label} location is required.`;
       if (v.length < 3) return `${label} location must be at least 3 characters.`;
       if (v.length > 120) return `${label} location is too long.`;
-      if (!/[a-zA-Z\u0900-\u097F\u0C00-\u0C7F]/.test(v)) return `Enter a valid ${label.toLowerCase()} location.`;
+      if (!/[a-zA-Z\u0900-\u097F\u0C00-\u0C7F]/u.test(v)) return `Enter a valid ${label.toLowerCase()} location.`;
       if (other.trim() && other.trim().toLowerCase() === v.toLowerCase()) return "Pickup and drop can't be the same.";
       return undefined;
     }
