@@ -11,7 +11,7 @@ export const ADS_CONVERSION_ID = "AW-18349476379";
  * Without a label the hit still reaches the Ads account via send_to.
  */
 export const ADS_CONVERSION_LABELS: Record<string, string | undefined> = {
-  booking_form_submit: undefined,
+  booking_form_submit: "9TdaCMud3N0cEJuU261E",
 };
 
 /** Fire a Google Ads conversion. Safe no-op if gtag hasn't loaded yet. */
