@@ -6,9 +6,11 @@ export const telLink = `tel:+${PHONE_INTL}`;
 
 export function waFor(context?: string, route?: string) {
   const base = "Hi GM Cabs,";
-  const ctx = context ? ` I'm interested in *${context}*.` : " I would like to book a cab.";
+  const ctx = context
+    ? ` I have a booking inquiry for *${context}*.`
+    : " I have a booking inquiry for a cab.";
   const from = route && route !== "/" ? ` (from page: ${route})` : "";
-  const msg = `${base}${ctx}${from} Please share availability and pricing.`;
+  const msg = `${base}${ctx}${from} Please share availability and fare details. Thank you!`;
   return `https://wa.me/${PHONE_INTL}?text=${encodeURIComponent(msg)}`;
 }
 
