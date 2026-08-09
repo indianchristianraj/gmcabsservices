@@ -11,10 +11,10 @@ export const Route = createFileRoute("/")({
   component: Index,
   head: () => ({
     meta: [
-      { title: "GM Cabs Services — Premium Airport Taxi, One Way & Outstation Cabs in Hyderabad" },
-      { name: "description", content: "Book premium airport pickup & drop, one way taxi, outstation cabs and luxury car rentals in Hyderabad. Innova Crysta, Hycross, Fortuner & more. 24×7 — 6301875485." },
-      { property: "og:title", content: "GM Cabs Services — Premium Airport Taxi, One Way & Outstation Cabs in Hyderabad" },
-      { property: "og:description", content: "Book premium airport pickup & drop, one way taxi, outstation cabs and luxury car rentals in Hyderabad. Innova Crysta, Hycross, Fortuner & more. 24×7 — 6301875485." },
+      { title: "Airport & Outstation Cabs in Hyderabad | GM Cabs Services" },
+      { name: "description", content: "Book airport pickup & drop, one way taxi and outstation cabs in Hyderabad. Innova Crysta, Hycross & Fortuner. 24×7 booking on 6301875485." },
+      { property: "og:title", content: "Airport & Outstation Cabs in Hyderabad | GM Cabs Services" },
+      { property: "og:description", content: "Book airport pickup & drop, one way taxi and outstation cabs in Hyderabad. Innova Crysta, Hycross & Fortuner. 24×7 booking on 6301875485." },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://gmcabsservices.com/" },
     ],
@@ -643,7 +643,7 @@ function Services() {
               <h3 className="font-display text-xl font-bold leading-snug text-primary">{s.title}</h3>
               <p className="mt-2.5 text-sm leading-relaxed text-muted-foreground">{s.desc}</p>
               <Link to="/services/$slug" params={{ slug: s.slug }} className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-orange-ink hover:text-primary">
-                Learn more <span aria-hidden>→</span>
+                More about {s.title} <span aria-hidden>→</span>
               </Link>
               <div className="mt-5 flex gap-2 pt-1 [margin-top:auto]">
                 <a href={waFor(s.title)} target="_blank" rel="noopener noreferrer" data-ga-name={`WhatsApp — ${s.title}`} data-ga-context="service_card" aria-label={`Book ${s.title} on WhatsApp`} className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-full bg-[var(--whatsapp-ink)] px-3 py-2 text-xs font-semibold text-white hover:opacity-90">

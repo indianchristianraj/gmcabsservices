@@ -1,4 +1,4 @@
-import { Pic } from "@/components/Pic";
+import { Pic, picUrl } from "@/components/Pic";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 
 const PHONE_INTL = "916301875485";
@@ -289,9 +289,9 @@ export const Route = createFileRoute("/services/$slug")({
         { property: "og:description", content: s.seo.desc },
         { property: "og:type", content: "website" },
         { property: "og:url", content: url },
-        { property: "og:image", content: `https://gmcabsservices.com${s.hero}` },
+        { property: "og:image", content: `https://gmcabsservices.com${picUrl(s.hero)}` },
         { name: "twitter:card", content: "summary_large_image" },
-        { name: "twitter:image", content: `https://gmcabsservices.com${s.hero}` },
+        { name: "twitter:image", content: `https://gmcabsservices.com${picUrl(s.hero)}` },
       ],
       links: [{ rel: "canonical", href: url }],
       scripts: [

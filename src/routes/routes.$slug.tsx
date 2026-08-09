@@ -1,4 +1,4 @@
-import { Pic } from "@/components/Pic";
+import { Pic, picUrl } from "@/components/Pic";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { TRIP_ROUTES, TRIP_ROUTE_LIST, type TripRoute } from "@/lib/trip-routes";
 
@@ -31,7 +31,7 @@ export const Route = createFileRoute("/routes/$slug")({
     }
     const r = TRIP_ROUTES[loaderData.slug]!;
     const url = `${SITE}/routes/${r.slug}`;
-    const img = `${SITE}${heroFor(r.slug)}`;
+    const img = `${SITE}${picUrl(heroFor(r.slug))}`;
     return {
       meta: [
         { title: r.seo.title },

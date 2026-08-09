@@ -159,7 +159,7 @@ export const TRIP_ROUTES: Record<string, TripRoute> = {
     ],
     seo: {
       title: "Hyderabad to Tirupati Cab | Darshan Taxi — GM Cabs",
-      desc: "Book a Hyderabad to Tirupati taxi for Tirumala Balaji darshan — 560 km overnight, rested drivers, Innova Crysta, Hycross & Tempo Traveller. 24×7 WhatsApp booking.",
+      desc: "Book a Hyderabad to Tirupati taxi for Tirumala Balaji darshan — 560 km overnight with rested drivers. Crysta, Hycross & Tempo Traveller, 24×7.",
     },
   },
 
