@@ -3,7 +3,7 @@ import { TRIP_ROUTE_LIST } from "@/lib/trip-routes";
 import { Pic, picUrl } from "@/components/Pic";
 
 const PHONE_INTL = "916301875485";
-const SITE = "https://www.gmcabsservices.com";
+const SITE = "https://gmcabsservices.com";
 const telLink = `tel:+${PHONE_INTL}`;
 
 function wa(msg: string) {

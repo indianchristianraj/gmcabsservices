@@ -1,4 +1,4 @@
-import { Pic } from "@/components/Pic";
+import { Pic, picUrl } from "@/components/Pic";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 
 const PHONE_INTL = "916301875485";
@@ -280,7 +280,7 @@ export const Route = createFileRoute("/services/$slug")({
       return { meta: [{ title: "Service not found — GM Cabs" }, { name: "robots", content: "noindex" }] };
     }
     const s = loaderData.service;
-    const url = `https://www.gmcabsservices.com/services/${s.slug}`;
+    const url = `https://gmcabsservices.com/services/${s.slug}`;
     return {
       meta: [
         { title: s.seo.title },
@@ -289,9 +289,9 @@ export const Route = createFileRoute("/services/$slug")({
         { property: "og:description", content: s.seo.desc },
         { property: "og:type", content: "website" },
         { property: "og:url", content: url },
-        { property: "og:image", content: `https://www.gmcabsservices.com${s.hero}` },
+        { property: "og:image", content: `https://gmcabsservices.com${picUrl(s.hero)}` },
         { name: "twitter:card", content: "summary_large_image" },
-        { name: "twitter:image", content: `https://www.gmcabsservices.com${s.hero}` },
+        { name: "twitter:image", content: `https://gmcabsservices.com${picUrl(s.hero)}` },
       ],
       links: [{ rel: "canonical", href: url }],
       scripts: [
@@ -311,13 +311,13 @@ export const Route = createFileRoute("/services/$slug")({
                   "@type": "LocalBusiness",
                   name: "GM Cabs Services",
                   telephone: "+916301875485",
-                  url: "https://www.gmcabsservices.com",
+                  url: "https://gmcabsservices.com",
                 },
               },
               {
                 "@type": "BreadcrumbList",
                 itemListElement: [
-                  { "@type": "ListItem", position: 1, name: "Home", item: "https://www.gmcabsservices.com/" },
+                  { "@type": "ListItem", position: 1, name: "Home", item: "https://gmcabsservices.com/" },
                   { "@type": "ListItem", position: 2, name: s.title, item: url },
                 ],
               },
