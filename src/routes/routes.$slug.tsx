@@ -3,7 +3,7 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { TRIP_ROUTES, TRIP_ROUTE_LIST, type TripRoute } from "@/lib/trip-routes";
 
 const PHONE_INTL = "916301875485";
-const SITE = "https://www.gmcabsservices.com";
+const SITE = "https://gmcabsservices.com";
 const telLink = `tel:+${PHONE_INTL}`;
 
 function wa(msg: string) {

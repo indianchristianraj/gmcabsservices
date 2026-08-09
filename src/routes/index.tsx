@@ -16,10 +16,10 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: "GM Cabs Services — Premium Airport Taxi, One Way & Outstation Cabs in Hyderabad" },
       { property: "og:description", content: "Book premium airport pickup & drop, one way taxi, outstation cabs and luxury car rentals in Hyderabad. Innova Crysta, Hycross, Fortuner & more. 24×7 — 6301875485." },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "https://www.gmcabsservices.com/" },
+      { property: "og:url", content: "https://gmcabsservices.com/" },
     ],
     links: [
-      { rel: "canonical", href: "https://www.gmcabsservices.com/" },
+      { rel: "canonical", href: "https://gmcabsservices.com/" },
       { rel: "preload", as: "image", href: picUrlAt("hero-suv-front", 800), fetchPriority: "high" } as unknown as { rel: string; href: string },
     ],
     scripts: [

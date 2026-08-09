@@ -121,10 +121,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "@context": "https://schema.org",
           "@type": ["LocalBusiness", "TaxiService"],
           name: "GM Cabs Services",
-          image: "https://www.gmcabsservices.com/favicon.jpg",
+          image: "https://gmcabsservices.com/favicon.jpg",
           telephone: "+916301875485",
           email: "gmcabs@gmail.com",
-          url: "https://www.gmcabsservices.com",
+          url: "https://gmcabsservices.com",
           priceRange: "₹₹",
           address: {
             "@type": "PostalAddress",

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.gmcabsservices.com/sitemap.xml
+Sitemap: https://gmcabsservices.com/sitemap.xml

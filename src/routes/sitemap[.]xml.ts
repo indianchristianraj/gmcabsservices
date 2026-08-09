@@ -3,7 +3,7 @@ import type {} from "@tanstack/react-start";
 import { SERVICE_SLUGS } from "./services.$slug";
 import { TRIP_ROUTE_SLUGS } from "@/lib/trip-routes";
 
-const BASE_URL = "https://www.gmcabsservices.com";
+const BASE_URL = "https://gmcabsservices.com";
 
 export const Route = createFileRoute("/sitemap.xml")({
   server: {
