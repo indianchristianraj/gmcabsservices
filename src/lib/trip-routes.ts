@@ -54,7 +54,7 @@ export const TRIP_ROUTES: Record<string, TripRoute> = {
       { q: "Are tolls included?", a: "We share a single all-inclusive quote on WhatsApp covering fuel, driver allowance and tolls, so there are no surprises at the end of the trip." },
     ],
     seo: {
-      title: "Hyderabad to Vijayawada Cab | One Way & Round Trip Taxi — GM Cabs",
+      title: "Hyderabad to Vijayawada Cab | One Way Taxi — GM Cabs",
       desc: "Book a Hyderabad to Vijayawada taxi — 275 km on NH-65 in about 5 hours. Innova Crysta, Hycross & sedans, one-way drops, 24×7 booking on WhatsApp.",
     },
   },
@@ -89,7 +89,7 @@ export const TRIP_ROUTES: Record<string, TripRoute> = {
       { q: "Can we cover Srisailam and Mahanandi together?", a: "Yes, this is a popular two-day combination. Tell us on WhatsApp and we will plan the itinerary and vehicle accordingly." },
     ],
     seo: {
-      title: "Hyderabad to Srisailam Cab | Temple Taxi via Nallamala — GM Cabs",
+      title: "Hyderabad to Srisailam Cab | Temple Taxi — GM Cabs",
       desc: "Book a Hyderabad to Srisailam taxi for Mallikarjuna Jyotirlinga darshan — 215 km, ghat-experienced drivers, early-morning starts, Innova Crysta & Hycross.",
     },
   },
@@ -123,7 +123,7 @@ export const TRIP_ROUTES: Record<string, TripRoute> = {
       { q: "Is Ramappa Temple worth adding?", a: "Yes. It is India's UNESCO-listed Kakatiya masterpiece and adds roughly 140 km round trip from Warangal city." },
     ],
     seo: {
-      title: "Hyderabad to Warangal Cab | Fort & Ramappa Day Trip Taxi — GM Cabs",
+      title: "Hyderabad to Warangal Cab | Day Trip Taxi — GM Cabs",
       desc: "Hyderabad to Warangal taxi — 150 km, under 3 hours. Full-day disposal covering Warangal Fort, Thousand Pillar Temple and Ramappa. Book 24×7 on WhatsApp.",
     },
   },
@@ -158,7 +158,7 @@ export const TRIP_ROUTES: Record<string, TripRoute> = {
       { q: "Is a 2-day round trip cheaper than one-way both times?", a: "Usually yes. Share your dates on WhatsApp and we will quote both options so you can compare." },
     ],
     seo: {
-      title: "Hyderabad to Tirupati Cab | Overnight Balaji Darshan Taxi — GM Cabs",
+      title: "Hyderabad to Tirupati Cab | Darshan Taxi — GM Cabs",
       desc: "Book a Hyderabad to Tirupati taxi for Tirumala Balaji darshan — 560 km overnight, rested drivers, Innova Crysta, Hycross & Tempo Traveller. 24×7 WhatsApp booking.",
     },
   },
@@ -193,7 +193,7 @@ export const TRIP_ROUTES: Record<string, TripRoute> = {
       { q: "Do two drivers travel on long routes?", a: "For back-to-back long-haul or overnight schedules we assign a second driver on request so no one drives fatigued." },
     ],
     seo: {
-      title: "Hyderabad to Bangalore Cab | One Way Intercity Taxi — GM Cabs",
+      title: "Hyderabad to Bangalore Cab | Intercity Taxi — GM Cabs",
       desc: "Hyderabad to Bangalore taxi on NH-44 — 570 km door-to-door in about 9 hours. Innova Crysta, Fortuner & Tempo Traveller, GST invoice, one-way drops available.",
     },
   },
@@ -227,7 +227,7 @@ export const TRIP_ROUTES: Record<string, TripRoute> = {
       { q: "Which vehicle suits this distance?", a: "Innova Crysta or Hycross. On a 10-hour drive the seat comfort and suspension make a real difference." },
     ],
     seo: {
-      title: "Hyderabad to Visakhapatnam Cab | Vizag & Araku Taxi — GM Cabs",
+      title: "Hyderabad to Visakhapatnam Cab | Vizag Taxi — GM Cabs",
       desc: "Book a Hyderabad to Vizag taxi — 620 km coastal drive via Vijayawada and Rajahmundry. Araku Valley and Borra Caves packages, Innova Crysta & Tempo Traveller.",
     },
   },
@@ -261,7 +261,7 @@ export const TRIP_ROUTES: Record<string, TripRoute> = {
       { q: "Do you cover Konaseema and Antarvedi?", a: "Yes, as an extension package with the same car and driver staying with you." },
     ],
     seo: {
-      title: "Hyderabad to Rajahmundry Cab | Godavari Taxi Service — GM Cabs",
+      title: "Hyderabad to Rajahmundry Cab | Godavari Taxi — GM Cabs",
       desc: "Hyderabad to Rajahmundry taxi — 445 km via Vijayawada in about 8 hours. Papikondalu and Konaseema packages, wedding convoys, Innova Crysta & Tempo Traveller.",
     },
   },
@@ -295,7 +295,7 @@ export const TRIP_ROUTES: Record<string, TripRoute> = {
       { q: "Do you drop at Gannavaram airport?", a: "Yes, Gannavaram (Vijayawada airport) drops and pickups are available on this route." },
     ],
     seo: {
-      title: "Hyderabad to Guntur Cab | Amaravati & Tenali Taxi — GM Cabs",
+      title: "Hyderabad to Guntur Cab | Amaravati Taxi — GM Cabs",
       desc: "Book a Hyderabad to Guntur taxi — 290 km in about 5 hours. Amaravati, Undavalli and Tenali day packages with full-day disposal. 24×7 WhatsApp booking.",
     },
   },
@@ -329,7 +329,7 @@ export const TRIP_ROUTES: Record<string, TripRoute> = {
       { q: "Is a sedan enough for this distance?", a: "It works for two or three passengers with light luggage, but for families we recommend a Crysta or Hycross." },
     ],
     seo: {
-      title: "Hyderabad to Nellore Cab | One Way & Round Trip Taxi — GM Cabs",
+      title: "Hyderabad to Nellore Cab | One Way Taxi — GM Cabs",
       desc: "Hyderabad to Nellore taxi — 460 km in about 8 hours. Combine with Tirupati or Srikalahasti, Mypadu beach add-on. Innova Crysta & Hycross, 24×7 booking.",
     },
   },
@@ -363,7 +363,7 @@ export const TRIP_ROUTES: Record<string, TripRoute> = {
       { q: "Is parking charged separately?", a: "Parking and tolls are folded into the single quote we share on WhatsApp." },
     ],
     seo: {
-      title: "Hyderabad to Ramoji Film City Cab | Full Day Taxi — GM Cabs",
+      title: "Hyderabad to Ramoji Film City Cab | Day Taxi — GM Cabs",
       desc: "Book a full-day Ramoji Film City cab from Hyderabad — driver waits all day, doorstep pickup and drop, Ertiga, Innova Crysta & Tempo Traveller. 24×7 booking.",
     },
   },
@@ -397,7 +397,7 @@ export const TRIP_ROUTES: Record<string, TripRoute> = {
       { q: "Can we add Bhongir Fort?", a: "Yes, it is directly on the route and adds very little time." },
     ],
     seo: {
-      title: "Hyderabad to Yadagirigutta Cab | Yadadri Temple Taxi — GM Cabs",
+      title: "Hyderabad to Yadagirigutta Cab | Yadadri Taxi — GM Cabs",
       desc: "Book a Hyderabad to Yadagirigutta (Yadadri) temple cab — 60 km, half-day round trip with waiting included. Bhongir Fort add-on. 24×7 WhatsApp booking.",
     },
   },
@@ -431,7 +431,7 @@ export const TRIP_ROUTES: Record<string, TripRoute> = {
       { q: "Do you offer one-way drops to Ongole?", a: "Yes, one-way drops are available on all vehicle types." },
     ],
     seo: {
-      title: "Hyderabad to Ongole Cab | Prakasam & Chirala Taxi — GM Cabs",
+      title: "Hyderabad to Ongole Cab | Prakasam Taxi — GM Cabs",
       desc: "Hyderabad to Ongole taxi — 370 km via Vijayawada in about 7 hours. Chirala and Vodarevu beach add-ons, one-way drops, Innova Crysta & Hycross.",
     },
   },
