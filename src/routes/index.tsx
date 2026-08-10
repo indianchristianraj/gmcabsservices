@@ -934,6 +934,7 @@ function Footer() {
           <ul className="mt-4 space-y-2 text-sm">
             {[["Home", "#top"], ["Services", "#services"], ["Fleet", "#fleet"], ["Routes", "#routes"], ["Contact", "#contact"]].map(([l, h]) => (
               <li key={h}><a href={h} className="text-primary-foreground/80 hover:text-orange">{l}</a></li>
+            <li><Link to="/fare-estimate" className="text-primary-foreground/80 hover:text-orange">Fare Estimate</Link></li>
             ))}
           </ul>
         </div>
