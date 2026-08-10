@@ -23,7 +23,7 @@ export const Route = createFileRoute("/fare-estimate")({
       {
         name: "description",
         content:
-          "Get an instant cab fare estimate for airport transfers, one-way drops, outstation round trips and local hourly rentals in Hyderabad. Final fare confirmed on WhatsApp — no fixed pricing.",
+          "Get an instant cab fare estimate for Hyderabad airport, one-way, outstation and local trips. Final fare confirmed on WhatsApp — no fixed pricing.",
       },
       {
         property: "og:title",
