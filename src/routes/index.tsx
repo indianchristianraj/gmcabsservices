@@ -359,28 +359,7 @@ function QuoteWidget() {
   const veh = QUOTE_VEHICLES.find((v) => v.id === vehicle)!;
 
   function calcQuote() {
-    let result: { low: number; high: number; km: number; note: string };
-    if (trip === "local") {
-      const low = veh.base + veh.perKm * 80;
-      const high = veh.base + veh.perKm * 120;
-      result = { low, high, km: 0, note: "8–12 hr city package · fuel & driver included" };
-    } else if (trip === "airport") {
-      const low = Math.max(veh.base + veh.perKm * 25, 700);
-      const high = veh.base + veh.perKm * 45;
-      result = { low, high, km: 30, note: "Flat airport transfer within Hyderabad" };
-    } else {
-      const km = guessKm(drop) ?? guessKm(pickup) ?? 250;
-      const multiplier = trip === "outstation" ? 2 : 1;
-      const eff = km * multiplier;
-      const low = veh.base + veh.perKm * eff;
-      const high = low + veh.perKm * (trip === "outstation" ? 60 : 20);
-      result = {
-        low,
-        high,
-        km: eff,
-        note: trip === "outstation" ? "Round trip · driver bata & tolls extra" : "One way drop · tolls extra",
-      };
-    }
+    const result = calculateEstimate(trip, vehicle, pickup, drop);
     setQuote(result);
     trackEvent("quote_request", {
       trip_type: trip,
