@@ -1,6 +1,7 @@
 import { createFileRoute, useRouterState, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { trackEvent, trackAdsConversion } from "@/lib/analytics";
+import { TripType, TRIP_TYPES, QuoteVehicle, QUOTE_VEHICLES, calculateEstimate } from "@/lib/fare-estimate";
 import { TRIP_ROUTE_LIST } from "@/lib/trip-routes";
 import { PHONE, PHONE_INTL, telLink, waFor, bookingStore, EMPTY_DRAFT } from "@/lib/whatsapp";
 import { WhatsAppIcon } from "@/components/FloatingWhatsApp";
@@ -344,37 +345,6 @@ function Hero() {
 
 
 /* ---------------- QUOTE WIDGET ---------------- */
-type TripType = "airport" | "oneway" | "outstation" | "local";
-
-const TRIP_TYPES: { id: TripType; label: string; icon: string; hint: string }[] = [
-  { id: "airport", label: "Airport", icon: "✈️", hint: "Pickup / Drop at RGIA" },
-  { id: "oneway", label: "One Way", icon: "➡️", hint: "Drop to any city" },
-  { id: "outstation", label: "Outstation", icon: "🛣️", hint: "Round trip · Multi-day" },
-  { id: "local", label: "Local (Hourly)", icon: "🏙️", hint: "8/12 hr packages" },
-];
-
-type QuoteVehicle = { id: string; name: string; seats: string; perKm: number; base: number; category: string };
-const QUOTE_VEHICLES: QuoteVehicle[] = [
-  { id: "dzire", name: "Swift Dzire / Amaze", seats: "4+1", perKm: 12, base: 250, category: "Sedan" },
-  { id: "city", name: "Honda City / Verna", seats: "4+1", perKm: 14, base: 300, category: "Sedan+" },
-  { id: "innova", name: "Toyota Innova", seats: "7+1", perKm: 17, base: 400, category: "SUV" },
-  { id: "crysta", name: "Innova Crysta / Hycross", seats: "6+1", perKm: 20, base: 500, category: "Premium SUV" },
-  { id: "fortuner", name: "Fortuner / Carnival", seats: "6+1", perKm: 28, base: 800, category: "Luxury" },
-];
-
-const KM_HINTS: Record<string, number> = {
-  "warangal": 150, "vijayawada": 275, "guntur": 290, "tirupati": 560,
-  "bangalore": 570, "visakhapatnam": 620, "vizag": 620, "chennai": 630,
-  "rajahmundry": 445, "nellore": 460, "ongole": 370, "srisailam": 220,
-  "yadagirigutta": 60, "ramoji": 30, "shamshabad": 30, "rgia": 30, "airport": 30,
-  "pune": 560, "mumbai": 710, "kakinada": 500,
-};
-
-function guessKm(text: string): number | null {
-  const t = text.toLowerCase();
-  for (const key of Object.keys(KM_HINTS)) if (t.includes(key)) return KM_HINTS[key];
-  return null;
-}
 
 function QuoteWidget() {
   const [trip, setTrip] = useState<TripType>("airport");
@@ -389,28 +359,7 @@ function QuoteWidget() {
   const veh = QUOTE_VEHICLES.find((v) => v.id === vehicle)!;
 
   function calcQuote() {
-    let result: { low: number; high: number; km: number; note: string };
-    if (trip === "local") {
-      const low = veh.base + veh.perKm * 80;
-      const high = veh.base + veh.perKm * 120;
-      result = { low, high, km: 0, note: "8–12 hr city package · fuel & driver included" };
-    } else if (trip === "airport") {
-      const low = Math.max(veh.base + veh.perKm * 25, 700);
-      const high = veh.base + veh.perKm * 45;
-      result = { low, high, km: 30, note: "Flat airport transfer within Hyderabad" };
-    } else {
-      const km = guessKm(drop) ?? guessKm(pickup) ?? 250;
-      const multiplier = trip === "outstation" ? 2 : 1;
-      const eff = km * multiplier;
-      const low = veh.base + veh.perKm * eff;
-      const high = low + veh.perKm * (trip === "outstation" ? 60 : 20);
-      result = {
-        low,
-        high,
-        km: eff,
-        note: trip === "outstation" ? "Round trip · driver bata & tolls extra" : "One way drop · tolls extra",
-      };
-    }
+    const result = calculateEstimate(trip, vehicle, pickup, drop);
     setQuote(result);
     trackEvent("quote_request", {
       trip_type: trip,
@@ -986,6 +935,7 @@ function Footer() {
             {[["Home", "#top"], ["Services", "#services"], ["Fleet", "#fleet"], ["Routes", "#routes"], ["Contact", "#contact"]].map(([l, h]) => (
               <li key={h}><a href={h} className="text-primary-foreground/80 hover:text-orange">{l}</a></li>
             ))}
+            <li><Link to="/fare-estimate" className="text-primary-foreground/80 hover:text-orange">Fare Estimate</Link></li>
           </ul>
         </div>
         <div>
