@@ -126,7 +126,7 @@ function FareEstimatePage() {
   function calcQuote() {
     const result = calculateEstimate(trip, vehicle, pickup, drop);
     setQuote(result);
-    trackEvent("quote_request", {
+    const params = {
       trip_type: trip,
       service_type: TRIP_TYPES.find((t) => t.id === trip)?.label,
       vehicle_name: veh.name,
@@ -138,6 +138,28 @@ function FareEstimatePage() {
       estimate_high: result.high,
       estimate_km: result.km,
       source: "fare_estimate_page",
+    };
+    trackEvent("quote_request", params);
+    trackEvent("fare_estimate_calculated", params);
+    trackAdsConversion("fare_estimate_calculated", {
+      value: Math.round((result.low + result.high) / 2),
+      currency: "INR",
+    });
+  }
+
+  function trackEstimateWhatsApp(buttonName: string, url: string) {
+    trackEvent("whatsapp_click", {
+      button_name: buttonName,
+      link_url: url,
+      context: "fare_estimate_page",
+      trip_type: trip,
+      vehicle_name: veh.name,
+      estimate_low: quote?.low,
+      estimate_high: quote?.high,
+    });
+    trackAdsConversion("fare_estimate_whatsapp", {
+      value: quote ? Math.round((quote.low + quote.high) / 2) : undefined,
+      currency: "INR",
     });
   }
 
@@ -149,8 +171,10 @@ function FareEstimatePage() {
       trip_type: trip,
       vehicle_name: veh.name,
     });
+    trackEstimateWhatsApp("WhatsApp — Confirm Estimate", url);
     window.open(url, "_blank", "noopener,noreferrer");
   }
+
 
   function applyRoute(city: string, km: number) {
     setDrop(city);
