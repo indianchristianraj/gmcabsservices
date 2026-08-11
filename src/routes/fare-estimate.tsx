@@ -2,7 +2,7 @@ import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Pic, picUrl } from "@/components/Pic";
 import { WhatsAppIcon } from "@/components/FloatingWhatsApp";
-import { trackEvent } from "@/lib/analytics";
+import { trackEvent, trackAdsConversion } from "@/lib/analytics";
 import {
   TripType,
   TRIP_TYPES,
