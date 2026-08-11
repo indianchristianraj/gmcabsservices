@@ -492,6 +492,7 @@ function FareEstimatePage() {
               rel="noopener noreferrer"
               data-ga-name="WhatsApp — Fare Estimate CTA"
               data-ga-context="fare_estimate_page"
+              onClick={() => trackAdsConversion("fare_estimate_whatsapp", { currency: "INR" })}
               className="inline-flex items-center gap-2 rounded-full bg-[var(--whatsapp-ink)] px-6 py-3 text-sm font-semibold text-white shadow-elegant hover:opacity-90"
             >
               <WhatsAppIcon className="h-4 w-4" /> Get confirmed quote
