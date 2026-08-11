@@ -2,7 +2,7 @@ import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Pic, picUrl } from "@/components/Pic";
 import { WhatsAppIcon } from "@/components/FloatingWhatsApp";
-import { trackEvent } from "@/lib/analytics";
+import { trackEvent, trackAdsConversion } from "@/lib/analytics";
 import {
   TripType,
   TRIP_TYPES,
@@ -126,7 +126,7 @@ function FareEstimatePage() {
   function calcQuote() {
     const result = calculateEstimate(trip, vehicle, pickup, drop);
     setQuote(result);
-    trackEvent("quote_request", {
+    const params = {
       trip_type: trip,
       service_type: TRIP_TYPES.find((t) => t.id === trip)?.label,
       vehicle_name: veh.name,
@@ -138,6 +138,28 @@ function FareEstimatePage() {
       estimate_high: result.high,
       estimate_km: result.km,
       source: "fare_estimate_page",
+    };
+    trackEvent("quote_request", params);
+    trackEvent("fare_estimate_calculated", params);
+    trackAdsConversion("fare_estimate_calculated", {
+      value: Math.round((result.low + result.high) / 2),
+      currency: "INR",
+    });
+  }
+
+  function trackEstimateWhatsApp(buttonName: string, url: string) {
+    trackEvent("whatsapp_click", {
+      button_name: buttonName,
+      link_url: url,
+      context: "fare_estimate_page",
+      trip_type: trip,
+      vehicle_name: veh.name,
+      estimate_low: quote?.low,
+      estimate_high: quote?.high,
+    });
+    trackAdsConversion("fare_estimate_whatsapp", {
+      value: quote ? Math.round((quote.low + quote.high) / 2) : undefined,
+      currency: "INR",
     });
   }
 
@@ -149,8 +171,10 @@ function FareEstimatePage() {
       trip_type: trip,
       vehicle_name: veh.name,
     });
+    trackEstimateWhatsApp("WhatsApp — Confirm Estimate", url);
     window.open(url, "_blank", "noopener,noreferrer");
   }
+
 
   function applyRoute(city: string, km: number) {
     setDrop(city);
@@ -192,6 +216,7 @@ function FareEstimatePage() {
                   rel="noopener noreferrer"
                   data-ga-name="WhatsApp — Fare Estimate Hero"
                   data-ga-context="fare_estimate_page"
+                  onClick={() => trackAdsConversion("fare_estimate_whatsapp", { currency: "INR" })}
                   className="inline-flex items-center justify-center gap-2 rounded-full bg-[var(--whatsapp-ink)] px-6 py-3.5 text-sm font-bold text-white shadow-elegant transition hover:opacity-90"
                 >
                   <WhatsAppIcon className="h-4 w-4" /> Get quote on WhatsApp
@@ -467,6 +492,7 @@ function FareEstimatePage() {
               rel="noopener noreferrer"
               data-ga-name="WhatsApp — Fare Estimate CTA"
               data-ga-context="fare_estimate_page"
+              onClick={() => trackAdsConversion("fare_estimate_whatsapp", { currency: "INR" })}
               className="inline-flex items-center gap-2 rounded-full bg-[var(--whatsapp-ink)] px-6 py-3 text-sm font-semibold text-white shadow-elegant hover:opacity-90"
             >
               <WhatsAppIcon className="h-4 w-4" /> Get confirmed quote

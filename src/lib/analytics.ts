@@ -12,7 +12,12 @@ export const ADS_CONVERSION_ID = "AW-18349476379";
  */
 export const ADS_CONVERSION_LABELS: Record<string, string | undefined> = {
   booking_form_submit: "9TdaCMud3N0cEJuU261E",
+  // Add labels from Google Ads → Goals → Conversions when the actions are created.
+  // Until then the hit still reaches the Ads account via send_to (AW id only).
+  fare_estimate_calculated: undefined,
+  fare_estimate_whatsapp: undefined,
 };
+
 
 /** Fire a Google Ads conversion. Safe no-op if gtag hasn't loaded yet. */
 export function trackAdsConversion(
