@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as FareEstimateRouteImport } from './routes/fare-estimate'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as RoutesIndexRouteImport } from './routes/routes.index'
 import { Route as ServicesSlugRouteImport } from './routes/services.$slug'
@@ -24,6 +25,11 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
 const FareEstimateRoute = FareEstimateRouteImport.update({
   id: '/fare-estimate',
   path: '/fare-estimate',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -49,6 +55,7 @@ const RoutesSlugRoute = RoutesSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/fare-estimate': typeof FareEstimateRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/routes/$slug': typeof RoutesSlugRoute
@@ -57,6 +64,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/fare-estimate': typeof FareEstimateRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/routes/$slug': typeof RoutesSlugRoute
@@ -66,6 +74,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/fare-estimate': typeof FareEstimateRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/routes/$slug': typeof RoutesSlugRoute
@@ -76,6 +85,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/auth'
     | '/fare-estimate'
     | '/sitemap.xml'
     | '/routes/$slug'
@@ -84,6 +94,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/auth'
     | '/fare-estimate'
     | '/sitemap.xml'
     | '/routes/$slug'
@@ -92,6 +103,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/auth'
     | '/fare-estimate'
     | '/sitemap.xml'
     | '/routes/$slug'
@@ -101,6 +113,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthRoute: typeof AuthRoute
   FareEstimateRoute: typeof FareEstimateRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   RoutesSlugRoute: typeof RoutesSlugRoute
@@ -122,6 +135,13 @@ declare module '@tanstack/react-router' {
       path: '/fare-estimate'
       fullPath: '/fare-estimate'
       preLoaderRoute: typeof FareEstimateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -157,6 +177,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthRoute: AuthRoute,
   FareEstimateRoute: FareEstimateRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   RoutesSlugRoute: RoutesSlugRoute,
