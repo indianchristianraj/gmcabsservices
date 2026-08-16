@@ -170,6 +170,15 @@ export function initAnalytics(
   if (typeof window === "undefined" || window.__gaInit) return;
   window.__gaInit = true;
 
+  // Pull the Google Ads conversion labels configured in the admin page.
+  void import("./ads-labels")
+    .then(({ fetchAdsConversionLabels }) => fetchAdsConversionLabels())
+    .then((labels) => setAdsConversionLabels(labels))
+    .catch(() => {
+      /* keep built-in defaults if the settings can't be loaded */
+    });
+
+
   // The base Google tag is installed statically in <head> (see __root.tsx).
   // Only bootstrap it here if, for any reason, it is not present yet.
   if (typeof window.gtag !== "function") {
