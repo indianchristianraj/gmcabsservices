@@ -11,10 +11,13 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as FareEstimateRouteImport } from './routes/fare-estimate'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as RoutesIndexRouteImport } from './routes/routes.index'
 import { Route as ServicesSlugRouteImport } from './routes/services.$slug'
 import { Route as RoutesSlugRouteImport } from './routes/routes.$slug'
+import { Route as AuthenticatedAdminAdsLabelsRouteImport } from './routes/_authenticated/admin.ads-labels'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
@@ -24,6 +27,15 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
 const FareEstimateRoute = FareEstimateRouteImport.update({
   id: '/fare-estimate',
   path: '/fare-estimate',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -46,61 +58,83 @@ const RoutesSlugRoute = RoutesSlugRouteImport.update({
   path: '/routes/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAdminAdsLabelsRoute =
+  AuthenticatedAdminAdsLabelsRouteImport.update({
+    id: '/admin/ads-labels',
+    path: '/admin/ads-labels',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/fare-estimate': typeof FareEstimateRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/routes/$slug': typeof RoutesSlugRoute
   '/services/$slug': typeof ServicesSlugRoute
   '/routes/': typeof RoutesIndexRoute
+  '/admin/ads-labels': typeof AuthenticatedAdminAdsLabelsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/fare-estimate': typeof FareEstimateRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/routes/$slug': typeof RoutesSlugRoute
   '/services/$slug': typeof ServicesSlugRoute
   '/routes': typeof RoutesIndexRoute
+  '/admin/ads-labels': typeof AuthenticatedAdminAdsLabelsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/auth': typeof AuthRoute
   '/fare-estimate': typeof FareEstimateRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/routes/$slug': typeof RoutesSlugRoute
   '/services/$slug': typeof ServicesSlugRoute
   '/routes/': typeof RoutesIndexRoute
+  '/_authenticated/admin/ads-labels': typeof AuthenticatedAdminAdsLabelsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/auth'
     | '/fare-estimate'
     | '/sitemap.xml'
     | '/routes/$slug'
     | '/services/$slug'
     | '/routes/'
+    | '/admin/ads-labels'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/auth'
     | '/fare-estimate'
     | '/sitemap.xml'
     | '/routes/$slug'
     | '/services/$slug'
     | '/routes'
+    | '/admin/ads-labels'
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
+    | '/auth'
     | '/fare-estimate'
     | '/sitemap.xml'
     | '/routes/$slug'
     | '/services/$slug'
     | '/routes/'
+    | '/_authenticated/admin/ads-labels'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AuthRoute: typeof AuthRoute
   FareEstimateRoute: typeof FareEstimateRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   RoutesSlugRoute: typeof RoutesSlugRoute
@@ -122,6 +156,20 @@ declare module '@tanstack/react-router' {
       path: '/fare-estimate'
       fullPath: '/fare-estimate'
       preLoaderRoute: typeof FareEstimateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -152,11 +200,31 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RoutesSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/admin/ads-labels': {
+      id: '/_authenticated/admin/ads-labels'
+      path: '/admin/ads-labels'
+      fullPath: '/admin/ads-labels'
+      preLoaderRoute: typeof AuthenticatedAdminAdsLabelsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminAdsLabelsRoute: typeof AuthenticatedAdminAdsLabelsRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminAdsLabelsRoute: AuthenticatedAdminAdsLabelsRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AuthRoute: AuthRoute,
   FareEstimateRoute: FareEstimateRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   RoutesSlugRoute: RoutesSlugRoute,
@@ -166,3 +234,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
