@@ -7,22 +7,14 @@ export const GA_MEASUREMENT_ID = "G-BK309MJNHS";
 /**
  * Google Ads conversion configuration.
  *
- * Everything below is configurable WITHOUT code changes:
+ * Labels are stored in the database (table `ads_conversion_labels`) and edited
+ * from the admin page at /admin/ads-labels — no env vars, no localStorage and
+ * no code change needed. The built-in map below is only the fallback used
+ * before the remote labels have loaded.
  *
- * 1. Environment (build time) — set in your `.env` / hosting env:
- *      VITE_ADS_CONVERSION_ID="AW-18349476379"
- *      VITE_ADS_CONVERSION_LABELS='{"booking_form_submit":"AbC-D_efG","fare_estimate_whatsapp":"XyZ123"}'
- *    The labels var also accepts a compact form:
- *      VITE_ADS_CONVERSION_LABELS="booking_form_submit=AbC-D_efG,whatsapp_click=XyZ123"
- *
- * 2. Runtime override (no rebuild) — from the browser console or a tag manager:
- *      localStorage.setItem('ads_conversion_labels', '{"whatsapp_click":"XyZ123"}')
- *      window.__ADS_CONVERSION_LABELS = { whatsapp_click: "XyZ123" }
- *
- * Precedence: runtime override > env > built-in defaults.
  * Without a label the hit still reaches the Ads account via send_to (AW id only).
  */
-const DEFAULT_ADS_CONVERSION_ID = "AW-18349476379";
+export const ADS_CONVERSION_ID = "AW-18349476379";
 
 const DEFAULT_ADS_CONVERSION_LABELS: Record<string, string | undefined> = {
   booking_form_submit: "9TdaCMud3N0cEJuU261E",
@@ -31,70 +23,22 @@ const DEFAULT_ADS_CONVERSION_LABELS: Record<string, string | undefined> = {
   whatsapp_click: undefined,
 };
 
-function parseLabels(raw: unknown): Record<string, string> {
-  if (!raw || typeof raw !== "string") {
-    return raw && typeof raw === "object" ? ({ ...(raw as Record<string, string>) }) : {};
-  }
-  const value = raw.trim();
-  if (!value) return {};
-  if (value.startsWith("{")) {
-    try {
-      const parsed = JSON.parse(value);
-      return parsed && typeof parsed === "object" ? parsed : {};
-    } catch {
-      return {};
-    }
-  }
-  // "key=label,key2=label2" form
-  const out: Record<string, string> = {};
-  for (const pair of value.split(",")) {
-    const [k, v] = pair.split(/[=:]/);
-    if (k && v) out[k.trim()] = v.trim();
-  }
-  return out;
+/** Labels loaded from the database at runtime. */
+let remoteLabels: Record<string, string | undefined> = {};
+
+/** Replace the runtime label map (called after loading from the database). */
+export function setAdsConversionLabels(labels: Record<string, string | undefined>) {
+  remoteLabels = { ...labels };
 }
 
-export const ADS_CONVERSION_ID =
-  (import.meta.env?.VITE_ADS_CONVERSION_ID as string | undefined)?.trim() ||
-  DEFAULT_ADS_CONVERSION_ID;
-
-const ENV_LABELS = parseLabels(import.meta.env?.VITE_ADS_CONVERSION_LABELS);
-
-/** Labels overridden at runtime (localStorage / window global), browser only. */
-function runtimeLabels(): Record<string, string> {
-  if (typeof window === "undefined") return {};
-  let stored: Record<string, string> = {};
-  try {
-    stored = parseLabels(window.localStorage.getItem("ads_conversion_labels"));
-  } catch {
-    stored = {};
-  }
-  const globalLabels = parseLabels(
-    (window as unknown as { __ADS_CONVERSION_LABELS?: unknown }).__ADS_CONVERSION_LABELS,
-  );
-  return { ...stored, ...globalLabels };
-}
-
-/** Effective label map: defaults < env < runtime override. */
+/** Effective label map: built-in defaults overridden by database values. */
 export function getAdsConversionLabels(): Record<string, string | undefined> {
-  return { ...DEFAULT_ADS_CONVERSION_LABELS, ...ENV_LABELS, ...runtimeLabels() };
+  return { ...DEFAULT_ADS_CONVERSION_LABELS, ...remoteLabels };
 }
 
-/** Set (or clear, with `undefined`) a label at runtime and persist it. */
-export function setAdsConversionLabel(key: string, label?: string) {
-  if (typeof window === "undefined") return;
-  try {
-    const current = parseLabels(window.localStorage.getItem("ads_conversion_labels"));
-    if (label) current[key] = label;
-    else delete current[key];
-    window.localStorage.setItem("ads_conversion_labels", JSON.stringify(current));
-  } catch {
-    /* storage unavailable */
-  }
-}
+/** Event keys the app fires conversions for. */
+export const ADS_CONVERSION_EVENT_KEYS = Object.keys(DEFAULT_ADS_CONVERSION_LABELS);
 
-/** Back-compat export — snapshot of the effective labels. */
-export const ADS_CONVERSION_LABELS: Record<string, string | undefined> = getAdsConversionLabels();
 
 /** Fire a Google Ads conversion. Safe no-op if gtag hasn't loaded yet. */
 export function trackAdsConversion(key: string, params: Record<string, unknown> = {}) {
