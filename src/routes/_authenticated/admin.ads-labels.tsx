@@ -50,6 +50,12 @@ function AdsLabelsAdmin() {
   const [savingId, setSavingId] = useState<string | null>(null);
   const [status, setStatus] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [tested, setTested] = useState<Record<string, string>>({});
+  const [gtagReady, setGtagReady] = useState(true);
+
+  useEffect(() => {
+    setGtagReady(isGtagReady());
+  }, []);
 
   useEffect(() => {
     let active = true;
