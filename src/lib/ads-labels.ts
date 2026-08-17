@@ -11,6 +11,28 @@ export type AdsLabelRow = {
   updated_at: string;
 };
 
+/**
+ * Validate a Google Ads conversion label.
+ * Ads labels are short opaque tokens: letters, digits, `-` and `_` only.
+ * Returns an error message, a soft warning, or nothing.
+ */
+export function validateAdsLabel(raw: string): { error?: string; warning?: string } {
+  const value = raw.trim();
+  if (value === "") return {};
+  if (value.includes("/") || /^AW-/i.test(value)) {
+    return { error: "Enter only the label part — not the AW-… conversion ID or a full send_to value." };
+  }
+  if (/\s/.test(value)) return { error: "Labels cannot contain spaces." };
+  if (!/^[A-Za-z0-9_-]+$/.test(value)) {
+    return { error: "Only letters, numbers, hyphens and underscores are allowed." };
+  }
+  if (value.length < 10 || value.length > 40) {
+    return { warning: "Most Google Ads labels are around 20 characters — double-check this value." };
+  }
+  return {};
+}
+
+
 /** Public read — any visitor can read the labels (they are not secret). */
 export async function fetchAdsConversionLabels(): Promise<Record<string, string | undefined>> {
   const { data, error } = await supabase
