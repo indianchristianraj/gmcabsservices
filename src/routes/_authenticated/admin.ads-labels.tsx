@@ -1,8 +1,18 @@
 import { useEffect, useState } from "react";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
-import { listAdsLabelRows, updateAdsLabel, type AdsLabelRow } from "@/lib/ads-labels";
-import { ADS_CONVERSION_ID } from "@/lib/analytics";
+import {
+  listAdsLabelRows,
+  updateAdsLabel,
+  validateAdsLabel,
+  type AdsLabelRow,
+} from "@/lib/ads-labels";
+import {
+  ADS_CONVERSION_ID,
+  buildSendTo,
+  fireTestAdsConversion,
+  isGtagReady,
+} from "@/lib/analytics";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
