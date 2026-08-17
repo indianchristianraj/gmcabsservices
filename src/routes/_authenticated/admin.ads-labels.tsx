@@ -132,40 +132,106 @@ function AdsLabelsAdmin() {
 
         <div className="mt-6 space-y-4">
           {loading && <p className="text-sm text-muted-foreground">Loading…</p>}
-          {rows.map((row) => (
-            <div key={row.id} className="rounded-xl border border-border bg-card p-4">
-              <div className="flex flex-wrap items-baseline justify-between gap-2">
-                <h2 className="font-semibold text-foreground">
-                  {FRIENDLY[row.event_key] ?? row.event_key}
-                </h2>
-                <span className="font-mono text-xs text-muted-foreground">{row.event_key}</span>
+          {rows.map((row) => {
+            const draft = drafts[row.id] ?? "";
+            const value = draft.trim();
+            const { error: vError, warning } = validateAdsLabel(draft);
+            const sendTo = buildSendTo(value);
+            const willFire = value !== "" && !vError;
+            const dirty = draft !== (row.label ?? "");
+            return (
+              <div key={row.id} className="rounded-xl border border-border bg-card p-4">
+                <div className="flex flex-wrap items-baseline justify-between gap-2">
+                  <h2 className="font-semibold text-foreground">
+                    {FRIENDLY[row.event_key] ?? row.event_key}
+                  </h2>
+                  <span className="font-mono text-xs text-muted-foreground">{row.event_key}</span>
+                </div>
+                {row.note && <p className="mt-1 text-sm text-muted-foreground">{row.note}</p>}
+                <div className="mt-3 flex flex-col gap-2 sm:flex-row">
+                  <Input
+                    aria-label={`Conversion label for ${row.event_key}`}
+                    aria-invalid={Boolean(vError)}
+                    placeholder="Conversion label, e.g. 9TdaCMud3N0cEJuU261E"
+                    value={draft}
+                    disabled={!isAdmin}
+                    onChange={(e) => setDrafts((d) => ({ ...d, [row.id]: e.target.value }))}
+                  />
+                  <Button
+                    onClick={() => save(row)}
+                    disabled={!isAdmin || Boolean(vError) || savingId === row.id || !dirty}
+                  >
+                    {savingId === row.id ? "Saving…" : "Save"}
+                  </Button>
+                </div>
+
+                {vError && (
+                  <p role="alert" className="mt-2 text-xs font-medium text-destructive">
+                    {vError}
+                  </p>
+                )}
+                {!vError && warning && (
+                  <p className="mt-2 text-xs text-muted-foreground">⚠️ {warning}</p>
+                )}
+
+                {/* Live preview of the exact conversion hit */}
+                <div className="mt-3 rounded-lg border border-border bg-muted/40 p-3">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <span
+                      className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold ${
+                        vError
+                          ? "bg-destructive/10 text-destructive"
+                          : willFire
+                            ? "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400"
+                            : "bg-amber-500/15 text-amber-600 dark:text-amber-500"
+                      }`}
+                    >
+                      {vError
+                        ? "Will not be saved"
+                        : willFire
+                          ? "Will fire as a tracked conversion"
+                          : "No label — hit reaches the account but no conversion action"}
+                    </span>
+                    {dirty && !vError && (
+                      <span className="text-xs text-muted-foreground">Unsaved preview</span>
+                    )}
+                  </div>
+                  <pre className="mt-2 overflow-x-auto rounded-md bg-background/70 p-2 text-[11px] leading-relaxed text-foreground">
+{`gtag('event', 'conversion', {
+  send_to: '${sendTo}'
+})`}
+                  </pre>
+                  <div className="mt-2 flex flex-wrap items-center gap-2">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      disabled={Boolean(vError)}
+                      onClick={() => {
+                        const used = fireTestAdsConversion(row.event_key, value);
+                        setTested((t) => ({
+                          ...t,
+                          [row.id]: used
+                            ? `Test conversion sent to ${used} — check Google Ads Tag Assistant / DebugView.`
+                            : "Google tag is not loaded on this page yet, so nothing was sent.",
+                        }));
+                      }}
+                    >
+                      Send test conversion
+                    </Button>
+                    {!gtagReady && (
+                      <span className="text-xs text-muted-foreground">Google tag not detected</span>
+                    )}
+                  </div>
+                  {tested[row.id] && (
+                    <p className="mt-2 text-xs text-muted-foreground">{tested[row.id]}</p>
+                  )}
+                </div>
               </div>
-              {row.note && <p className="mt-1 text-sm text-muted-foreground">{row.note}</p>}
-              <div className="mt-3 flex flex-col gap-2 sm:flex-row">
-                <Input
-                  aria-label={`Conversion label for ${row.event_key}`}
-                  placeholder="Conversion label, e.g. 9TdaCMud3N0cEJuU261E"
-                  value={drafts[row.id] ?? ""}
-                  disabled={!isAdmin}
-                  onChange={(e) => setDrafts((d) => ({ ...d, [row.id]: e.target.value }))}
-                />
-                <Button
-                  onClick={() => save(row)}
-                  disabled={!isAdmin || savingId === row.id || (drafts[row.id] ?? "") === (row.label ?? "")}
-                >
-                  {savingId === row.id ? "Saving…" : "Save"}
-                </Button>
-              </div>
-              <p className="mt-2 text-xs text-muted-foreground">
-                Sends:{" "}
-                <span className="font-mono">
-                  {ADS_CONVERSION_ID}
-                  {(drafts[row.id] ?? "").trim() ? `/${(drafts[row.id] ?? "").trim()}` : ""}
-                </span>
-              </p>
-            </div>
-          ))}
+            );
+          })}
         </div>
+
 
         <p className="mt-8 text-xs text-muted-foreground">
           Changes apply to every visitor on their next page load — no redeploy needed.
