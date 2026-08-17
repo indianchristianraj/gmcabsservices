@@ -14,6 +14,42 @@ export type Database = {
   }
   public: {
     Tables: {
+      admin_access_requests: {
+        Row: {
+          created_at: string
+          decided_at: string | null
+          decided_by: string | null
+          email: string | null
+          id: string
+          reason: string | null
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          decided_at?: string | null
+          decided_by?: string | null
+          email?: string | null
+          id?: string
+          reason?: string | null
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          decided_at?: string | null
+          decided_by?: string | null
+          email?: string | null
+          id?: string
+          reason?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       ads_conversion_labels: {
         Row: {
           event_key: string
@@ -64,12 +100,52 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      decide_admin_request: {
+        Args: { _approve: boolean; _request_id: string }
+        Returns: {
+          created_at: string
+          decided_at: string | null
+          decided_by: string | null
+          email: string | null
+          id: string
+          reason: string | null
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "admin_access_requests"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
           _user_id: string
         }
         Returns: boolean
+      }
+      request_admin_access: {
+        Args: { _reason?: string }
+        Returns: {
+          created_at: string
+          decided_at: string | null
+          decided_by: string | null
+          email: string | null
+          id: string
+          reason: string | null
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "admin_access_requests"
+          isOneToOne: true
+          isSetofReturn: false
+        }
       }
     }
     Enums: {
