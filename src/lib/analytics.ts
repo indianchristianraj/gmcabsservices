@@ -39,16 +39,43 @@ export function getAdsConversionLabels(): Record<string, string | undefined> {
 /** Event keys the app fires conversions for. */
 export const ADS_CONVERSION_EVENT_KEYS = Object.keys(DEFAULT_ADS_CONVERSION_LABELS);
 
+/** The exact `send_to` value a label would produce. */
+export function buildSendTo(label?: string | null): string {
+  const clean = (label ?? "").trim();
+  return clean ? `${ADS_CONVERSION_ID}/${clean}` : ADS_CONVERSION_ID;
+}
+
+/** Is the Google tag actually loaded in this page? */
+export function isGtagReady(): boolean {
+  return typeof window !== "undefined" && typeof window.gtag === "function";
+}
 
 /** Fire a Google Ads conversion. Safe no-op if gtag hasn't loaded yet. */
 export function trackAdsConversion(key: string, params: Record<string, unknown> = {}) {
   if (typeof window === "undefined" || typeof window.gtag !== "function") return;
   const label = getAdsConversionLabels()[key];
   window.gtag("event", "conversion", {
-    send_to: label ? `${ADS_CONVERSION_ID}/${label}` : ADS_CONVERSION_ID,
+    send_to: buildSendTo(label),
     ...params,
   });
 }
+
+/**
+ * Fire a one-off test conversion using an unsaved label (admin preview only).
+ * Returns the send_to value that was used, or null if the tag isn't loaded.
+ */
+export function fireTestAdsConversion(key: string, label?: string | null): string | null {
+  if (!isGtagReady()) return null;
+  const sendTo = buildSendTo(label);
+  window.gtag("event", "conversion", {
+    send_to: sendTo,
+    event_key: key,
+    debug_mode: true,
+    test_preview: true,
+  });
+  return sendTo;
+}
+
 
 
 
