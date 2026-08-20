@@ -241,6 +241,7 @@ function AdminAccessPage() {
                     </p>
                     <p className="mt-2 text-xs text-muted-foreground">
                       Submitted {new Date(request.created_at).toLocaleString()}
+                      {request.decision_note ? ` — Admin note: ${request.decision_note}` : ""}
                     </p>
                   </div>
                 )}
