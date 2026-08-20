@@ -19,6 +19,7 @@ export type Database = {
           created_at: string
           decided_at: string | null
           decided_by: string | null
+          decision_note: string | null
           email: string | null
           id: string
           reason: string | null
@@ -30,6 +31,7 @@ export type Database = {
           created_at?: string
           decided_at?: string | null
           decided_by?: string | null
+          decision_note?: string | null
           email?: string | null
           id?: string
           reason?: string | null
@@ -41,6 +43,7 @@ export type Database = {
           created_at?: string
           decided_at?: string | null
           decided_by?: string | null
+          decision_note?: string | null
           email?: string | null
           id?: string
           reason?: string | null
@@ -101,11 +104,12 @@ export type Database = {
     }
     Functions: {
       decide_admin_request: {
-        Args: { _approve: boolean; _request_id: string }
+        Args: { _approve: boolean; _note?: string; _request_id: string }
         Returns: {
           created_at: string
           decided_at: string | null
           decided_by: string | null
+          decision_note: string | null
           email: string | null
           id: string
           reason: string | null
@@ -133,6 +137,7 @@ export type Database = {
           created_at: string
           decided_at: string | null
           decided_by: string | null
+          decision_note: string | null
           email: string | null
           id: string
           reason: string | null

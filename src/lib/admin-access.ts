@@ -10,6 +10,7 @@ export type AdminAccessRequest = {
   status: AdminRequestStatus;
   decided_by: string | null;
   decided_at: string | null;
+  decision_note: string | null;
   created_at: string;
   updated_at: string;
 };
@@ -69,10 +70,13 @@ export async function listAdminRequests(): Promise<AdminAccessRequest[]> {
 export async function decideAdminRequest(
   requestId: string,
   approve: boolean,
+  note?: string,
 ): Promise<AdminAccessRequest> {
+  const trimmed = (note ?? "").trim();
   const { data, error } = await supabase.rpc("decide_admin_request", {
     _request_id: requestId,
     _approve: approve,
+    ...(trimmed === "" ? {} : { _note: trimmed }),
   });
   if (error) throw error;
   return data as unknown as AdminAccessRequest;
