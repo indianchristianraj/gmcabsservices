@@ -43,6 +43,15 @@ function AdminAccessPage() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [status, setStatus] = useState<string | null>(null);
+  const [queue, setQueue] = useState<AdminAccessRequest[]>([]);
+  const [notes, setNotes] = useState<Record<string, string>>({});
+  const [decidingId, setDecidingId] = useState<string | null>(null);
+
+  async function loadQueue() {
+    const rows = await listAdminRequests();
+    setQueue(rows);
+    setNotes(Object.fromEntries(rows.map((r) => [r.id, r.decision_note ?? ""])));
+  }
 
   useEffect(() => {
     let active = true;
@@ -53,6 +62,7 @@ function AdminAccessPage() {
         setIsAdmin(admin);
         setRequest(mine);
         setReason(mine?.reason ?? "");
+        if (admin) await loadQueue();
       } catch {
         if (active) setError("Could not load your admin access status.");
       } finally {
