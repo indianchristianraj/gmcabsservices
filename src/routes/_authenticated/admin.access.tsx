@@ -134,13 +134,103 @@ function AdminAccessPage() {
         {!loading && (
           <>
             {isAdmin ? (
-              <p className="mt-6 rounded-lg border border-border bg-muted/40 p-4 text-sm text-foreground">
-                You already have admin access. You can manage the{" "}
-                <Link to="/admin/ads-labels" className="underline">
-                  Google Ads conversion labels
-                </Link>
-                .
-              </p>
+              <>
+                <p className="mt-6 rounded-lg border border-border bg-muted/40 p-4 text-sm text-foreground">
+                  You already have admin access. You can manage the{" "}
+                  <Link to="/admin/ads-labels" className="underline">
+                    Google Ads conversion labels
+                  </Link>
+                  .
+                </p>
+
+                <section className="mt-8">
+                  <h2 className="text-lg font-semibold text-foreground">
+                    Pending requests{pending.length > 0 ? ` (${pending.length})` : ""}
+                  </h2>
+                  {pending.length === 0 ? (
+                    <p className="mt-2 text-sm text-muted-foreground">
+                      No requests are waiting for a decision.
+                    </p>
+                  ) : (
+                    <ul className="mt-3 space-y-3">
+                      {pending.map((r) => (
+                        <li key={r.id} className="rounded-xl border border-border bg-card p-4">
+                          <p className="font-medium text-foreground">{r.email ?? r.user_id}</p>
+                          <p className="mt-1 text-sm text-muted-foreground">
+                            {r.reason ?? "No reason provided."}
+                          </p>
+                          <p className="mt-1 text-xs text-muted-foreground">
+                            Requested {new Date(r.created_at).toLocaleString()}
+                          </p>
+                          <Textarea
+                            className="mt-3"
+                            rows={2}
+                            aria-label={`Decision note for ${r.email ?? r.user_id}`}
+                            placeholder="Decision note (optional) — visible to the requester"
+                            value={notes[r.id] ?? ""}
+                            onChange={(e) =>
+                              setNotes((prev) => ({ ...prev, [r.id]: e.target.value }))
+                            }
+                          />
+                          <div className="mt-3 flex gap-2">
+                            <Button
+                              onClick={() => decide(r.id, true)}
+                              disabled={decidingId === r.id}
+                            >
+                              {decidingId === r.id ? "Saving…" : "Approve"}
+                            </Button>
+                            <Button
+                              variant="outline"
+                              onClick={() => decide(r.id, false)}
+                              disabled={decidingId === r.id}
+                            >
+                              Reject
+                            </Button>
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </section>
+
+                {decided.length > 0 && (
+                  <section className="mt-8">
+                    <h2 className="text-lg font-semibold text-foreground">Decided</h2>
+                    <ul className="mt-3 space-y-3">
+                      {decided.map((r) => (
+                        <li key={r.id} className="rounded-xl border border-border bg-card/60 p-4">
+                          <div className="flex flex-wrap items-center justify-between gap-2">
+                            <p className="font-medium text-foreground">{r.email ?? r.user_id}</p>
+                            <span className="rounded-full border border-border px-2 py-0.5 text-xs capitalize text-muted-foreground">
+                              {r.status}
+                            </span>
+                          </div>
+                          {r.decision_note && (
+                            <p className="mt-2 text-sm text-muted-foreground">
+                              Note: {r.decision_note}
+                            </p>
+                          )}
+                          {r.decided_at && (
+                            <p className="mt-1 text-xs text-muted-foreground">
+                              Decided {new Date(r.decided_at).toLocaleString()}
+                            </p>
+                          )}
+                          <div className="mt-3 flex gap-2">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => decide(r.id, r.status !== "approved")}
+                              disabled={decidingId === r.id}
+                            >
+                              {r.status === "approved" ? "Revoke access" : "Approve instead"}
+                            </Button>
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  </section>
+                )}
+              </>
             ) : (
               <>
                 {request && (
