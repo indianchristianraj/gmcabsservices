@@ -18,6 +18,7 @@ import { Route as RoutesIndexRouteImport } from './routes/routes.index'
 import { Route as ServicesSlugRouteImport } from './routes/services.$slug'
 import { Route as RoutesSlugRouteImport } from './routes/routes.$slug'
 import { Route as AuthenticatedAdminAdsLabelsRouteImport } from './routes/_authenticated/admin.ads-labels'
+import { Route as AuthenticatedAdminAccessRouteImport } from './routes/_authenticated/admin.access'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
@@ -64,6 +65,12 @@ const AuthenticatedAdminAdsLabelsRoute =
     path: '/admin/ads-labels',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAdminAccessRoute =
+  AuthenticatedAdminAccessRouteImport.update({
+    id: '/admin/access',
+    path: '/admin/access',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -73,6 +80,7 @@ export interface FileRoutesByFullPath {
   '/routes/$slug': typeof RoutesSlugRoute
   '/services/$slug': typeof ServicesSlugRoute
   '/routes/': typeof RoutesIndexRoute
+  '/admin/access': typeof AuthenticatedAdminAccessRoute
   '/admin/ads-labels': typeof AuthenticatedAdminAdsLabelsRoute
 }
 export interface FileRoutesByTo {
@@ -83,6 +91,7 @@ export interface FileRoutesByTo {
   '/routes/$slug': typeof RoutesSlugRoute
   '/services/$slug': typeof ServicesSlugRoute
   '/routes': typeof RoutesIndexRoute
+  '/admin/access': typeof AuthenticatedAdminAccessRoute
   '/admin/ads-labels': typeof AuthenticatedAdminAdsLabelsRoute
 }
 export interface FileRoutesById {
@@ -95,6 +104,7 @@ export interface FileRoutesById {
   '/routes/$slug': typeof RoutesSlugRoute
   '/services/$slug': typeof ServicesSlugRoute
   '/routes/': typeof RoutesIndexRoute
+  '/_authenticated/admin/access': typeof AuthenticatedAdminAccessRoute
   '/_authenticated/admin/ads-labels': typeof AuthenticatedAdminAdsLabelsRoute
 }
 export interface FileRouteTypes {
@@ -107,6 +117,7 @@ export interface FileRouteTypes {
     | '/routes/$slug'
     | '/services/$slug'
     | '/routes/'
+    | '/admin/access'
     | '/admin/ads-labels'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -117,6 +128,7 @@ export interface FileRouteTypes {
     | '/routes/$slug'
     | '/services/$slug'
     | '/routes'
+    | '/admin/access'
     | '/admin/ads-labels'
   id:
     | '__root__'
@@ -128,6 +140,7 @@ export interface FileRouteTypes {
     | '/routes/$slug'
     | '/services/$slug'
     | '/routes/'
+    | '/_authenticated/admin/access'
     | '/_authenticated/admin/ads-labels'
   fileRoutesById: FileRoutesById
 }
@@ -207,14 +220,23 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminAdsLabelsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin/access': {
+      id: '/_authenticated/admin/access'
+      path: '/admin/access'
+      fullPath: '/admin/access'
+      preLoaderRoute: typeof AuthenticatedAdminAccessRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminAccessRoute: typeof AuthenticatedAdminAccessRoute
   AuthenticatedAdminAdsLabelsRoute: typeof AuthenticatedAdminAdsLabelsRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminAccessRoute: AuthenticatedAdminAccessRoute,
   AuthenticatedAdminAdsLabelsRoute: AuthenticatedAdminAdsLabelsRoute,
 }
 
