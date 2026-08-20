@@ -96,9 +96,27 @@ function AdminAccessPage() {
     }
   }
 
+  async function decide(id: string, approve: boolean) {
+    setDecidingId(id);
+    setError(null);
+    setStatus(null);
+    try {
+      await decideAdminRequest(id, approve, notes[id] ?? "");
+      await loadQueue();
+      setStatus(approve ? "Request approved — admin access granted." : "Request rejected.");
+    } catch {
+      setError("Could not save that decision. Please try again.");
+    } finally {
+      setDecidingId(null);
+    }
+  }
+
+  const pending = queue.filter((r) => r.status === "pending");
+  const decided = queue.filter((r) => r.status !== "pending");
+
   return (
     <main className="min-h-screen bg-background px-4 py-12">
-      <div className="mx-auto w-full max-w-2xl">
+      <div className="mx-auto w-full max-w-3xl">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <h1 className="text-2xl font-bold text-foreground">Admin access</h1>
           <div className="flex gap-2">
