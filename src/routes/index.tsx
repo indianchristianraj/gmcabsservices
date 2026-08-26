@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { trackEvent, trackAdsConversion } from "@/lib/analytics";
 import { TripType, TRIP_TYPES, QuoteVehicle, QUOTE_VEHICLES, calculateEstimate } from "@/lib/fare-estimate";
 import { TRIP_ROUTE_LIST } from "@/lib/trip-routes";
-import { PHONE, PHONE_INTL, telLink, waFor, bookingStore, EMPTY_DRAFT } from "@/lib/whatsapp";
+import { PHONE, PHONE_INTL, telLink, waFor, waLink, EMAIL, EMAIL_RENTALS, ADDRESS, bookingStore, EMPTY_DRAFT } from "@/lib/whatsapp";
 import { WhatsAppIcon } from "@/components/FloatingWhatsApp";
 import { BookingForm } from "@/components/BookingForm";
 import { Pic, picUrlAt } from "@/components/Pic";
@@ -42,11 +42,6 @@ export const Route = createFileRoute("/")({
   }),
 });
 
-const EMAIL = "gmcabsservices@gmail.com";
-const EMAIL_RENTALS = "gmcabrentals@gmail.com";
-const ADDRESS = "H.No: 7-6/16, Sri Sai Colony, Nacharam, Hyderabad - 500076";
-
-const waLink = waFor();
 
 
 
@@ -159,8 +154,6 @@ const stats = [
 function Index() {
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <ScrollProgress />
-      <Header />
       <Hero />
       <QuoteWidget />
       <StatsBar />
@@ -175,84 +168,7 @@ function Index() {
       <FAQ />
       <Instagram />
       <Contact />
-      <Footer />
-      <FloatingCall />
-
-      <ScrollTop />
     </div>
-  );
-}
-
-/* ---------------- HEADER ---------------- */
-function Logo() {
-  return (
-    <Pic
-      name="gm-logo-mark"
-      alt="GM Cabs Services Hyderabad"
-      title="GM Cabs Services"
-      width={954}
-      height={518}
-      sizes="(min-width: 768px) 130px, 111px"
-      priority
-      className="h-[60px] w-auto max-w-full object-contain md:h-[70px]"
-    />
-  );
-}
-
-function Header() {
-  const [open, setOpen] = useState(false);
-  return (
-    <header className="sticky top-0 z-40 border-b border-border/60 bg-card shadow-card">
-      <div className="mx-auto flex h-[70px] max-w-7xl items-center justify-between gap-4 px-4 md:h-20 md:px-8">
-        <a href="#top" className="flex min-w-0 shrink items-center py-1.5" aria-label="GM Cabs Services home"><Logo /></a>
-
-        <div className="flex shrink-0 items-center gap-3 lg:gap-6">
-          <nav className="hidden items-center gap-7 text-sm font-medium text-foreground/80 lg:flex">
-            <a href="#services" className="hover:text-orange-ink">Services</a>
-            <a href="#fleet" className="hover:text-orange-ink">Fleet</a>
-            <a href="#routes" className="hover:text-orange-ink">Routes</a>
-            <a href="#packages" className="hover:text-orange-ink">Packages</a>
-            <a href="#about" className="hover:text-orange-ink">About</a>
-            <a href="#contact" className="hover:text-orange-ink">Contact</a>
-            <Link to="/book" className="rounded-full bg-brand-gradient px-3.5 py-1.5 text-xs font-semibold text-white shadow-gold hover:opacity-90">Book</Link>
-          </nav>
-          <div className="hidden items-center gap-2 lg:flex">
-            <a href={waLink} target="_blank" rel="noopener noreferrer" data-ga-name="WhatsApp — Header" data-ga-context="header" className="inline-flex items-center gap-1.5 rounded-full bg-[var(--whatsapp-ink)] px-4 py-2 text-xs font-semibold text-white shadow-card hover:opacity-90">
-              <WhatsAppIcon className="h-4 w-4" /> WhatsApp
-            </a>
-            <a href={telLink} className="inline-flex items-center gap-1.5 rounded-full bg-brand-gradient px-4 py-2 text-xs font-semibold text-white shadow-gold hover:opacity-90">
-              📞 Call Now
-            </a>
-          </div>
-          <button
-            onClick={() => setOpen((o) => !o)}
-            aria-label="Open menu"
-            className="grid h-11 w-11 shrink-0 place-items-center rounded-lg border border-border bg-card text-primary shadow-card lg:hidden"
-          >
-            <span className="text-xl leading-none">{open ? "✕" : "☰"}</span>
-          </button>
-        </div>
-      </div>
-
-      {open && (
-        <div className="border-t border-border bg-card lg:hidden">
-          <nav className="mx-auto flex max-w-7xl flex-col gap-1 px-4 py-3 text-sm font-medium">
-            {["Services", "Fleet", "Routes", "Packages", "About", "Contact"].map((l) => (
-              <a key={l} href={`#${l.toLowerCase()}`} onClick={() => setOpen(false)} className="rounded-lg px-3 py-2.5 hover:bg-accent">{l}</a>
-            ))}
-            <Link to="/book" onClick={() => setOpen(false)} className="rounded-lg px-3 py-2.5 font-semibold text-gold-ink hover:bg-accent">Book Now</Link>
-            <div className="mt-2 grid grid-cols-2 gap-2 pt-2">
-              <a href={waLink} target="_blank" rel="noopener noreferrer" data-ga-name="WhatsApp — Mobile menu" data-ga-context="header_menu" className="inline-flex items-center justify-center gap-1.5 rounded-full bg-[var(--whatsapp-ink)] px-4 py-2.5 text-xs font-semibold text-white shadow-card">
-                <WhatsAppIcon className="h-4 w-4" /> WhatsApp
-              </a>
-              <a href={telLink} className="inline-flex items-center justify-center gap-1.5 rounded-full bg-brand-gradient px-4 py-2.5 text-xs font-semibold text-white shadow-gold">
-                📞 Call
-              </a>
-            </div>
-          </nav>
-        </div>
-      )}
-    </header>
   );
 }
 
@@ -919,78 +835,10 @@ function Instagram() {
 }
 
 
-function Footer() {
-  return (
-    <footer className="border-t border-border bg-primary text-primary-foreground">
-      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-12 md:grid-cols-4 md:px-8">
-        <div>
-          <div className="flex items-center gap-2.5">
-            <Pic name="gm-logo" alt="GM Cabs Services" width={44} height={44} sizes="44px" className="rounded-lg" />
-            <div>
-              <div className="font-display text-base font-bold text-white">GM Cabs Services</div>
-              <div className="text-[10px] uppercase tracking-widest text-orange">Airport · One Way · Outstation</div>
-            </div>
-          </div>
-          <p className="mt-4 text-xs text-primary-foreground/70">Premium airport taxi, one way & luxury outstation cabs across Telangana & Andhra Pradesh.</p>
-        </div>
-        <div>
-          <div className="text-[10px] font-semibold uppercase tracking-widest text-orange">Quick Links</div>
-          <ul className="mt-4 space-y-2 text-sm">
-            {["Home", "Services", "Fleet", "Routes", "Contact"].map((l) => (
-              <li key={l}><a href={l === "Home" ? "#top" : `#${l.toLowerCase()}`} className="text-primary-foreground/80 hover:text-orange">{l}</a></li>
-            ))}
-            <li><Link to="/book" className="text-primary-foreground/80 hover:text-orange">Book Now</Link></li>
-            <li><Link to="/fare-estimate" className="text-primary-foreground/80 hover:text-orange">Fare Estimate</Link></li>
-          </ul>
-        </div>
-        <div>
-          <div className="text-[10px] font-semibold uppercase tracking-widest text-orange">Services</div>
-          <ul className="mt-4 space-y-2 text-sm">
-            {["Airport Pickup & Drop", "One Way Taxi", "Outstation Cab", "Luxury Car Rental", "Corporate Travel"].map((l) => (
-              <li key={l}><a href="#services" className="text-primary-foreground/80 hover:text-orange">{l}</a></li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <div className="text-[10px] font-semibold uppercase tracking-widest text-orange">Contact</div>
-          <ul className="mt-4 space-y-2 text-sm text-primary-foreground/80">
-            <li>📞 <a href={telLink} className="hover:text-orange">{PHONE}</a></li>
-            <li>✉️ <a href={`mailto:${EMAIL}`} className="hover:text-orange break-all">{EMAIL}</a></li>
-            <li>✉️ <a href={`mailto:${EMAIL_RENTALS}`} className="hover:text-orange break-all">{EMAIL_RENTALS}</a></li>
-            <li>📍 {ADDRESS}</li>
-          </ul>
-        </div>
-      </div>
-      <div className="border-t border-white/10">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-2 px-4 py-5 text-xs text-primary-foreground/70 md:flex-row md:px-8">
-          <div>© {new Date().getFullYear()} GM Cabs Services. All rights reserved.</div>
-          <div>Proprietor: Mohsin Khan</div>
-        </div>
-      </div>
-    </footer>
-  );
-}
 
 /* ---------------- SCROLL TOP ---------------- */
 
 
-
-function ScrollTop() {
-  const [show, setShow] = useState(false);
-  useEffect(() => {
-    const onScroll = () => setShow(window.scrollY > 600);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-  if (!show) return null;
-  return (
-    <button
-      onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-      aria-label="Scroll to top"
-      className="fixed bottom-[88px] right-4 z-40 grid h-11 w-11 sm:bottom-24 sm:right-6 place-items-center rounded-full bg-primary text-white shadow-elegant transition hover:bg-orange"
-    >↑</button>
-  );
-}
 
 
 function SectionHead({ eyebrow, title, sub }: { eyebrow: string; title: string; sub: string }) {
@@ -1013,45 +861,6 @@ function ContactCard({ icon, title, line, href }: { icon: string; title: string;
   return href ? <a href={href} className={cls}>{inner}</a> : <div className={cls}>{inner}</div>;
 }
 
-
-/* ---------------- SCROLL PROGRESS ---------------- */
-function ScrollProgress() {
-  const [p, setP] = useState(0);
-  useEffect(() => {
-    const onScroll = () => {
-      const h = document.documentElement;
-      const max = h.scrollHeight - h.clientHeight;
-      setP(max > 0 ? (h.scrollTop / max) * 100 : 0);
-    };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-  return (
-    <div className="pointer-events-none fixed left-0 top-0 z-[60] h-[3px] w-full bg-transparent">
-      <div
-        className="h-full bg-brand-gradient transition-[width] duration-150 ease-out"
-        style={{ width: `${p}%` }}
-      />
-    </div>
-  );
-}
-
-/* ---------------- FLOATING CALL ---------------- */
-function FloatingCall() {
-  return (
-    <a
-      href={telLink}
-      aria-label="Call GM Cabs Services"
-      title="Call now"
-      className="fixed bottom-6 left-6 z-50 hidden h-12 w-12 place-items-center rounded-full bg-orange text-white shadow-elegant transition hover:scale-105 sm:grid sm:h-14 sm:w-14"
-    >
-      <svg viewBox="0 0 24 24" fill="currentColor" className="h-6 w-6" aria-hidden>
-        <path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.24.2 2.45.57 3.57a1 1 0 0 1-.24 1.02l-2.21 2.2z" />
-      </svg>
-    </a>
-  );
-}
 
 /* ---------------- TESTIMONIALS ---------------- */
 const testimonials = [

@@ -3,6 +3,10 @@ import { useSyncExternalStore } from "react";
 export const PHONE = "6301875485";
 export const PHONE_INTL = "916301875485";
 export const telLink = `tel:+${PHONE_INTL}`;
+export const EMAIL = "gmcabsservices@gmail.com";
+export const EMAIL_RENTALS = "gmcabrentals@gmail.com";
+export const ADDRESS = "H.No: 7-6/16, Sri Sai Colony, Nacharam, Hyderabad - 500076";
+export const waLink = waFor();
 
 export function waFor(context?: string, route?: string) {
   const base = "Hi GM Cabs,";

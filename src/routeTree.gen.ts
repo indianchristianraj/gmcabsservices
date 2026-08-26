@@ -15,6 +15,7 @@ import { Route as BookRouteImport } from './routes/book'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ServicesIndexRouteImport } from './routes/services.index'
 import { Route as RoutesIndexRouteImport } from './routes/routes.index'
 import { Route as ServicesSlugRouteImport } from './routes/services.$slug'
 import { Route as RoutesSlugRouteImport } from './routes/routes.$slug'
@@ -48,6 +49,11 @@ const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicesIndexRoute = ServicesIndexRouteImport.update({
+  id: '/services/',
+  path: '/services/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RoutesIndexRoute = RoutesIndexRouteImport.update({
@@ -87,6 +93,7 @@ export interface FileRoutesByFullPath {
   '/routes/$slug': typeof RoutesSlugRoute
   '/services/$slug': typeof ServicesSlugRoute
   '/routes/': typeof RoutesIndexRoute
+  '/services/': typeof ServicesIndexRoute
   '/admin/access': typeof AuthenticatedAdminAccessRoute
   '/admin/ads-labels': typeof AuthenticatedAdminAdsLabelsRoute
 }
@@ -99,6 +106,7 @@ export interface FileRoutesByTo {
   '/routes/$slug': typeof RoutesSlugRoute
   '/services/$slug': typeof ServicesSlugRoute
   '/routes': typeof RoutesIndexRoute
+  '/services': typeof ServicesIndexRoute
   '/admin/access': typeof AuthenticatedAdminAccessRoute
   '/admin/ads-labels': typeof AuthenticatedAdminAdsLabelsRoute
 }
@@ -113,6 +121,7 @@ export interface FileRoutesById {
   '/routes/$slug': typeof RoutesSlugRoute
   '/services/$slug': typeof ServicesSlugRoute
   '/routes/': typeof RoutesIndexRoute
+  '/services/': typeof ServicesIndexRoute
   '/_authenticated/admin/access': typeof AuthenticatedAdminAccessRoute
   '/_authenticated/admin/ads-labels': typeof AuthenticatedAdminAdsLabelsRoute
 }
@@ -127,6 +136,7 @@ export interface FileRouteTypes {
     | '/routes/$slug'
     | '/services/$slug'
     | '/routes/'
+    | '/services/'
     | '/admin/access'
     | '/admin/ads-labels'
   fileRoutesByTo: FileRoutesByTo
@@ -139,6 +149,7 @@ export interface FileRouteTypes {
     | '/routes/$slug'
     | '/services/$slug'
     | '/routes'
+    | '/services'
     | '/admin/access'
     | '/admin/ads-labels'
   id:
@@ -152,6 +163,7 @@ export interface FileRouteTypes {
     | '/routes/$slug'
     | '/services/$slug'
     | '/routes/'
+    | '/services/'
     | '/_authenticated/admin/access'
     | '/_authenticated/admin/ads-labels'
   fileRoutesById: FileRoutesById
@@ -166,6 +178,7 @@ export interface RootRouteChildren {
   RoutesSlugRoute: typeof RoutesSlugRoute
   ServicesSlugRoute: typeof ServicesSlugRoute
   RoutesIndexRoute: typeof RoutesIndexRoute
+  ServicesIndexRoute: typeof ServicesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -210,6 +223,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services/': {
+      id: '/services/'
+      path: '/services'
+      fullPath: '/services/'
+      preLoaderRoute: typeof ServicesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/routes/': {
@@ -273,6 +293,7 @@ const rootRouteChildren: RootRouteChildren = {
   RoutesSlugRoute: RoutesSlugRoute,
   ServicesSlugRoute: ServicesSlugRoute,
   RoutesIndexRoute: RoutesIndexRoute,
+  ServicesIndexRoute: ServicesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
