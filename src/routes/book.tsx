@@ -2,9 +2,12 @@ import { createFileRoute } from "@tanstack/react-router";
 import { BookingForm } from "@/components/BookingForm";
 import { Pic, picUrlAt } from "@/components/Pic";
 import { PHONE, telLink, waFor } from "@/lib/whatsapp";
+import { resolveService } from "@/lib/booking-services";
 
 export const Route = createFileRoute("/book")({
   component: BookPage,
+  validateSearch: (search: Record<string, unknown>): { service?: string } =>
+    typeof search.service === "string" && search.service ? { service: search.service } : {},
   head: () => ({
     meta: [
       { title: "Book a Cab | GM Cabs Services Hyderabad" },
@@ -43,6 +46,8 @@ export const Route = createFileRoute("/book")({
 });
 
 function BookPage() {
+  const { service } = Route.useSearch();
+  const preselected = resolveService(service);
   return (
     <main className="min-h-screen bg-background text-foreground">
       <section className="relative overflow-hidden bg-background">
@@ -62,7 +67,9 @@ function BookPage() {
 
           <div className="mx-auto mt-8 max-w-3xl">
             <BookingForm
-              title="Start your booking"
+              key={preselected ?? "default"}
+              initialService={preselected}
+              title={preselected ? `Start your ${preselected.toLowerCase()} booking` : "Start your booking"}
               description="Fill the details below. We will reply on WhatsApp with fare and driver info."
             />
           </div>

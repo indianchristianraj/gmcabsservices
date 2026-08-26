@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { trackEvent, trackAdsConversion } from "@/lib/analytics";
 import { WhatsAppIcon } from "@/components/FloatingWhatsApp";
 import { PHONE_INTL, bookingStore, EMPTY_DRAFT } from "@/lib/whatsapp";
+import { SERVICE_OPTIONS, resolveService } from "@/lib/booking-services";
 
 export type BookingFields =
   | "name"
@@ -92,16 +93,20 @@ export function BookingForm({
   description = "All fields marked * are required.",
   className = "",
   onSubmitSuccess,
+  initialService,
 }: {
   title?: string;
   description?: string;
   className?: string;
   onSubmitSuccess?: () => void;
+  /** Slug (e.g. "airport-pickup") or label (e.g. "Airport Pickup") to preselect. */
+  initialService?: string;
 }) {
+  const preselected = resolveService(initialService);
   const [form, setForm] = useState<Record<BookingFields, string>>({
     name: "",
     phone: "",
-    service: "Airport Pickup",
+    service: preselected ?? "Airport Pickup",
     car: "Sedan (City/Verna)",
     pickup: "",
     drop: "",
@@ -115,6 +120,10 @@ export function BookingForm({
   const [errors, setErrors] = useState<Errors>({});
   const [touched, setTouched] = useState<Partial<Record<BookingFields, boolean>>>({});
   const startedRef = useRef(false);
+
+  useEffect(() => {
+    if (preselected) setForm((f) => (f.service === preselected ? f : { ...f, service: preselected }));
+  }, [preselected]);
 
   useEffect(() => {
     bookingStore.set(form);
@@ -258,21 +267,12 @@ export function BookingForm({
         <label className="space-y-1.5">
           <span className={labelCls}>Preferred service *</span>
           <select value={form.service} onChange={update("service")} className={`${baseInput} ${okInput}`}>
-            {[
-              "Airport Pickup",
-              "Airport Drop",
-              "One Way Taxi",
-              "Outstation Cab",
-              "Local Rental",
-              "Corporate Travel",
-              "Wedding Cars",
-              "Temple Tour",
-              "Luxury Car Rental",
-            ].map((o) => (
+            {SERVICE_OPTIONS.map((o) => (
               <option key={o}>{o}</option>
             ))}
           </select>
         </label>
+
         <label className="space-y-1.5">
           <span className={labelCls}>Car type</span>
           <select value={form.car} onChange={update("car")} className={`${baseInput} ${okInput}`}>

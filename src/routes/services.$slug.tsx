@@ -382,6 +382,9 @@ function ServiceDetail() {
             <a href={telLink} className="inline-flex items-center gap-2 rounded-full bg-brand-gradient px-6 py-3 text-sm font-semibold text-white shadow-gold hover:opacity-90">
               📞 Call 6301875485
             </a>
+            <Link to="/book" search={{ service: s.slug }} className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-6 py-3 text-sm font-semibold text-white hover:border-orange hover:bg-white/15">
+              📝 Book online
+            </Link>
           </div>
         </div>
       </section>
@@ -485,6 +488,9 @@ function ServiceDetail() {
             <a href={telLink} className="inline-flex items-center gap-2 rounded-full bg-brand-gradient px-6 py-3 text-sm font-semibold text-white shadow-gold hover:opacity-90">
               📞 Call 6301875485
             </a>
+            <Link to="/book" search={{ service: s.slug }} className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-6 py-3 text-sm font-semibold text-white hover:border-orange hover:bg-white/15">
+              📝 Book online
+            </Link>
           </div>
           <div className="mt-10 border-t border-white/10 pt-8">
             <div className="text-xs font-semibold uppercase tracking-[0.2em] text-orange">Explore more services</div>
