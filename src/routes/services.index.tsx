@@ -187,10 +187,10 @@ function ServicesPage() {
                   params={{ slug: service.slug }}
                   className="inline-flex flex-1 items-center justify-center rounded-full border border-border bg-background px-4 py-2.5 text-sm font-semibold text-foreground transition hover:bg-accent"
                 >
-                  Learn more
+                  View {service.title} details
                 </Link>
                 <a
-                  href={waFor(`${service.title} booking`)}
+                  href={waFor(`I'd like to book *${service.title}*. Please share availability and fare.`)}
                   target="_blank"
                   rel="noopener noreferrer"
                   data-ga-name={`WhatsApp — ${service.title}`}
