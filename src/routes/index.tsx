@@ -237,9 +237,10 @@ function Header() {
       {open && (
         <div className="border-t border-border bg-card lg:hidden">
           <nav className="mx-auto flex max-w-7xl flex-col gap-1 px-4 py-3 text-sm font-medium">
-            {[["Services", "#services"], ["Fleet", "#fleet"], ["Routes", "#routes"], ["Packages", "#packages"], ["About", "#about"], ["Contact", "#contact"]].map(([l, h]) => (
-              <a key={h} href={h} onClick={() => setOpen(false)} className="rounded-lg px-3 py-2.5 hover:bg-accent">{l}</a>
+            {["Services", "Fleet", "Routes", "Packages", "About", "Contact"].map((l) => (
+              <a key={l} href={`#${l.toLowerCase()}`} onClick={() => setOpen(false)} className="rounded-lg px-3 py-2.5 hover:bg-accent">{l}</a>
             ))}
+            <Link to="/book" onClick={() => setOpen(false)} className="rounded-lg px-3 py-2.5 font-semibold text-gold-ink hover:bg-accent">Book Now</Link>
             <div className="mt-2 grid grid-cols-2 gap-2 pt-2">
               <a href={waLink} target="_blank" rel="noopener noreferrer" data-ga-name="WhatsApp — Mobile menu" data-ga-context="header_menu" className="inline-flex items-center justify-center gap-1.5 rounded-full bg-[var(--whatsapp-ink)] px-4 py-2.5 text-xs font-semibold text-white shadow-card">
                 <WhatsAppIcon className="h-4 w-4" /> WhatsApp
