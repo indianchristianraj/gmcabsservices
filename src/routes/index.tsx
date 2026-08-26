@@ -214,6 +214,7 @@ function Header() {
             <a href="#packages" className="hover:text-orange-ink">Packages</a>
             <a href="#about" className="hover:text-orange-ink">About</a>
             <a href="#contact" className="hover:text-orange-ink">Contact</a>
+            <Link to="/book" className="rounded-full bg-brand-gradient px-3.5 py-1.5 text-xs font-semibold text-white shadow-gold hover:opacity-90">Book</Link>
           </nav>
           <div className="hidden items-center gap-2 lg:flex">
             <a href={waLink} target="_blank" rel="noopener noreferrer" data-ga-name="WhatsApp — Header" data-ga-context="header" className="inline-flex items-center gap-1.5 rounded-full bg-[var(--whatsapp-ink)] px-4 py-2 text-xs font-semibold text-white shadow-card hover:opacity-90">
