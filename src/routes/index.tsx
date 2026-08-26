@@ -660,9 +660,9 @@ function Fleet() {
                   <a href={waFor(`${v.name} booking`)} target="_blank" rel="noopener noreferrer" data-ga-name={`WhatsApp — ${v.name}`} data-ga-context="fleet_card" aria-label={`Book ${v.name} on WhatsApp`} className="inline-flex flex-1 items-center justify-center gap-1 rounded-full bg-[var(--whatsapp-ink)] px-3 py-2 text-[11px] font-semibold text-white hover:opacity-90">
                     <WhatsAppIcon className="h-3 w-3" /> WhatsApp
                   </a>
-                  <a href="#contact" className="inline-flex flex-1 items-center justify-center rounded-full bg-brand-gradient px-3 py-2 text-[11px] font-semibold text-white hover:opacity-90">
+                  <Link to="/book" className="inline-flex flex-1 items-center justify-center rounded-full bg-brand-gradient px-3 py-2 text-[11px] font-semibold text-white hover:opacity-90">
                     Book Now
-                  </a>
+                  </Link>
                 </div>
               </div>
             </article>
