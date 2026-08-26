@@ -936,9 +936,10 @@ function Footer() {
         <div>
           <div className="text-[10px] font-semibold uppercase tracking-widest text-orange">Quick Links</div>
           <ul className="mt-4 space-y-2 text-sm">
-            {[["Home", "#top"], ["Services", "#services"], ["Fleet", "#fleet"], ["Routes", "#routes"], ["Contact", "#contact"]].map(([l, h]) => (
-              <li key={h}><a href={h} className="text-primary-foreground/80 hover:text-orange">{l}</a></li>
+            {["Home", "Services", "Fleet", "Routes", "Contact"].map((l) => (
+              <li key={l}><a href={l === "Home" ? "#top" : `#${l.toLowerCase()}`} className="text-primary-foreground/80 hover:text-orange">{l}</a></li>
             ))}
+            <li><Link to="/book" className="text-primary-foreground/80 hover:text-orange">Book Now</Link></li>
             <li><Link to="/fare-estimate" className="text-primary-foreground/80 hover:text-orange">Fare Estimate</Link></li>
           </ul>
         </div>
