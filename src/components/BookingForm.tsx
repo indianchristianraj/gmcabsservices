@@ -258,21 +258,12 @@ export function BookingForm({
         <label className="space-y-1.5">
           <span className={labelCls}>Preferred service *</span>
           <select value={form.service} onChange={update("service")} className={`${baseInput} ${okInput}`}>
-            {[
-              "Airport Pickup",
-              "Airport Drop",
-              "One Way Taxi",
-              "Outstation Cab",
-              "Local Rental",
-              "Corporate Travel",
-              "Wedding Cars",
-              "Temple Tour",
-              "Luxury Car Rental",
-            ].map((o) => (
+            {SERVICE_OPTIONS.map((o) => (
               <option key={o}>{o}</option>
             ))}
           </select>
         </label>
+
         <label className="space-y-1.5">
           <span className={labelCls}>Car type</span>
           <select value={form.car} onChange={update("car")} className={`${baseInput} ${okInput}`}>
