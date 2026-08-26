@@ -50,15 +50,35 @@ export function isGtagReady(): boolean {
   return typeof window !== "undefined" && typeof window.gtag === "function";
 }
 
-/** Fire a Google Ads conversion. Safe no-op if gtag hasn't loaded yet. */
-export function trackAdsConversion(key: string, params: Record<string, unknown> = {}) {
+/** Conversion IDs already sent in this page session (duplicate protection). */
+const firedConversions = new Set<string>();
+
+/**
+ * Fire a Google Ads conversion. Safe no-op if gtag hasn't loaded yet.
+ *
+ * Pass `dedupeId` (a unique id for one successful submission) to guarantee the
+ * same conversion is never counted twice — it is also sent to Google Ads as
+ * `transaction_id`, which de-duplicates server-side across reloads/retries.
+ */
+export function trackAdsConversion(
+  key: string,
+  params: Record<string, unknown> = {},
+  dedupeId?: string,
+) {
   if (typeof window === "undefined" || typeof window.gtag !== "function") return;
+  if (dedupeId) {
+    const seen = `${key}:${dedupeId}`;
+    if (firedConversions.has(seen)) return;
+    firedConversions.add(seen);
+  }
   const label = getAdsConversionLabels()[key];
   window.gtag("event", "conversion", {
     send_to: buildSendTo(label),
+    ...(dedupeId ? { transaction_id: dedupeId } : {}),
     ...params,
   });
 }
+
 
 /**
  * Fire a one-off test conversion using an unsaved label (admin preview only).

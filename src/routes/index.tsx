@@ -1,6 +1,6 @@
 import { createFileRoute, useRouterState, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { trackEvent, trackAdsConversion } from "@/lib/analytics";
+import { trackEvent } from "@/lib/analytics";
 import { TripType, TRIP_TYPES, QuoteVehicle, QUOTE_VEHICLES, calculateEstimate } from "@/lib/fare-estimate";
 import { TRIP_ROUTE_LIST } from "@/lib/trip-routes";
 import { PHONE, PHONE_INTL, telLink, waFor, waLink, EMAIL, EMAIL_RENTALS, ADDRESS, bookingStore, EMPTY_DRAFT } from "@/lib/whatsapp";
