@@ -205,15 +205,27 @@ export function BookingForm({
     trackEvent("contact_form_submit", { form_name: "booking_form", ...eventParams });
     trackEvent("enquiry_submitted", eventParams);
     trackEvent("booking_completed", eventParams);
-    trackAdsConversion("booking_form_submit", {
-      event_category: "booking",
-      service_type: form.service,
-      vehicle_category: form.car,
-      trip_type: form.tripType,
-    });
+
+    // Google Ads conversion — fires only here, after validation passed and the
+    // submission is complete. `submissionId` is stable per unique submission
+    // payload, so a double click / re-submit of identical data never counts twice.
+    const submissionId = `booking-${btoa(
+      unescape(encodeURIComponent([form.phone, form.pickup, form.drop, form.date, form.time].join("|"))),
+    ).replace(/=+$/, "")}`;
+    trackAdsConversion(
+      "booking_form_submit",
+      {
+        event_category: "booking",
+        service_type: form.service,
+        vehicle_category: form.car,
+        trip_type: form.tripType,
+      },
+      submissionId,
+    );
     window.open(url, "_blank", "noopener,noreferrer");
     onSubmitSuccess?.();
   }
+
 
   const baseInput =
     "w-full rounded-lg border bg-background px-3.5 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/70 focus:outline-none focus:ring-2";
