@@ -13,6 +13,7 @@ export const Route = createFileRoute("/sitemap.xml")({
           { path: "/", priority: "1.0" },
           { path: "/book", priority: "0.9" },
           { path: "/fare-estimate", priority: "0.9" },
+          { path: "/services", priority: "0.9" },
           { path: "/routes", priority: "0.8" },
           ...SERVICE_SLUGS.map((s) => ({ path: `/services/${s}`, priority: "0.7" })),
           ...TRIP_ROUTE_SLUGS.map((s) => ({ path: `/routes/${s}`, priority: "0.7" })),

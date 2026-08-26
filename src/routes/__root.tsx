@@ -12,6 +12,9 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { FloatingWhatsApp } from "../components/FloatingWhatsApp";
+import { SiteHeader } from "../components/SiteHeader";
+import { SiteFooter } from "../components/SiteFooter";
+import { ScrollProgress, ScrollTop, FloatingCall } from "../components/SiteChrome";
 
 function NotFoundComponent() {
   return (
@@ -218,9 +221,14 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <ScrollProgress />
+      <SiteHeader />
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
+      <SiteFooter />
       <FloatingWhatsApp />
+      <FloatingCall />
+      <ScrollTop />
     </QueryClientProvider>
   );
 }
