@@ -5,7 +5,9 @@ import { TripType, TRIP_TYPES, QuoteVehicle, QUOTE_VEHICLES, calculateEstimate }
 import { TRIP_ROUTE_LIST } from "@/lib/trip-routes";
 import { PHONE, PHONE_INTL, telLink, waFor, bookingStore, EMPTY_DRAFT } from "@/lib/whatsapp";
 import { WhatsAppIcon } from "@/components/FloatingWhatsApp";
+import { BookingForm } from "@/components/BookingForm";
 import { Pic, picUrlAt } from "@/components/Pic";
+
 
 
 export const Route = createFileRoute("/")({
