@@ -6,9 +6,8 @@ import { resolveService } from "@/lib/booking-services";
 
 export const Route = createFileRoute("/book")({
   component: BookPage,
-  validateSearch: (search: Record<string, unknown>) => ({
-    service: typeof search.service === "string" ? search.service : undefined,
-  }),
+  validateSearch: (search: Record<string, unknown>): { service?: string } =>
+    typeof search.service === "string" && search.service ? { service: search.service } : {},
   head: () => ({
     meta: [
       { title: "Book a Cab | GM Cabs Services Hyderabad" },
