@@ -301,12 +301,12 @@ function Hero() {
             </p>
 
             <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-              <a
-                href="#quote"
+              <Link
+                to="/book"
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-brand-gradient px-7 py-4 text-sm font-bold text-white shadow-gold transition hover:opacity-90"
               >
                 Book Now <span aria-hidden>→</span>
-              </a>
+              </Link>
               <a
                 href={waFor("Airport & outstation cab booking")}
                 target="_blank"
