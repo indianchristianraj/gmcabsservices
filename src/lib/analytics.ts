@@ -133,6 +133,26 @@ export function trackEvent(name: string, params: Params = {}) {
   window.gtag("event", name, { ...baseParams(), ...params });
 }
 
+/** GA4 events already sent in this page session (duplicate protection). */
+const firedEvents = new Set<string>();
+
+/**
+ * Fire a GA4 event at most once per `dedupeId` (same guard as
+ * trackAdsConversion). Use for one-shot events such as form submissions so a
+ * re-submit of identical data never inflates GA4 metrics. The dedupe id is
+ * also sent as `transaction_id`-style `submission_id` param for analysis.
+ */
+export function trackEventOnce(name: string, params: Params = {}, dedupeId?: string) {
+  if (!dedupeId) {
+    trackEvent(name, params);
+    return;
+  }
+  const seen = `${name}:${dedupeId}`;
+  if (firedEvents.has(seen)) return;
+  firedEvents.add(seen);
+  trackEvent(name, { ...params, submission_id: dedupeId });
+}
+
 export function trackPageView(path: string, title?: string) {
   if (typeof window === "undefined" || typeof window.gtag !== "function") return;
   window.gtag("event", "page_view", {
