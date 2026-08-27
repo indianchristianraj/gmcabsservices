@@ -191,24 +191,9 @@ export function BookingForm({
     lines.push("", "Please share availability and fare. Thank you!");
 
     const url = `https://wa.me/${PHONE_INTL}?text=${encodeURIComponent(lines.join("\n"))}`;
-    const eventParams = {
-      service_type: form.service,
-      vehicle_category: form.car,
-      trip_type: form.tripType,
-      pickup_location: form.pickup,
-      drop_location: form.drop,
-      passengers: Number(form.passengers) || undefined,
-      luggage: Number(form.luggage) || undefined,
-      travel_date: form.date,
-      travel_time: form.time || undefined,
-    };
-    trackEvent("contact_form_submit", { form_name: "booking_form", ...eventParams });
-    trackEvent("enquiry_submitted", eventParams);
-    trackEvent("booking_completed", eventParams);
-
-    // Google Ads conversion — fires only here, after validation passed and the
-    // submission is complete. `submissionId` is stable per unique submission
-    // payload, so a double click / re-submit of identical data never counts twice.
+    // `submissionId` is stable per unique submission payload, so a double
+    // click / re-submit of identical data never counts twice — it guards the
+    // GA4 events AND the Ads conversion below.
     const submissionId = `booking-${btoa(
       unescape(encodeURIComponent([form.phone, form.pickup, form.drop, form.date, form.time].join("|"))),
     ).replace(/=+$/, "")}`;
