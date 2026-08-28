@@ -197,6 +197,27 @@ export function BookingForm({
     const submissionId = `booking-${btoa(
       unescape(encodeURIComponent([form.phone, form.pickup, form.drop, form.date, form.time].join("|"))),
     ).replace(/=+$/, "")}`;
+
+    // GA4 events — same dedup guard as the Ads conversion: a re-submit of an
+    // identical payload never inflates GA4 metrics. `form_location` tells
+    // whether it came from the homepage contact section or the /book page.
+    const formLocation = window.location.pathname.startsWith("/book") ? "book_page" : "homepage_contact";
+    const eventParams = {
+      service_type: form.service,
+      vehicle_category: form.car,
+      trip_type: form.tripType,
+      pickup_location: form.pickup,
+      drop_location: form.drop,
+      passengers: Number(form.passengers) || undefined,
+      luggage: Number(form.luggage) || undefined,
+      travel_date: form.date,
+      travel_time: form.time || undefined,
+      form_location: formLocation,
+    };
+    trackEventOnce("contact_form_submit", { form_name: "booking_form", ...eventParams }, submissionId);
+    trackEventOnce("enquiry_submitted", eventParams, submissionId);
+    trackEventOnce("booking_completed", eventParams, submissionId);
+
     trackAdsConversion(
       "booking_form_submit",
       {
